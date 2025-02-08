@@ -1,6 +1,5 @@
 package com.wecp.eventmanagementsystem.controller;
 
-
 import com.wecp.eventmanagementsystem.dto.LoginRequest;
 import com.wecp.eventmanagementsystem.dto.LoginResponse;
 import com.wecp.eventmanagementsystem.entity.User;
@@ -18,18 +17,42 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-
+@RestController
 public class RegisterAndLoginController {
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+ 
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @PostMapping("/api/user/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
-       // register user and return the registered user with status code 201 created
+        // register user and return the registered user with status code 201 created
+        return new ResponseEntity<User>(userService.registerUser(user), HttpStatus.CREATED);
     }
 
     @PostMapping("/api/user/login")
     public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginRequest loginRequest) {
-         // login user and return the login response with status code 200 ok
+        // login user and return the login response with status code 200 ok
         // if authentication fails, return status code 401 unauthorized
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        } catch (AuthenticationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username or password", e);
+        }
+        final UserDetails userDetails = userService.loadUserByUsername(loginRequest.getUsername());
+        User foundUser = userService.getUserByUsername(loginRequest.getUsername());
+        final String token = jwtUtil.generateToken(loginRequest.getUsername());
+        String role = foundUser.getRole();
+        Long userId = foundUser.getUserID();
+        String usernameString = foundUser.getUsername();
+        String email = foundUser.getEmail();
+        System.out.println("User Role: " + role);
+        return ResponseEntity.ok(new LoginResponse(token, usernameString, email, role));
     }
 }
