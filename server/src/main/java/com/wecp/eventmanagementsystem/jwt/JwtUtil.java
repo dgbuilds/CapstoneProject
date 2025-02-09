@@ -26,7 +26,7 @@ public class JwtUtil {
         this.userRepository = userRepository;
     }
  
-    private final String secret = "secret";
+    private final String secret = "secretKey000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
  
     private final int expiration = 86400;
  
@@ -65,7 +65,9 @@ public class JwtUtil {
                 .setSigningKey(secret)
                 .parseClaimsJws(token)
                 .getBody();
-        return claims.getSubject();
+        System.out.println(claims);
+        //return claims.getSubject();
+        return claims.get("username", String.class);
     }
  
     public boolean isTokenExpired(String token) {

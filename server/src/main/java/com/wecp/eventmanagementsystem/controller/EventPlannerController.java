@@ -34,13 +34,14 @@ public class EventPlannerController {
     @GetMapping("/api/planner/events")
     public ResponseEntity<List<Event>> getAllEvents() {
         // get all events and return the list with status code 200 (OK)
+        
         return new ResponseEntity<>(eventService.getAllEvents(),HttpStatus.OK);
     }
 
     @PostMapping("/api/planner/resource")
     public ResponseEntity<Resource> addResource(@RequestBody Resource resource) {
         // add resource and return added resource with status code 201 (CREATED)
-        return ResponseEntity.ok(resourceService.addResource(resource));
+        return new ResponseEntity<Resource>(resourceService.addResource(resource) , HttpStatus.CREATED);
     }
 
     @GetMapping("/api/planner/resources")
