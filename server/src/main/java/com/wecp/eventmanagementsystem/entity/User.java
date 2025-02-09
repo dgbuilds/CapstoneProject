@@ -14,8 +14,7 @@ public class User {
     private String email;
     private String role;
  
-    public User() {
-    }
+    public User() {}
  
     public User(Long userID, String username, String password, String email, String role) {
         this.userID = userID;

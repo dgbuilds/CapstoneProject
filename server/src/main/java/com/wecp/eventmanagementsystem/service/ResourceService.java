@@ -35,20 +35,23 @@ public class ResourceService{
     public Allocation allocateResource(Long eventId, Long resourceId, int quantity) {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new RuntimeException("Event not found"));
-        
+       
         Resource resource = resourceRepository.findById(resourceId)
                 .orElseThrow(() -> new RuntimeException("Resource not found"));
-
+ 
         if (!resource.isAvailability()) {
             throw new RuntimeException("Resource is not available");
         }
-
+        resource.setAvailability(false);
+       
         Allocation allocation = new Allocation();
         allocation.setEvent(event);
         allocation.setResource(resource);
         allocation.setQuantity(quantity);
-
+        event.getAllocations().add(allocation);
+        event.setAllocations(event.getAllocations());
         return allocationRepository.save(allocation);
     }
+ 
 
 }

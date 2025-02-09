@@ -31,6 +31,7 @@ public class RegisterAndLoginController {
 
     @PostMapping("/api/user/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
+        System.out.println(user);
         // register user and return the registered user with status code 201 created
         return new ResponseEntity<User>(userService.registerUser(user), HttpStatus.CREATED);
     }
