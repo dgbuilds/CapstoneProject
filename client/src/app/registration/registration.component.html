@@ -1,1 +1,47 @@
-//todo: complete missing code..
+<div>
+    <h2>EVENT MANAGEMENT AND RESOURCE ALLOCATION PLATFORM</h2>
+    <p>Please enter your details here</p>
+    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+        <div>
+            <div>
+                <label for="username">Username</label>
+                <input type="text" formControlName="username" id="username" placeholder="Username">
+                <div *ngIf="itemForm.get('username')?.touched && itemForm.get('username')?.invalid">
+                    <div *ngIf="itemForm.get('username')?.errors?.['required']" >Please Enter Username.</div>
+                </div>
+            </div>
+            <div>
+                <label for="email">Email address</label>
+                <input type="text" formControlName="email" id="email" placeholder="name@example.com">
+                <div *ngIf="itemForm.get('email')?.touched && itemForm.get('email')?.invalid">
+                    <div *ngIf="itemForm.get('email')?.errors?.['required']" >Please Enter email.</div>
+                    <div *ngIf="itemForm.get('email')?.errors?.['email']"></div>
+                </div>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="text" formControlName="password" id="password" placeholder="">
+                <div *ngIf="itemForm.get('password')?.touched && itemForm.get('password')?.invalid">
+                    <div *ngIf="itemForm.get('password')?.errors?.['required']" >Please Enter password.</div>
+                    <div *ngIf="itemForm.get('password')?.errors?.['minlength']"></div>
+                </div>
+            </div>
+            <div>
+                <label for="role">Role</label>
+                <select name="role" id="role" formControlName="role">
+                    <option value="">Choose Role</option>
+                    <option value="PLANNER">PLANNER</option>
+                    <option value="CLIENT">CLIENT</option>
+                    <option value="STAFF">STAFF</option>
+                </select>
+                <div *ngIf="itemForm.get('role')?.touched && itemForm.get('role')?.invalid">
+                    <div *ngIf="itemForm.get('role')?.errors?.['required']">Select an option</div>
+                </div>
+            </div>
+            <div  *ngIf="errorMessage">{{errorMessage}}</div>
+            <button type="submit" [disabled]="!itemForm.valid">Submit</button>
+            <a routerLink="/login">Go to Login</a>
+ 
+        </div>
+    </form>
+</div>

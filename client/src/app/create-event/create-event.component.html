@@ -1,1 +1,59 @@
-//todo: complete missing code.
+<div class="create-event-container">
+    <h2>Create Event</h2>
+    <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          id="title"
+          formControlName="title"
+          class="form-control"
+          placeholder="Enter event title">
+      </div>
+ 
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          class="form-control"
+          placeholder="Enter event description"
+          rows="4"></textarea>
+      </div>
+ 
+      <div class="form-group">
+        <label for="dateTime">Date Time</label>
+        <input
+          type="datetime-local"
+          id="dateTime"
+          formControlName="dateTime"
+          class="form-control">
+      </div>
+ 
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input
+          type="text"
+          id="location"
+          formControlName="location"
+          class="form-control"
+          placeholder="Enter event location">
+      </div>
+
+      <div class="form-group">
+        <label for="status">Status</label>
+        <input
+          type="text"
+          id="status"
+          formControlName="status"
+          class="form-control"
+          placeholder="Enter event status">
+      </div>
+ 
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+ 
+      <button type="submit">Submit</button>
+    </form>
+  </div>

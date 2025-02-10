@@ -12,29 +12,29 @@ import { DashbaordComponent } from './dashbaord/dashbaord.component';
 import { CreateEventComponent } from './create-event/create-event.component';
 import { AddResourceComponent } from './add-resource/add-resource.component';
 import { ResourceAllocateComponent } from './resource-allocate/resource-allocate.component';
-import { ViewEventsComponent } from './view-events/view-events.component';
 import { BookingDetailsComponent } from './booking-details/booking-details.component';
+import { ViewEventsComponent } from './view-events/view-events.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-      RegistrationComponent,
-      DashbaordComponent,    
-      CreateEventComponent,
-      AddResourceComponent,
-      ResourceAllocateComponent,
-      ViewEventsComponent,
-      BookingDetailsComponent
+    RegistrationComponent,
+    DashbaordComponent,
+    CreateEventComponent,
+    AddResourceComponent,
+    ResourceAllocateComponent,
+    BookingDetailsComponent,
+    ViewEventsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule 
+    HttpClientModule
   ],
-  providers: [HttpService,HttpClientModule ],
+  providers: [HttpService, HttpClientModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
