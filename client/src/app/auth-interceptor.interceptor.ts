@@ -25,13 +25,14 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
       // Get the token from your authentication service
   
       const token = this.authService.getToken();
-  
+      console.log(token);
       if (request.url.includes("login") || request.url.includes("register")) {
         return next.handle(request);
       }
   
       // Clone the request and add the Authorization header with the token
       if (token) {
+        console.log("in what we want");
         request = request.clone({
           setHeaders: {
             "Content-Type": "application/json; charset=utf-8",
