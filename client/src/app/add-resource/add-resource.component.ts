@@ -11,11 +11,11 @@ import { AuthService } from '../../services/auth.service';
 })
 
 export class AddResourceComponent implements OnInit {
-    resourceForm: FormGroup;
+    itemForm: FormGroup;
     errorMessage: string = '';
     resources: any[] = [];
     constructor(private httpService: HttpService, private router: Router, private fb:FormBuilder){
-        this.resourceForm = this.fb.group({
+        this.itemForm = this.fb.group({
             name: ['', Validators.required],
             type: ['', Validators.required],
             availability: [null,Validators.required]
@@ -26,25 +26,25 @@ export class AddResourceComponent implements OnInit {
     }
  
     getResources(){
-        this.httpService.getAllResources().subscribe((res:any[])=>
+        this.httpService.GetAllResources().subscribe((res:any[])=>
         this.resources = res);
     }
  
     onRadioChange(selectedValue: string) {
         if (selectedValue === 'availability') {
-          this.resourceForm.get('availability')?.setValue(true);
+          this.itemForm.get('availability')?.setValue(true);
           document.getElementById('unavailability')?.setAttribute('disabled', 'true');
           document.getElementById('availability')?.removeAttribute('disabled');
         } else if (selectedValue === 'unavailability') {
-          this.resourceForm.get('availability')?.setValue(false);
+          this.itemForm.get('availability')?.setValue(false);
           document.getElementById('availability')?.setAttribute('disabled', 'true');
           document.getElementById('unavailability')?.removeAttribute('disabled');
         }
     }
  
     onSubmit(): void{
-        if(this.resourceForm.valid){
-            this.httpService.addResource(this.resourceForm.value).subscribe(()=>
+        if(this.itemForm.valid){
+            this.httpService.addResource(this.itemForm.value).subscribe(()=>
             this.getResources())
         }else{
             this.errorMessage = "Form is invalid";

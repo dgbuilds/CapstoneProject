@@ -20,7 +20,7 @@ export class HttpService {
     return this.http.post<any>(`${this.serverName}/api/user/register`,user);
   }
  
-  public login(user:any):Observable<any>{
+  public Login(user:any):Observable<any>{
     return this.http.post<any>(`${this.serverName}/api/user/login`,user);
   }
  
@@ -31,7 +31,7 @@ export class HttpService {
     return this.http.post<any>(`${this.serverName}/api/planner/event`,event);
   }
  
-  public getEvents():Observable<any[]>{
+  public GetAllevents():Observable<any[]>{
     return this.http.get<any[]>(this.serverName+"/api/planner/events");
   }
  
@@ -39,7 +39,7 @@ export class HttpService {
     return this.http.post<any>(this.serverName+"/api/planner/resource",resource);
   }
  
-  public getAllResources():Observable<any[]>{
+  public GetAllResources():Observable<any[]>{
     return this.http.get<any[]>(this.serverName+"/api/planner/resources");
   }
  
@@ -56,12 +56,12 @@ export class HttpService {
  
   //staff
  
-  public getEventDetails(eventId:any):Observable<any>{
+  public GetEventdetails(eventId:any):Observable<any>{
     return this.http.get<any>(`${this.serverName}//api/staff/event-details/${eventId}`)
   }
  
  
-  public updateEventSetup(eventId:any,updateEvent:any){
+  public updateEvent(eventId:any,updateEvent:any){
     return this.http.post<any>(`${this.serverName}/api/staff/update-setup/${eventId}`,updateEvent);
   }
  

@@ -1,7 +1,7 @@
 <div class="login-container">
   <h2>EVENT MANAGEMENT AND RESOURCE ALLOCATION PLATFORM</h2>
   <p>Please enter your user and password!</p>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="username">Username</label>
       <input 
@@ -22,7 +22,7 @@
         placeholder="Enter password">
     </div>
 
-    <button type="submit" [disabled]="!loginForm.valid">Login</button>
+    <button type="submit" [disabled]="!itemForm.valid">Login</button>
 
     <div routerLink="/login">Login</div>
   </form>
