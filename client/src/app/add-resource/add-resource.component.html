@@ -1,1 +1,52 @@
-//todo: complete missing codel..
+<div>
+    <h1>Manage Resource</h1>
+    <div>
+        <h2>Add Resource</h2>
+        <form [formGroup]="resourceForm" (ngSubmit)="onSubmit()">
+            <div>
+                <label for="name">Name</label>
+                <input type="text" id="name" formControlName="name" placeholder="Enter name">
+                <div *ngIf="resourceForm.get('name')?.invalid && resourceForm.get('name')?.touched">
+                    <div *ngIf="resourceForm.get('name')?.errors?.['required']">Name is required.</div>
+                </div>
+ 
+                <label for="type">Type</label>
+                <input type="text" id="type" formControlName="type" placeholder="Enter type">
+                <div *ngIf="resourceForm.get('type')?.invalid && resourceForm.get('type')?.touched">
+                    <div *ngIf="resourceForm.get('type')?.errors?.['required']">Type is required.</div>
+                </div>
+ 
+                <div>
+                    <input type="radio" id="availability" name="status" value="availability"
+                        (change)="onRadioChange('availability')">
+                    <label for="availability">Availability</label><br>
+ 
+                    <input type="radio" id="unavailability" name="status" value="unavailability"
+                        (change)="onRadioChange('unavailability')">
+                    <label for="unavailability">Unavailability</label><br>
+                </div>
+            </div>
+ 
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+ 
+ 
+    <div>
+        <h3>Resource Information</h3>
+        <table>
+            <tr>
+                <th>Sr*</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Availability</th>
+            </tr>
+            <tr *ngFor="let resource of resources">
+                <td>{{resource.resourceID}}</td>
+                <td>{{resource.name}}</td>
+                <td>{{resource.type}}</td>
+                <td>{{resource.availability}}</td>
+            </tr>
+        </table>
+    </div>
+</div>

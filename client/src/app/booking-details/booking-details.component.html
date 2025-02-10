@@ -1,1 +1,30 @@
-//todo: complete missing code.
+<div class="booking-details-container">
+  <h2>Booking Details</h2>
+ 
+  <div class="error-message" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+ 
+  <div class="event-details" *ngIf="eventDetails">
+    <h3>{{ eventDetails.title }}</h3>
+    <div class="details-section">
+      <p><strong>Description:</strong> {{ eventDetails.description }}</p>
+      <p><strong>Date & Time:</strong> {{ eventDetails.dateTime | date:'medium' }}</p>
+      <p><strong>Location:</strong> {{ eventDetails.location }}</p>
+      <p><strong>Status:</strong> {{ eventDetails.status }}</p>
+    </div>
+ 
+    <div class="resources-section" *ngIf="eventDetails.allocations?.length">
+      <h4>Allocated Resources</h4>
+      <ul>
+        <li *ngFor="let allocation of eventDetails.allocations">
+          {{ allocation.resource.name }} ({{ allocation.quantity }})
+        </li>
+      </ul>
+    </div>
+  </div>
+ 
+  <div class="no-details" *ngIf="!eventDetails && !errorMessage">
+    Loading event details...
+  </div>
+</div>
