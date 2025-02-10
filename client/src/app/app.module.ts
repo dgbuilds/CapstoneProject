@@ -42,7 +42,6 @@ import { AuthInterceptorInterceptor } from './auth-interceptor.interceptor';
       multi : true
     }
   
-  
   ],
   bootstrap: [AppComponent]
 })
