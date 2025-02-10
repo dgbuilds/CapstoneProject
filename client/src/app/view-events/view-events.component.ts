@@ -14,12 +14,12 @@ export class ViewEventsComponent implements OnInit{
   events : any[]=[];
   filteredEvents:any[]=[];
   searchId :string='';
-  updateForm:FormGroup;
+  itemForm:FormGroup;
   selectedEvent: any =null;
   successMessage: string='';
  
   constructor(private httpService:HttpService,private fb:FormBuilder){
-    this.updateForm=this.fb.group({
+    this.itemForm=this.fb.group({
       title:[''],
       description:[''],
       dateTime:[''],
@@ -29,7 +29,7 @@ export class ViewEventsComponent implements OnInit{
    
   }
   ngOnInit(): void {
-    this.httpService.getEvents().subscribe({
+    this.httpService.GetAllevents().subscribe({
       next:(data:any)=>{
         this.events=data;
         this.filteredEvents=[...this.events]
@@ -51,12 +51,12 @@ export class ViewEventsComponent implements OnInit{
  
   selectEvent(event :any){
     this.selectedEvent= {...event};
-    this.updateForm.patchValue(event);
+    this.itemForm.patchValue(event);
   }
  
   updateEvent(){
     if(!this.selectedEvent) return;
-    this.httpService.updateEventSetup(this.searchId,this.updateForm.value).subscribe({
+    this.httpService.updateEvent(this.searchId,this.itemForm.value).subscribe({
       next:()=>{
         this.successMessage= "Saved Successfully";
         this.selectedEvent=null;

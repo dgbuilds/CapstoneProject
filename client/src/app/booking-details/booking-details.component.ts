@@ -26,7 +26,7 @@ export class BookingDetailsComponent implements OnInit{
     }
   }
   loadEventDetails(eventId: string): void{
-    this.http.getEventDetails(eventId).subscribe({
+    this.http.GetEventdetails(eventId).subscribe({
       next:(details) =>{
         this.eventDetails = details;
       },

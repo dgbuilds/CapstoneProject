@@ -13,7 +13,7 @@ import { AuthService } from '../../services/auth.service';
 
 export class LoginComponent {
   
-  loginForm: FormGroup;
+  itemForm: FormGroup;
   errorMessage: string = '';
 
   constructor(
@@ -22,15 +22,15 @@ export class LoginComponent {
     private authService: AuthService,
     private router: Router
   ) {
-    this.loginForm = this.fb.group({
+    this.itemForm = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]
     });
   }
 
   onSubmit(): void {
-    if (this.loginForm.valid) {
-      this.httpService.login(this.loginForm.value).subscribe({
+    if (this.itemForm.valid) {
+      this.httpService.Login(this.itemForm.value).subscribe({
         next: (response) => {
           this.authService.saveToken(response.token);
           this.authService.setRole(response.role);

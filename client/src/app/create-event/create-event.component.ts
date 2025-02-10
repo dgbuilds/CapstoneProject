@@ -12,14 +12,14 @@ import { AuthService } from '../../services/auth.service';
 
 export class CreateEventComponent
 {
-  eventForm: FormGroup;
+  itemForm: FormGroup;
   errorMessage: String= '';
   constructor(
     private fb:FormBuilder,
     private httpService: HttpService,
     private router:Router
   ){
-    this.eventForm = this.fb.group({
+    this.itemForm = this.fb.group({
       title:['' , Validators.required],
       description:['' , Validators.required],
       dateTime:['' , Validators.required],
@@ -29,10 +29,10 @@ export class CreateEventComponent
   }
   onSubmit():void{
     console.log("create event button clicked");
-    console.log(this.eventForm.valid);
-    console.log(this.eventForm.value);
-    if(this.eventForm.valid){
-      this.httpService.createEvent(this.eventForm.value).subscribe({
+    console.log(this.itemForm.valid);
+    console.log(this.itemForm.value);
+    if(this.itemForm.valid){
+      this.httpService.createEvent(this.itemForm.value).subscribe({
         next: () =>{
         this.router.navigate(['/view-events']);
       },

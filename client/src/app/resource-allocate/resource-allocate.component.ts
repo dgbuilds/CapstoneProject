@@ -10,14 +10,14 @@ import { NgIfContext } from '@angular/common';
   styleUrls: ['./resource-allocate.component.scss']
 })
 export class ResourceAllocateComponent implements OnInit{
-    allocationForm: FormGroup;
+    itemForm: FormGroup;
     events: any[] = [];
     resources: any[] = [];
     errorMessage: string = '';
     successMessage: string = '';
    
     constructor(private httpService:HttpService, private fb:FormBuilder){
-        this.allocationForm = this.fb.group({
+        this.itemForm = this.fb.group({
             eventId: ['', Validators.required],
             resourceId: ['', Validators.required],
             quantity: ['', [Validators.required, Validators.min(1)]]
@@ -29,7 +29,7 @@ export class ResourceAllocateComponent implements OnInit{
     }
  
     loadEvents(): void{
-        this.httpService.getEvents().subscribe({
+        this.httpService.GetAllevents().subscribe({
             next: (events) => {
                 this.events = events;
             },
@@ -42,7 +42,7 @@ export class ResourceAllocateComponent implements OnInit{
     }
  
     loadResources(): void{
-        this.httpService.getAllResources().subscribe({
+        this.httpService.GetAllResources().subscribe({
             next: (resources) => {
                 this.resources = resources;
             },
@@ -53,11 +53,11 @@ export class ResourceAllocateComponent implements OnInit{
     }
  
     onSubmit(): void {
-      if(this.allocationForm.valid){
-          const {eventID, resourceID, quantity} = this.allocationForm.value;
+      if(this.itemForm.valid){
+          const {eventID, resourceID, quantity} = this.itemForm.value;
           this.httpService.allocateResources(eventID, resourceID, quantity).subscribe({
               next: () => {
-                  this.allocationForm.reset();
+                  this.itemForm.reset();
                   this.loadResources();
                   this.successMessage = 'Resource saved successfully';
               },

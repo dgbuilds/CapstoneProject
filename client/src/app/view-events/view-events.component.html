@@ -8,7 +8,7 @@
          <button (input)="loadEvents()">Search</button>
    
     <div *ngIf="selectedEvent" >
-        <form [formGroup]="updateForm" (ngSubmit)="updateEvent()">
+        <form [formGroup]="itemForm" (ngSubmit)="updateEvent()">
             <label for="title">Title</label>
             <input type="text" formControlName="title" id="title">
  
