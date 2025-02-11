@@ -60,8 +60,9 @@ export class ResourceAllocateComponent implements OnInit{
         console.log(this.itemForm.valid);
         console.log(this.itemForm.value);
       if(this.itemForm.valid){
-          const {eventID, resourceID, quantity} = this.itemForm.value;
-          this.httpService.allocateResources(eventID, resourceID, quantity).subscribe({
+          //const {eventId, resourceId, quantity} = this.itemForm.value;
+          
+          this.httpService.allocateResources(this.itemForm.value.eventId, this.itemForm.value.resourceId, this.itemForm.value).subscribe({
               next: () => {
                   this.itemForm.reset();
                   this.loadResources();

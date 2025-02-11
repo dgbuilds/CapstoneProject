@@ -18,7 +18,6 @@ public class Allocation {
     private Event event;
  
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "resource_id", nullable = false)
     private Resource resource;
  
