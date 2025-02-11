@@ -36,6 +36,9 @@ public class EventService {
         event.setStatus(eventDetails.getStatus());
         return eventRepository.save(event);
     }
+
+
+    
  
 
 }

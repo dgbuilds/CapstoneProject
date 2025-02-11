@@ -1,57 +1,57 @@
 <div class="booking-details-container">
   <h2>Manage Events</h2>
- 
+
   <div class="error-message" *ngIf="errorMessage">
     {{ errorMessage }}
   </div>
 
-  <label >Event ID</label><br>
+  <label>Event ID</label><br>
   <input type="text" [(ngModel)]="eventId" placeholder="Serach by ID">
   <button (click)="loadEvents()">Search</button>
- 
+
   <div *ngIf="filteredEvents.length === 0">
     <p>No events found.</p>
   </div>
 
   <div *ngIf="filteredEvents.length > 0">
     <h3>Booking Information</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Sr#</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Date Time</th>
-                    <th>Location</th>
-                    <th>Status</th>
-                    <th>Allocation</th>
-                </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let fevents of filteredEvents">
-                  <td>{{fevents.eventID}}</td>
-                  <td>{{fevents.title}}</td>
-                  <td>{{fevents.description}}</td>
-                  <td>{{fevents.dateTime}}</td>
-                  <td>{{fevents.location}}</td>
-                  <td>{{fevents.status}}</td>
-                  <td>
-                      <ul>
-                        <li *ngFor="let allocation of fevents.allocations">
-                          {{ allocation.quantity }}
-                        <div>
-                          <p>Resource:</p>
-                          <p>Name:{{allocation.resource.name}}</p>
-                          <p>Type:{{allocation.resource.type}}</p>
-                          <p>Availability:{{allocation.resource.availability}}</p>
-                        </div>
-                        </li>
-                      </ul>
-                  </td>
-              </tr>
-            </tbody>
-          </table>
+    <table>
+      <thead>
+        <tr>
+          <th>Sr#</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Date Time</th>
+          <th>Location</th>
+          <th>Status</th>
+          <th>Allocation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let fevents of filteredEvents">
+          <td>{{fevents.eventID}}</td>
+          <td>{{fevents.title}}</td>
+          <td>{{fevents.description}}</td>
+          <td>{{fevents.dateTime}}</td>
+          <td>{{fevents.location}}</td>
+          <td>{{fevents.status}}</td>
+          <td>
+            <ul>
+              <li *ngFor="let allocation of fevents.allocations">
+                {{ allocation.quantity }}
+                <div>
+                  <p>Resource:</p>
+                  <p>Name:{{allocation.resource.name}}</p>
+                  <p>Type:{{allocation.resource.type}}</p>
+                  <p>Availability:{{allocation.resource.availability}}</p>
+                </div>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  
- 
+
+
 </div>
