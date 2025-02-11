@@ -14,25 +14,36 @@ import { ActionReducer } from '@ngrx/store';
 export class BookingDetailsComponent implements OnInit{
   eventDetails: any = null;
   errorMessage: string ='';
+  eventId : any = null;
+  events : any[]=[];
+  filteredEvents:any[]=[];
+
   constructor(
     private route : ActivatedRoute,
     private http:HttpService
   ){}
+  
   ngOnInit(): void {
-    const eventId = this.route.snapshot.paramMap.get('eventId');
-    if(eventId){
-      this.loadEventDetails(eventId);
-    }
-  }
-  loadEventDetails(eventId: string): void{
-    this.http.GetEventdetails(eventId).subscribe({
-      next:(details) =>{
-        this.eventDetails = details;
-      },
-      error: () => {
-        this.errorMessage = 'Somethings gone wrong, Faied to load event details.'
+    this.http.GetAllevents().subscribe({
+      next:(data:any)=>{
+        this.events=data;
+        this.filteredEvents=[...this.events]
+        console.log(this.events);
       }
-    });
+    })
+    this.loadEvents()
   }
- 
+
+  loadEvents(){
+    if(this.eventId){
+    this.filteredEvents= this.events.filter((e)=>{
+     return e.eventID.toString().includes(this.eventId);
+    })
+    }else{
+     this.filteredEvents=[...this.events];
+    }
+   }
+
+
+  
 }

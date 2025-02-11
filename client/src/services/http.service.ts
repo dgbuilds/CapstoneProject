@@ -7,64 +7,83 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
-
 export class HttpService {
-  public serverName=environment.apiUrl;
+  public serverName = environment.apiUrl;
  
-  constructor(private http:HttpClient){}
+  constructor(private http: HttpClient, private authService: AuthService) {}
  
-  //Register and login
-  public registerUser(user:any):Observable<any>{
-    console.log(this.serverName);
-    console.log(user);
-    return this.http.post<any>(`${this.serverName}/api/user/register`,user);
+  private getHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.authService.getToken()}`
+    });
   }
  
-  public Login(user:any):Observable<any>{
-    return this.http.post<any>(`${this.serverName}/api/user/login`,user);
+  // Register and login
+  public registerUser(user: any): Observable<any> {
+    return this.http.post<any>(`${this.serverName}/api/user/register`, user, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
   }
  
- 
-  //Event
- 
-  public createEvent(event:any):Observable<any>{
-    return this.http.post<any>(`${this.serverName}/api/planner/event`,event);
+  public Login(user: any): Observable<any> {
+    return this.http.post<any>(`${this.serverName}/api/user/login`, user, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
   }
  
-  public GetAllevents():Observable<any[]>{
-    return this.http.get<any[]>(this.serverName+"/api/planner/events");
+  // Event
+  public createEvent(event: any): Observable<any> {
+    return this.http.post<any>(`${this.serverName}/api/planner/event`, event, {
+      headers: this.getHeaders()
+    });
   }
  
-  public addResource(resource:any):Observable<any>{
-    return this.http.post<any>(this.serverName+"/api/planner/resource",resource);
+  public GetAllevents(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.serverName}/api/planner/events`, {
+      headers: this.getHeaders()
+    });
   }
  
-  public GetAllResources():Observable<any[]>{
-    return this.http.get<any[]>(this.serverName+"/api/planner/resources");
+  public addResource(resource: any): Observable<any> {
+    return this.http.post<any>(`${this.serverName}/api/planner/resource`, resource, {
+      headers: this.getHeaders()
+    });
   }
  
-  public allocateResources(eventId:any,resourceId:any,allocation:any):Observable<any>{
-    return this.http.post<any>(`${this.serverName}/api/planner/allocate-resources?eventID=${eventId}?resourceID=${resourceId}`,allocation);
+  public GetAllResources(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.serverName}/api/planner/resources`, {
+      headers: this.getHeaders()
+    });
   }
  
-  //client
- 
-  public getBookingDetails(eventId:any):Observable<any>{
-    return this.http.get<any>(`${this.serverName}/api/client/booking-details/${eventId}`);
+  public allocateResources(eventId: any, resourceId: any, allocation: any): Observable<any> {
+    return this.http.post<any>(`${this.serverName}/api/planner/allocate-resources?eventId=${eventId}&resourceId=${resourceId}`, allocation, {
+      headers: this.getHeaders()
+    });
   }
  
- 
-  //staff
- 
-  public GetEventdetails(eventId:any):Observable<any>{
-    return this.http.get<any>(`${this.serverName}/api/staff/event-details/${eventId}`)
+  // Client
+  public getBookingDetails(eventId: any): Observable<any> {
+    return this.http.get<any>(`${this.serverName}/api/client/booking-details/${eventId}`, {
+      headers: this.getHeaders()
+    });
   }
  
- 
-  public updateEvent(eventId:any,updateEvent:any){
-    return this.http.post<any>(`${this.serverName}/api/staff/update-setup/${eventId}`,updateEvent);
+  // Staff
+  public GetEventdetails(eventId: any): Observable<any> {
+    return this.http.get<any>(`${this.serverName}/api/staff/event-details/${eventId}`, {
+      headers: this.getHeaders()
+    });
   }
  
+  public updateEvent(eventId: any, updateEvent: any): Observable<any> {
+    return this.http.put<any>(`${this.serverName}/api/staff/update-setup/${eventId}`, updateEvent, {
+      headers: this.getHeaders()
+    });
+  }
 }
- 
- 

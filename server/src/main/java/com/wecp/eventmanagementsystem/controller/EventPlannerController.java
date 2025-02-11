@@ -48,7 +48,6 @@ public class EventPlannerController {
     public ResponseEntity<List<Resource>> getAllResources() {
         // get all resources and return the list with status code 200 (OK)
         return ResponseEntity.ok(resourceService.getAllResources());
-
     }
 
     @PostMapping("/api/planner/allocate-resources")

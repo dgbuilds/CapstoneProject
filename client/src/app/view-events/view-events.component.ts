@@ -20,11 +20,11 @@ export class ViewEventsComponent implements OnInit{
  
   constructor(private httpService:HttpService,private fb:FormBuilder){
     this.itemForm=this.fb.group({
-      title:[''],
-      description:[''],
-      dateTime:[''],
-      location:[''],
-      status:['']
+      title:['' , Validators.required],
+      description:['' , Validators.required],
+      dateTime:['' , Validators.required],
+      location:['' , Validators.required],
+      status:['' , Validators.required]
     })
    
   }
@@ -42,7 +42,7 @@ export class ViewEventsComponent implements OnInit{
   loadEvents(){
    if(this.searchId){
    this.filteredEvents= this.events.filter((e)=>{
-    return e.eventId.toString().includes(this.searchId);
+    return e.eventID.toString().includes(this.searchId);
    })
    }else{
     this.filteredEvents=[...this.events];

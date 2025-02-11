@@ -4,8 +4,8 @@
     <div>
         <h3>View & Update Events</h3>
          <label >Event ID</label><br>
-         <input type="text" [(ngModel)]="searchId" placeholder="Serach by ID" >
-         <button (input)="loadEvents()">Search</button>
+         <input type="text" [(ngModel)]="searchId" placeholder="Serach by ID">
+         <button (click)="loadEvents()">Search</button>
    
     <div *ngIf="selectedEvent" >
         <form [formGroup]="itemForm" (ngSubmit)="updateEvent()">
@@ -49,7 +49,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let fevents of filteredEvents">
-                <td>{{fevents.eventId}}</td>
+                <td>{{fevents.eventID}}</td>
                 <td>{{fevents.title}}</td>
                 <td>{{fevents.description}}</td>
                 <td>{{fevents.dateTime}}</td>
