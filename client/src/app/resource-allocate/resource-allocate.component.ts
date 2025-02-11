@@ -23,9 +23,12 @@ export class ResourceAllocateComponent implements OnInit{
             quantity: ['', [Validators.required, Validators.min(1)]]
         });
     }
+
     ngOnInit(): void {
         this.loadEvents();
         this.loadResources();
+        // console.log(this.events);
+        // console.log(this.resources);
     }
  
     loadEvents(): void{
@@ -44,6 +47,7 @@ export class ResourceAllocateComponent implements OnInit{
     loadResources(): void{
         this.httpService.GetAllResources().subscribe({
             next: (resources) => {
+                console.log(resources);
                 this.resources = resources;
             },
             error: () => {
@@ -53,6 +57,8 @@ export class ResourceAllocateComponent implements OnInit{
     }
  
     onSubmit(): void {
+        console.log(this.itemForm.valid);
+        console.log(this.itemForm.value);
       if(this.itemForm.valid){
           const {eventID, resourceID, quantity} = this.itemForm.value;
           this.httpService.allocateResources(eventID, resourceID, quantity).subscribe({

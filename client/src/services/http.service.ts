@@ -57,7 +57,7 @@ export class HttpService {
   //staff
  
   public GetEventdetails(eventId:any):Observable<any>{
-    return this.http.get<any>(`${this.serverName}//api/staff/event-details/${eventId}`)
+    return this.http.get<any>(`${this.serverName}/api/staff/event-details/${eventId}`)
   }
  
  
