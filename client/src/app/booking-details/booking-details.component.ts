@@ -5,7 +5,6 @@ import { HttpService } from '../../services/http.service';
 import { AuthService } from '../../services/auth.service';
 import { ActionReducer } from '@ngrx/store';
  
- 
 @Component({
   selector: 'app-booking-details',
   templateUrl: './booking-details.component.html',

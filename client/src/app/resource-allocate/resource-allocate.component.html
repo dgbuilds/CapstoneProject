@@ -7,7 +7,7 @@
         <label for="eventId">Event</label>
         <select id="eventId" formControlName="eventId">
             <option value="">Choose Event</option>
-            <option *ngFor="let event of events" value="event.eventId">{{event.title}}</option>
+            <option *ngFor="let event of events" [value]="event.eventid">{{event.title}}</option>
         </select>
         </div>
  
@@ -15,7 +15,7 @@
             <label for="resourceId">Resource</label>
             <select id="resourceId" formControlName="resourceId">
                 <option value="">Choose Resource</option>
-                <option *ngFor="let resource of resources" value="resource.resourceId">{{resource.Name}}</option>
+                <option *ngFor="let resource of resources" [value]="resource.resourceid">{{resource.name}}</option>
             </select>
         </div>
  
@@ -30,7 +30,7 @@
         <div *ngIf="successMessage">{{successMessage}}</div>
         <div *ngIf="errorMessage">{{errorMessage}}</div>
  
-        <button type="submit" [disabled]="!itemForm.valid">Submit</button>
+        <button type="submit">Submit</button>
     </form>
 </div>
 </div>
