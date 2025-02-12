@@ -9,7 +9,7 @@ import com.wecp.eventmanagementsystem.repository.ResourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
+
 import java.util.List;
 
 @Service

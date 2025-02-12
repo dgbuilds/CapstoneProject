@@ -20,10 +20,10 @@ export class ViewEventsComponent implements OnInit{
  
   constructor(private httpService:HttpService,private fb:FormBuilder){
     this.itemForm=this.fb.group({
-      title:['' , Validators.required],
-      description:['' , Validators.required],
-      dateTime:['' , Validators.required],
-      location:['' , Validators.required],
+      title:[{value:'',disabled:true}, Validators.required],
+      description:[{value:'',disabled:true}, Validators.required],
+      dateTime:[{value:'',disabled:true} , Validators.required],
+      location:[{value:'',disabled:true}, Validators.required],
       status:['' , Validators.required]
     })
    

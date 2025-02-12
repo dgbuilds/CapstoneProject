@@ -3,6 +3,7 @@ package com.wecp.eventmanagementsystem.entity;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "events") // do not change table name
@@ -23,7 +24,19 @@ public class Event {
     
     @OneToMany(mappedBy = "event" ,cascade=CascadeType.ALL)
     private List<Allocation> allocations;
+
+    @OneToMany(mappedBy = "event",cascade = CascadeType.ALL)
+    private Set<Booking> bookings;
+
     
+    public Set<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(Set<Booking> bookings) {
+        this.bookings = bookings;
+    }
+
     public Long getEventID() {
         return eventID;
     }
