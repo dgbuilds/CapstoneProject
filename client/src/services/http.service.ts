@@ -79,6 +79,12 @@ export class HttpService {
       headers: this.getHeaders()
     });
   }
+
+  public getAllBookings() : Observable<any[]> {
+    return this.http.get<any[]>(`${this.serverName}/api/bookings` , {
+      headers: this.getHeaders()
+    });
+  }
  
   // Staff
   public GetEventdetails(eventId: any): Observable<any> {

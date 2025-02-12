@@ -97,125 +97,248 @@
 
 
 
-<nav class="navbar">
-    <a href="/" class="brand">
-      <fa-icon [icon]="faCalendar"></fa-icon>
-      <span>EventMaster</span>
-    </a>
-  
-    <div class="nav-actions">
-      <button class="view-requests-btn" (click)="toggleViewRequests()">
-        <fa-icon [icon]="faClipboard"></fa-icon>
-        View Requests
+
+<!-- Planner Navbar -->
+<nav class="navbar" *ngIf="role === 'PLANNER'">
+  <a href="/" class="brand">
+    <fa-icon [icon]="faCalendar"></fa-icon>
+    <span>EventMaster</span>
+  </a>
+
+  <div class="nav-actions">
+    <button class="view-requests-btn" (click)="toggleViewRequests()">
+      <fa-icon [icon]="faClipboard"></fa-icon>
+      View Requests
+    </button>
+
+    <div class="dropdown">
+      <button class="menu-btn" (click)="toggleDropdown()">
+        <fa-icon [icon]="faEllipsisV"></fa-icon>
       </button>
-  
-      <div class="dropdown">
-        <button class="menu-btn" (click)="toggleDropdown()">
-          <fa-icon [icon]="faEllipsisV"></fa-icon>
-        </button>
-        <div class="dropdown-menu" [class.show]="isDropdownOpen">
-          <a (click)="navigate('/add-resource')">
-            <fa-icon [icon]="faPlus"></fa-icon> Add Resource
-          </a>
-          <a (click)="navigate('/allocate-resource')">
-            <fa-icon [icon]="faShare"></fa-icon> Allocate Resource
-          </a>
-          <a (click)="navigate('/create-event')">
-            <fa-icon [icon]="faCalendarPlus"></fa-icon> Create Event
-          </a>
-          <a (click)="navigate('/update-event')">
-            <fa-icon [icon]="faEdit"></fa-icon> Update Event
-          </a>
-          <div class="dropdown-divider"></div>
-          <a (click)="logout()">
-            <fa-icon [icon]="faSignOutAlt"></fa-icon> Logout
-          </a>
-        </div>
+      <div class="dropdown-menu" [class.show]="isDropdownOpen">
+        <a (click)="navigate('/add-resource')">
+          <fa-icon [icon]="faPlus"></fa-icon> Add Resource
+        </a>
+        <a (click)="navigate('/allocate-resource')">
+          <fa-icon [icon]="faShare"></fa-icon> Allocate Resource
+        </a>
+        <a (click)="navigate('/create-event')">
+          <fa-icon [icon]="faCalendarPlus"></fa-icon> Create Event
+        </a>
+        <a (click)="navigate('/update-event')">
+          <fa-icon [icon]="faEdit"></fa-icon> Update Event
+        </a>
+        <div class="dropdown-divider"></div>
+        <a (click)="logout()">
+          <fa-icon [icon]="faSignOutAlt"></fa-icon> Logout
+        </a>
       </div>
     </div>
-  </nav>
-  
-  <div class="dashboard-container">
-    <ng-container *ngIf="role === 'PLANNER'">
-      <!-- Show requests view when viewingRequests is true -->
-      <div *ngIf="viewingRequests" class="requests-container">
-        <h2>Event Requests</h2>
-        <table class="requests-table">
+  </div>
+</nav>
+
+<!-- Client Navbar -->
+<nav class="navbar" *ngIf="role === 'CLIENT'">
+  <a href="/" class="brand">
+    <fa-icon [icon]="faCalendar"></fa-icon>
+    <span>EventMaster</span>
+  </a>
+  <div class="nav-actions">
+    <button class="logout-btn" (click)="logout()">
+      <fa-icon [icon]="faSignOutAlt"></fa-icon>
+      Logout
+    </button>
+  </div>
+</nav>
+
+<!-- Staff Navbar -->
+<nav class="navbar" *ngIf="role === 'STAFF'">
+  <a href="/" class="brand">
+    <fa-icon [icon]="faCalendar"></fa-icon>
+    <span>EventMaster</span>
+  </a>
+  <div class="nav-actions">
+    <button class="view-events-btn" (click)="viewEvents()">
+      <fa-icon [icon]="faCalendar"></fa-icon>
+      View Events
+    </button>
+    <button class="logout-btn" (click)="logout()">
+      <fa-icon [icon]="faSignOutAlt"></fa-icon>
+      Logout
+    </button>
+  </div>
+</nav>
+
+<!-- Main Content Area -->
+<div class="dashboard-container">
+  <!-- Planner Content -->
+  <ng-container *ngIf="role === 'PLANNER'">
+    <div *ngIf="viewingRequests" class="requests-container">
+      <h2>Event Requests</h2>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Request ID</th>
+            <th>Event Title</th>
+            <th>Client Name</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let request of requests">
+            <td>{{request.id}}</td>
+            <td>{{request.eventTitle}}</td>
+            <td>{{request.clientName}}</td>
+            <td>
+              <span class="status-badge" [class]="request.status.toLowerCase()">
+                {{request.status}}
+              </span>
+            </td>
+            <td class="actions">
+              <button class="action-btn approve" (click)="handleRequest(request.id, 'approve')" 
+                      [disabled]="request.status !== 'PENDING'">
+                <fa-icon [icon]="faCheck"></fa-icon>
+              </button>
+              <button class="action-btn reject" (click)="handleRequest(request.id, 'reject')"
+                      [disabled]="request.status !== 'PENDING'">
+                <fa-icon [icon]="faTimes"></fa-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="!viewingRequests" class="dashboard-content">
+      <div class="section">
+        <h2>Events</h2>
+        <table class="data-table">
           <thead>
             <tr>
-              <th>Request ID</th>
-              <th>Event Title</th>
-              <th>Client Name</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Date & Time</th>
+              <th>Location</th>
               <th>Status</th>
-              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let request of requests">
-              <td>{{request.id}}</td>
-              <td>{{request.eventTitle}}</td>
-              <td>{{request.clientName}}</td>
-              <td>{{request.status}}</td>
+            <tr *ngFor="let event of events">
+              <td>{{event.title}}</td>
+              <td>{{event.description}}</td>
+              <td>{{event.dateTime | date:'medium'}}</td>
+              <td>{{event.location}}</td>
               <td>
-                <button class="action-btn approve" (click)="handleRequest(request.id, 'approve')">
-                  <fa-icon [icon]="faCheck"></fa-icon>
-                </button>
-                <button class="action-btn reject" (click)="handleRequest(request.id, 'reject')">
-                  <fa-icon [icon]="faTimes"></fa-icon>
-                </button>
+                <span class="status-badge" [class]="event.status.toLowerCase()">
+                  {{event.status}}
+                </span>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-  
-      <!-- Show original dashboard content when viewingRequests is false -->
-      <div *ngIf="!viewingRequests" class="dashboard-content">
-        <!-- Your existing tables code here -->
-        <!-- <ng-container *ngIf="role === 'STAFF'"> -->
-            <div>
-                <button routerLink="/view-events">Update Status of Event</button>
-            </div>
-            <h3>Booking Information</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Sr.No</th>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Date Time</th>
-                        <th>Location</th>
-                        <th>Status</th>
-                        <th>Allocation</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let bookingDetails of bookingEvents">
-                        <td>{{bookingDetails.eventID}}</td>
-                        <td>{{bookingDetails.title}}</td>
-                        <td>{{bookingDetails.description}}</td>
-                        <td>{{bookingDetails.dateTime}}</td>
-                        <td>{{bookingDetails.location}}</td>
-                        <td>{{bookingDetails.status}}</td>
-                        <td>
-                            <ul>
-                                <li *ngFor="let allocation of bookingDetails.allocations">
-                                    {{ allocation.quantity }}
-                                    <div>
-                                        <p>Resource:</p>
-                                        <p>Name:{{allocation.resource.name}}</p>
-                                        <p>Type:{{allocation.resource.type}}</p>
-                                        <p>Availability:{{allocation.resource.availability ? 'Available' : 'Not Available'}}
-                                        </p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        <!-- </ng-container> -->
+
+      <div class="section">
+        <h2>Resources</h2>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Availability</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let resource of resources">
+              <td>{{resource.name}}</td>
+              <td>{{resource.type}}</td>
+              <td>
+                <span class="status-badge" [class]="resource.availability ? 'available' : 'unavailable'">
+                  {{resource.availability ? 'Available' : 'Not Available'}}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </ng-container>
-  </div>
-  
+
+      <div class="section">
+        <h2>Clients</h2>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let client of clients">
+              <td>{{client.username}}</td>
+              <td>{{client.email}}</td>
+              <td>
+                <span class="status-badge active">Active</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Client Content -->
+  <ng-container *ngIf="role === 'CLIENT'">
+    <div class="booking-details section">
+      <h2>Your Booking Details</h2>
+      <div class="booking-cards-container">
+        <div class="booking-card" *ngFor="let booking of bookingDetails">
+          <div class="booking-header">
+            <h3>Booking #{{booking.bookingId}}</h3>
+            <span class="status-badge" [class]="booking.status.toLowerCase()">
+              {{booking.status}}
+            </span>
+          </div>
+          <div class="booking-info">
+            <p><strong>Event:</strong> {{booking.eventTitle}}</p>
+            <p><strong>Date:</strong> {{booking.dateTime | date:'medium'}}</p>
+            <p><strong>Location:</strong> {{booking.location}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Staff Content -->
+  <ng-container *ngIf="role === 'STAFF'">
+    <div class="staff-dashboard">
+      <div class="section">
+        <h2>Booking Details</h2>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Booking ID</th>
+              <th>Event</th>
+              <th>Client</th>
+              <th>Date & Time</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let booking of bookingDetails">
+              <td>{{booking.bookingId}}</td>
+              <td>{{booking.eventTitle}}</td>
+              <td>{{booking.clientName}}</td>
+              <td>{{booking.dateTime | date:'medium'}}</td>
+              <td>
+                <span class="status-badge" [class]="booking.status.toLowerCase()">
+                  {{booking.status}}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-container>
+</div>
