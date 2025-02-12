@@ -15,6 +15,9 @@ import { ResourceAllocateComponent } from './resource-allocate/resource-allocate
 import { BookingDetailsComponent } from './booking-details/booking-details.component';
 import { ViewEventsComponent } from './view-events/view-events.component';
 import { AuthInterceptorInterceptor } from './auth-interceptor.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -26,14 +29,17 @@ import { AuthInterceptorInterceptor } from './auth-interceptor.interceptor';
     AddResourceComponent,
     ResourceAllocateComponent,
     BookingDetailsComponent,
-    ViewEventsComponent
+    ViewEventsComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    FontAwesomeModule
   ],
   providers: [HttpService, HttpClientModule , 
     {

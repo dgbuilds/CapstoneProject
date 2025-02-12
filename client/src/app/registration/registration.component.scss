@@ -1,0 +1,219 @@
+// Add this navbar styling at the top of your existing SCSS file
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: #764ba2;
+      font-weight: 700;
+      font-size: 1.5rem;
+  
+      fa-icon {
+        font-size: 1.8rem;
+      }
+  
+      &:hover {
+        transform: scale(1.05);
+        transition: transform 0.3s ease;
+      }
+    }
+  
+    .nav-buttons {
+      display: flex;
+      gap: 1rem;
+  
+      .sign-in, .sign-up {
+        padding: 0.5rem 1.5rem;
+        border-radius: 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+  
+      .sign-in {
+        background: transparent;
+        border: 2px solid #764ba2;
+        color: #764ba2;
+  
+        &:hover {
+          background: #764ba2;
+          color: white;
+        }
+      }
+  
+      .sign-up {
+        background: #764ba2;
+        border: none;
+        color: white;
+  
+        &:hover {
+          background: #667eea;
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+  
+  // Update the registration-container top padding to account for navbar
+  .registration-container {
+    padding-top: 5rem; // Add this line to existing styles
+  }
+  
+  // Add responsive styles for navbar
+  @media (max-width: 768px) {
+    .navbar {
+      padding: 1rem;
+  
+      .nav-buttons {
+        gap: 0.5rem;
+  
+        .sign-in, .sign-up {
+          padding: 0.5rem 1rem;
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }  
+
+
+.registration-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  
+    .registration-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 500px;
+      animation: fadeIn 0.6s ease-out;
+  
+      h2 {
+        color: #764ba2;
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: 0.5rem;
+      }
+  
+      p {
+        color: #666;
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+  
+      .form-group {
+        margin-bottom: 1.5rem;
+  
+        label {
+          display: block;
+          color: #4a4a4a;
+          margin-bottom: 0.5rem;
+          font-weight: 500;
+        }
+  
+        input, select {
+          width: 100%;
+          padding: 0.8rem;
+          border: 2px solid #e1e1e1;
+          border-radius: 10px;
+          font-size: 1rem;
+          transition: all 0.3s ease;
+  
+          &:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
+          }
+        }
+  
+        .error-message {
+          color: #ff4757;
+          font-size: 0.85rem;
+          margin-top: 0.5rem;
+        }
+      }
+  
+      .submit-button {
+        width: 100%;
+        padding: 1rem;
+        background: #764ba2;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+  
+        &:hover:not(:disabled) {
+          background: #667eea;
+          transform: translateY(-2px);
+        }
+  
+        &:disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
+        }
+      }
+  
+      .login-link {
+        display: block;
+        text-align: center;
+        margin-top: 1.5rem;
+        color: #764ba2;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+  
+        &:hover {
+          color: #667eea;
+        }
+      }
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .registration-container {
+      padding: 1rem;
+  
+      .registration-card {
+        padding: 1.5rem;
+  
+        h2 {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+  

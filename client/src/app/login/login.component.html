@@ -1,29 +1,48 @@
+<nav class="navbar">
+  <a href="/" class="brand">
+    <fa-icon [icon]="faCalendar"></fa-icon>
+    <span>EventMaster</span>
+  </a>
+
+  <div class="nav-buttons">
+    <button class="sign-up" routerLink="/registration">Sign Up</button>
+  </div>
+</nav>
+
 <div class="login-container">
-  <h2>EVENT MANAGEMENT AND RESOURCE ALLOCATION PLATFORM</h2>
-  <p>Please enter your user and password!</p>
-  <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input 
-        type="text" 
-        id="username" 
-        formControlName="username" 
-        class="form-control"
-        placeholder="Enter username">
-    </div>
+  <div class="login-card">
+    <h2>Login</h2>
+    <!-- <p>Please enter your credentials to login</p> -->
+    
+    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input 
+          type="text" 
+          id="username" 
+          formControlName="username" 
+          placeholder="Enter your username">
+        <div class="error-message" *ngIf="itemForm.get('username')?.touched && itemForm.get('username')?.invalid">
+          <div *ngIf="itemForm.get('username')?.errors?.['required']">Username is required</div>
+        </div>
+      </div>
 
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input 
-        type="password" 
-        id="password" 
-        formControlName="password" 
-        class="form-control"
-        placeholder="Enter password">
-    </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          formControlName="password" 
+          placeholder="Enter your password">
+        <div class="error-message" *ngIf="itemForm.get('password')?.touched && itemForm.get('password')?.invalid">
+          <div *ngIf="itemForm.get('password')?.errors?.['required']">Password is required</div>
+        </div>
+      </div>
 
-    <button type="submit" [disabled]="!itemForm.valid">Login</button>
+      <div class="error-message" *ngIf="errorMessage">{{errorMessage}}</div>
 
-    <div routerLink="/login">Login</div>
-  </form>
+      <button type="submit" class="submit-button" [disabled]="!itemForm.valid">Login</button>
+      <a routerLink="/registration" class="register-link">Don't have an account? Sign up</a>
+    </form>
+  </div>
 </div>

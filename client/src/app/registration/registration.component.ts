@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
+import { faCalendar } from '@fortawesome/free-solid-svg-icons';
  
  
 @Component({
@@ -11,6 +12,7 @@ import { HttpService } from '../../services/http.service';
 })
 
 export class RegistrationComponent {
+faCalendar = faCalendar;
 itemForm : FormGroup;
 errorMessage : string ='';
 constructor(private fb:FormBuilder,private httpService: HttpService,private router:Router){
@@ -18,7 +20,7 @@ constructor(private fb:FormBuilder,private httpService: HttpService,private rout
     username: ['',[Validators.required]],
     email :['',[Validators.required,Validators.email]],
     password:['',[Validators.required]],
-    role:[null,[Validators.required]]
+    role:['',[Validators.required]]
   })
 }
  

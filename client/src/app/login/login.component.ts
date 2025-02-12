@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
 import { AuthService } from '../../services/auth.service';
+import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -15,6 +16,7 @@ export class LoginComponent {
   
   itemForm: FormGroup;
   errorMessage: string = '';
+  faCalendar = faCalendar;
 
   constructor(
     private fb: FormBuilder,

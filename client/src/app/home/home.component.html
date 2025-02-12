@@ -1,0 +1,39 @@
+<nav class="navbar">
+    <a href="/" class="brand">
+      <fa-icon [icon]="faCalendar"></fa-icon>
+      <span>EventMaster</span>
+    </a>
+  
+    <div class="nav-buttons">
+      <button class="sign-in" routerLink="/login">Sign In</button>
+      <button class="sign-up" routerLink="/registration">Sign Up</button>
+    </div>
+</nav>
+
+<div class="hero-section" @fadeIn>
+    <div class="hero-content">
+      <h1 data-aos="fade-down">Welcome to EventMaster</h1>
+      <p data-aos="fade-up" data-aos-delay="300">Create, manage, and experience unforgettable events</p>
+    </div>
+  </div>
+  
+  <section class="featured-events">
+    <h2 data-aos="fade-up">Featured Events</h2>
+    <div class="events-grid">
+      <div *ngFor="let event of featuredEvents" class="event-card" data-aos="fade-up" data-aos-delay="200">
+        <img [src]="event.image" [alt]="event.title">
+        <div class="event-content">
+          <h3>{{event.title}}</h3>
+          <p>{{event.description}}</p>
+          <button class="event-button">Learn More</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="cta-section" data-aos="fade-up">
+    <h2>Ready to Create Your Event?</h2>
+    <p>Join thousands of event organizers who trust our platform</p>
+    <button class="cta-button" routerLink="/registration">Get Started</button>
+  </section>
+  

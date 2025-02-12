@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
     <h2>EVENT MANAGEMENT AND RESOURCE ALLOCATION PLATFORM</h2>
     <p>Please enter your details here</p>
     <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
@@ -44,4 +44,75 @@
  
         </div>
     </form>
-</div>
+</div> -->
+
+
+
+
+
+<nav class="navbar">
+    <a href="/" class="brand">
+      <fa-icon [icon]="faCalendar"></fa-icon>
+      <span>EventMaster</span>
+    </a>
+  
+    <div class="nav-buttons">
+      <button class="sign-in" routerLink="/login">Sign In</button>
+      <!-- <button class="sign-up" routerLink="/registration">Sign Up</button> -->
+    </div>
+  </nav>
+  
+  <!-- Rest of your existing registration-container code -->  
+<div class="registration-container">
+    <div class="registration-card">
+      <h2>Register</h2>
+      <!-- <p>Please enter your details here</p> -->
+      
+      <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" formControlName="username" id="username" placeholder="Enter your username">
+          <div class="error-message" *ngIf="itemForm.get('username')?.touched && itemForm.get('username')?.invalid">
+            <div *ngIf="itemForm.get('username')?.errors?.['required']">Please enter username</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" formControlName="email" id="email" placeholder="name@example.com">
+          <div class="error-message" *ngIf="itemForm.get('email')?.touched && itemForm.get('email')?.invalid">
+            <div *ngIf="itemForm.get('email')?.errors?.['required']">Please enter email</div>
+            <div *ngIf="itemForm.get('email')?.errors?.['email']">Please enter a valid email</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" formControlName="password" id="password" placeholder="Enter your password">
+          <div class="error-message" *ngIf="itemForm.get('password')?.touched && itemForm.get('password')?.invalid">
+            <div *ngIf="itemForm.get('password')?.errors?.['required']">Please enter password</div>
+            <div *ngIf="itemForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="role">Role</label>
+          <select name="role" id="role" formControlName="role">
+            <option value="" selected>Choose Role</option>
+            <option value="PLANNER">PLANNER</option>
+            <option value="CLIENT">CLIENT</option>
+            <option value="STAFF">STAFF</option>
+          </select>
+          <div class="error-message" *ngIf="itemForm.get('role')?.touched && itemForm.get('role')?.invalid">
+            <div *ngIf="itemForm.get('role')?.errors?.['required']">Please select a role</div>
+          </div>
+        </div>
+  
+        <div class="error-message" *ngIf="errorMessage">{{errorMessage}}</div>
+  
+        <button type="submit" class="submit-button" [disabled]="!itemForm.valid">Create Account</button>
+        <a routerLink="/login" class="login-link">Already have an account? Sign in</a>
+      </form>
+    </div>
+  </div>
+  
