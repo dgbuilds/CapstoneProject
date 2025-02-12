@@ -1,3 +1,96 @@
-<div class="row text-center">
-<h1 class="text-capitalize">Event Management System</h1>
+<div>
+    <h1>Event Management System</h1>
+    <ng-container *ngIf="role === 'PLANNER'">
+        <div>
+            <h2>Events</h2>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Date & Time</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                </tr>
+                <tr *ngFor="let event of events">
+                    <td>{{ event.title }}</td>
+                    <td>{{ event.description }}</td>
+                    <td>{{ event.dateTime }}</td>
+                    <td>{{ event.location }}</td>
+                    <td>{{ event.status }}</td>
+                </tr>
+            </table>
+
+
+            <h2>Resources</h2>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Availability</th>
+                </tr>
+                <tr *ngFor="let resource of resources">
+                    <td>{{ resource.name }}</td>
+                    <td>{{ resource.type }}</td>
+                    <td>{{ resource.availability ? 'Available' : 'Not Available' }}</td>
+                </tr>
+            </table>
+
+            <h2>Clients</h2>
+            <table>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                </tr>
+                <tr *ngFor="let client of clients">
+                    <td>{{ client.username }}</td>
+                    <td>{{ client.email }}</td>
+                </tr>
+            </table>
+        </div>
+    </ng-container>
+
+
+    <ng-container *ngIf="role === 'STAFF'">
+        <div>
+            <button routerLink="/view-events">Update Status of Event</button>
+        </div>
+        <h3>Booking Information</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Sr.No</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Date Time</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                    <th>Allocation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let bookingDetails of bookingEvents">
+                    <td>{{bookingDetails.eventID}}</td>
+                    <td>{{bookingDetails.title}}</td>
+                    <td>{{bookingDetails.description}}</td>
+                    <td>{{bookingDetails.dateTime}}</td>
+                    <td>{{bookingDetails.location}}</td>
+                    <td>{{bookingDetails.status}}</td>
+                    <td>
+                        <ul>
+                            <li *ngFor="let allocation of bookingDetails.allocations">
+                                {{ allocation.quantity }}
+                                <div>
+                                    <p>Resource:</p>
+                                    <p>Name:{{allocation.resource.name}}</p>
+                                    <p>Type:{{allocation.resource.type}}</p>
+                                    <p>Availability:{{allocation.resource.availability ? 'Available' : 'Not Available'}}
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </ng-container>
 </div>

@@ -5,6 +5,9 @@ import com.wecp.eventmanagementsystem.dto.LoginResponse;
 import com.wecp.eventmanagementsystem.entity.User;
 import com.wecp.eventmanagementsystem.jwt.JwtUtil;
 import com.wecp.eventmanagementsystem.service.UserService;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +15,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,5 +59,10 @@ public class RegisterAndLoginController {
         String email = foundUser.getEmail();
         System.out.println("User Role: " + role);
         return ResponseEntity.ok(new LoginResponse(token, usernameString, email, role));
+    }
+
+    @GetMapping("/api/user/clients")
+    public ResponseEntity<List<User>> getClients(){
+        return new ResponseEntity<List<User>>(userService.getClients(),HttpStatus.OK);
     }
 }

@@ -35,6 +35,12 @@ export class HttpService {
       })
     });
   }
+
+  public getClients():Observable<any[]>{
+    return this.http.get<any[]>(`${this.serverName}/api/user/clients`,{
+      headers:this.getHeaders()
+    });
+  }
  
   // Event
   public createEvent(event: any): Observable<any> {
