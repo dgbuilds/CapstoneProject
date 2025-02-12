@@ -17,13 +17,13 @@ public class StaffController {
     @GetMapping("/api/staff/event-details/{eventId}")
     public ResponseEntity<Event> getEventDetails(@PathVariable Long eventId) {
         // get the event details by eventId and return the event with status code 200 ok
-        return ResponseEntity.ok(eventService.getEventById(eventId));
+        return new ResponseEntity<Event>(eventService.getEventById(eventId),HttpStatus.OK);
 
     }
 
     @PutMapping("/api/staff/update-setup/{eventId}")
     public ResponseEntity<Event> updateEventSetup(@PathVariable Long eventId, @RequestBody Event updatedEvent) {
         // update the event setup and return the updated event with status code 200 ok
-        return ResponseEntity.ok(eventService.updateEvent(eventId, updatedEvent));
+        return new ResponseEntity<Event>(eventService.updateEvent(eventId, updatedEvent),HttpStatus.OK);
     }
 }

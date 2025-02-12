@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,11 +49,9 @@ public class RegisterAndLoginController {
         } catch (AuthenticationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username or password", e);
         }
-        final UserDetails userDetails = userService.loadUserByUsername(loginRequest.getUsername());
         User foundUser = userService.getUserByUsername(loginRequest.getUsername());
         final String token = jwtUtil.generateToken(loginRequest.getUsername());
         String role = foundUser.getRole();
-        Long userId = foundUser.getUserID();
         String usernameString = foundUser.getUsername();
         String email = foundUser.getEmail();
         System.out.println("User Role: " + role);

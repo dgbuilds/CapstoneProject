@@ -7,7 +7,6 @@ import com.wecp.eventmanagementsystem.entity.Resource;
 import com.wecp.eventmanagementsystem.service.EventService;
 import com.wecp.eventmanagementsystem.service.ResourceService;
 
-import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
