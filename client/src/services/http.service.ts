@@ -92,4 +92,12 @@ export class HttpService {
       headers: this.getHeaders()
     });
   }
+
+  public getRequests() : any {
+    return null;
+  }
+
+  public handleRequest(requestId : any , action : any) : any {
+    return null;
+  }
 }

@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
     <h1>Event Management System</h1>
     <ng-container *ngIf="role === 'PLANNER'">
         <div>
@@ -93,4 +93,129 @@
             </tbody>
         </table>
     </ng-container>
-</div>
+</div> -->
+
+
+
+<nav class="navbar">
+    <a href="/" class="brand">
+      <fa-icon [icon]="faCalendar"></fa-icon>
+      <span>EventMaster</span>
+    </a>
+  
+    <div class="nav-actions">
+      <button class="view-requests-btn" (click)="toggleViewRequests()">
+        <fa-icon [icon]="faClipboard"></fa-icon>
+        View Requests
+      </button>
+  
+      <div class="dropdown">
+        <button class="menu-btn" (click)="toggleDropdown()">
+          <fa-icon [icon]="faEllipsisV"></fa-icon>
+        </button>
+        <div class="dropdown-menu" [class.show]="isDropdownOpen">
+          <a (click)="navigate('/add-resource')">
+            <fa-icon [icon]="faPlus"></fa-icon> Add Resource
+          </a>
+          <a (click)="navigate('/allocate-resource')">
+            <fa-icon [icon]="faShare"></fa-icon> Allocate Resource
+          </a>
+          <a (click)="navigate('/create-event')">
+            <fa-icon [icon]="faCalendarPlus"></fa-icon> Create Event
+          </a>
+          <a (click)="navigate('/update-event')">
+            <fa-icon [icon]="faEdit"></fa-icon> Update Event
+          </a>
+          <div class="dropdown-divider"></div>
+          <a (click)="logout()">
+            <fa-icon [icon]="faSignOutAlt"></fa-icon> Logout
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="dashboard-container">
+    <ng-container *ngIf="role === 'PLANNER'">
+      <!-- Show requests view when viewingRequests is true -->
+      <div *ngIf="viewingRequests" class="requests-container">
+        <h2>Event Requests</h2>
+        <table class="requests-table">
+          <thead>
+            <tr>
+              <th>Request ID</th>
+              <th>Event Title</th>
+              <th>Client Name</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let request of requests">
+              <td>{{request.id}}</td>
+              <td>{{request.eventTitle}}</td>
+              <td>{{request.clientName}}</td>
+              <td>{{request.status}}</td>
+              <td>
+                <button class="action-btn approve" (click)="handleRequest(request.id, 'approve')">
+                  <fa-icon [icon]="faCheck"></fa-icon>
+                </button>
+                <button class="action-btn reject" (click)="handleRequest(request.id, 'reject')">
+                  <fa-icon [icon]="faTimes"></fa-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+      <!-- Show original dashboard content when viewingRequests is false -->
+      <div *ngIf="!viewingRequests" class="dashboard-content">
+        <!-- Your existing tables code here -->
+        <!-- <ng-container *ngIf="role === 'STAFF'"> -->
+            <div>
+                <button routerLink="/view-events">Update Status of Event</button>
+            </div>
+            <h3>Booking Information</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sr.No</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Date Time</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Allocation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let bookingDetails of bookingEvents">
+                        <td>{{bookingDetails.eventID}}</td>
+                        <td>{{bookingDetails.title}}</td>
+                        <td>{{bookingDetails.description}}</td>
+                        <td>{{bookingDetails.dateTime}}</td>
+                        <td>{{bookingDetails.location}}</td>
+                        <td>{{bookingDetails.status}}</td>
+                        <td>
+                            <ul>
+                                <li *ngFor="let allocation of bookingDetails.allocations">
+                                    {{ allocation.quantity }}
+                                    <div>
+                                        <p>Resource:</p>
+                                        <p>Name:{{allocation.resource.name}}</p>
+                                        <p>Type:{{allocation.resource.type}}</p>
+                                        <p>Availability:{{allocation.resource.availability ? 'Available' : 'Not Available'}}
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        <!-- </ng-container> -->
+      </div>
+    </ng-container>
+  </div>
+  
