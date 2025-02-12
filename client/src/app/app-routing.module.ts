@@ -13,6 +13,8 @@ import { ResourceAllocateComponent } from './resource-allocate/resource-allocate
 import { ViewEventsComponent } from './view-events/view-events.component';
 import { BookingDetailsComponent } from './booking-details/booking-details.component';
 import { HomeComponent } from './home/home.component';
+import { UpdateEventComponent } from './update-event/update-event.component';
+import { BookingEventComponent } from './booking-event/booking-event.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -22,9 +24,11 @@ const routes: Routes = [
   { path: 'add-resource', component: AddResourceComponent }, 
   { path: 'resource-allocate', component: ResourceAllocateComponent },  
   { path: 'view-events', component: ViewEventsComponent },  
-  { path: 'booking-details', component: BookingDetailsComponent },   
+  { path: 'booking-details', component: BookingDetailsComponent },
+  { path: 'booking-event', component: BookingEventComponent },  
+  {path:'update-event',component:UpdateEventComponent},
   // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: '**', component : HomeComponent },
+  { path: '**', component : DashbaordComponent },
 ];
 
 @NgModule({

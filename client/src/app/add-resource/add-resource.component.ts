@@ -45,7 +45,7 @@ export class AddResourceComponent implements OnInit {
     onSubmit(): void{
         if(this.itemForm.valid){
             this.httpService.addResource(this.itemForm.value).subscribe(()=>
-            this.getResources())
+            this.router.navigate(['/dashboard']))
         }else{
             this.errorMessage = "Form is invalid";
         }

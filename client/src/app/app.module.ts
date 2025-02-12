@@ -18,6 +18,8 @@ import { AuthInterceptorInterceptor } from './auth-interceptor.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HomeComponent } from './home/home.component';
+import { UpdateEventComponent } from './update-event/update-event.component';
+import { BookingEventComponent } from './booking-event/booking-event.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { HomeComponent } from './home/home.component';
     ResourceAllocateComponent,
     BookingDetailsComponent,
     ViewEventsComponent,
-    HomeComponent
+    HomeComponent,
+    UpdateEventComponent,
+    BookingEventComponent
   ],
   imports: [
     BrowserModule,

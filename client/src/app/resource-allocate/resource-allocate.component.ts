@@ -16,7 +16,7 @@ export class ResourceAllocateComponent implements OnInit{
     errorMessage: string = '';
     successMessage: string = '';
    
-    constructor(private httpService:HttpService, private fb:FormBuilder){
+    constructor(private httpService:HttpService, private fb:FormBuilder, private router:Router){
         this.itemForm = this.fb.group({
             eventId: ['', Validators.required],
             resourceId: ['', Validators.required],
@@ -67,6 +67,9 @@ export class ResourceAllocateComponent implements OnInit{
                   this.itemForm.reset();
                   this.loadResources();
                   this.successMessage = 'Resource saved successfully';
+                  setTimeout(()=> this.successMessage = '',3000);
+                  this.router.navigate(["/dashboard"])
+                  
               },
               error: () => {
                   this.errorMessage = 'Failed to allocate resource'
