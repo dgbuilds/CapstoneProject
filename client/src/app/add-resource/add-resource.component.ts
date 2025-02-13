@@ -141,4 +141,8 @@ export class AddResourceComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+
+  navigateToDashboard() : void {
+    this.router.navigate(['/dashboard']);
+  }
 }
