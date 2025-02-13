@@ -39,16 +39,16 @@ interface Client {
   email: string;
 }
 
-interface Request {
-  id: number;
-  eventTitle: string;
-  clientName: string;
-  status: string;
-}
+// interface Request {
+//   id: number;
+//   eventTitle: string;
+//   clientName: string;
+//   status: string;
+// }
 
 interface BookingDetail {
-  bookingId: number;
-  eventTitle: string;
+  bookingID: number;
+  title: string;
   description : string;
   expectedCount : number;
   dateTime: string;
@@ -57,11 +57,11 @@ interface BookingDetail {
 }
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-dashbaord',
+  templateUrl: './dashbaord.component.html',
+  styleUrls: ['./dashbaord.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashbaordComponent implements OnInit {
   // Icons
   faCalendar = faCalendar;
   faEllipsisV = faEllipsisV;
@@ -83,7 +83,7 @@ export class DashboardComponent implements OnInit {
   viewingEvents = false;
   
   // Data arrays
-  requests: Request[] = [];
+  requests: BookingDetail[] = [];
   events: Event[] = [];
   resources: Resource[] = [];
   clients: Client[] = [];
@@ -137,6 +137,10 @@ export class DashboardComponent implements OnInit {
       next : (res) => this.bookingDetails = res,
       error : (error) => console.error('Error loading booking details:', error)
     })
+    this.httpService.GetAllevents().subscribe({
+      next: (res) => this.events = res,
+      error: (error) => console.error('Error loading events:', error)
+    });
   }
 
   loadStaffData(): void {
@@ -147,8 +151,8 @@ export class DashboardComponent implements OnInit {
   }
 
   loadRequests(): void {
-    this.httpService.getRequests().subscribe({
-      next: (res: Request[]) => this.requests = res,
+    this.httpService.getRequests("pending").subscribe({
+      next: (res: BookingDetail[]) => this.requests = res,
       error: (error: any) => console.error('Error loading requests:', error)
     });
   }
@@ -157,7 +161,6 @@ export class DashboardComponent implements OnInit {
     this.httpService.handleRequest(requestId, action).subscribe({
       next: () => {
         this.loadRequests();
-        // Show success message
       },
       error: (error: any) => console.error(`Error ${action}ing request:`, error)
     });
