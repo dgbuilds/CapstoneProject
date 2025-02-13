@@ -1,4 +1,24 @@
 <div class="create-event-container">
+
+   <nav class="navbar">
+      <button type="button" class="brand" routerLink="/dashboard">
+        <fa-icon [icon]="faCalendar"></fa-icon>
+        <span>EventMaster</span>
+      </button>
+    
+      <div class="nav-actions">
+        <button class="nav-btn" routerLink="/dashboard">
+          <fa-icon [icon]="faDashboard"></fa-icon>
+          Dashboard
+        </button>
+        <button class="nav-logout" (click)="logout()">
+          <fa-icon [icon]="faSignOutAlt"></fa-icon>
+          Logout
+        </button>
+      </div>
+    </nav>
+    
+
    <h2>Create Event</h2>
    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
 
