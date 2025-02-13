@@ -115,4 +115,8 @@ export class BookingDetailsComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+
+  navigateToDashboard() : void {
+    this.router.navigate(['/dashboard']);
+  }
 }

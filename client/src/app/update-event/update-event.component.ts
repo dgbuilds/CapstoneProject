@@ -186,6 +186,10 @@ export class UpdateEventComponent implements OnInit {
     const milliseconds = String(date.getMilliseconds()).padStart(3, '0');
     return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}`;
   }
+
+  navigateToDashboard() : void {
+    this.router.navigate(['/dashboard']);
+  }
   
 }
 

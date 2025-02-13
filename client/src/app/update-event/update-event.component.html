@@ -61,8 +61,10 @@
    <!-- Navigation Bar -->
    <nav class="navbar">
      <div class="nav-brand">
-       <fa-icon [icon]="faCalendar"></fa-icon>
-       <span>EventMaster</span>
+      <button type="button" class="brand" (click)="navigateToDashboard()">
+        <fa-icon [icon]="faCalendar"></fa-icon>
+        <span>EventMaster</span>
+    </button>
      </div>
      <div class="nav-actions">
        <button class="nav-btn" routerLink="/dashboard">

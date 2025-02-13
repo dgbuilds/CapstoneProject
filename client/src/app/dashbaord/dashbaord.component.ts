@@ -88,7 +88,7 @@ export class DashbaordComponent implements OnInit {
   resources: Resource[] = [];
   clients: Client[] = [];
   bookingEvents: any[] = [];
-  bookingDetails: BookingDetail[] = [];
+  bookingDetails: any[] = [];
 
   constructor(
     private authService: AuthService,
@@ -145,7 +145,7 @@ export class DashbaordComponent implements OnInit {
   }
 
   loadStaffData(): void {
-    this.httpService.getAllBookings().subscribe({
+    this.httpService.GetAllevents().subscribe({
       next: (res) => this.bookingDetails = res,
       error: (error) => console.error('Error loading staff events:', error)
     })
@@ -179,7 +179,8 @@ export class DashbaordComponent implements OnInit {
   }
 
   viewEvents(): void {
-    this.viewingEvents = !this.viewingEvents;
+    //this.viewingEvents = !this.viewingEvents;
+    this.router.navigate(['/view-events']);
   }
 
   navigate(route: string): void {

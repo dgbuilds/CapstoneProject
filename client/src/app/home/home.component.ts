@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import * as AOS from 'aos';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -38,6 +39,10 @@ export class HomeComponent implements OnInit {
     }
   ];
 
+  constructor(private router : Router) {
+
+  }
+
   ngOnInit() {
     AOS.init({
       duration: 1000,
@@ -50,5 +55,9 @@ export class HomeComponent implements OnInit {
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  navigateToRegistration() {
+    this.router.navigate(['/registration']);
   }
 }

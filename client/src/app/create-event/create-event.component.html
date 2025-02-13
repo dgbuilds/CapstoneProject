@@ -62,8 +62,10 @@
   <div class="page-wrapper">
     <nav class="navbar">
       <div class="nav-brand" routerLink="/dashboard">
-        <fa-icon [icon]="faCalendar" class="pulse-icon"></fa-icon>
-        <span>EventMaster</span>
+        <button type="button" class="brand" (click)="navigateToDashboard()">
+          <fa-icon [icon]="faCalendar"></fa-icon>
+          <span>EventMaster</span>
+      </button>
       </div>
       <div class="nav-actions">
         <!-- <button class="nav-btn" routerLink="/dashboard">

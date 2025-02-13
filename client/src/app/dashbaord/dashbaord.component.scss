@@ -355,6 +355,11 @@ $border-color: #e1e1e1;
     color: $success-color;
   }
 
+  &.complete {
+    background: rgba($success-color, 0.1);
+    color: $success-color;
+  }
+
   &.rejected {
     background: rgba($danger-color, 0.1);
     color: $danger-color;

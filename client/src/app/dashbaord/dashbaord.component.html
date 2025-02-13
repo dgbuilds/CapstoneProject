@@ -60,12 +60,12 @@
   <div class="nav-actions">
     <button class="view-events-btn" (click)="viewEvents()">
       <fa-icon [icon]="faCalendar"></fa-icon>
-      View Events
+      Update
     </button>
-    <button class="view-events-btn" (click)="navigate('/view-events')">
+    <!-- <button class="view-events-btn" (click)="navigate('/view-events')">
       <fa-icon [icon]="faCalendar"></fa-icon>
       Update Event
-    </button>
+    </button> -->
     <button class="logout-btn" (click)="logout()">
       <fa-icon [icon]="faSignOutAlt"></fa-icon>
       Logout
@@ -250,7 +250,7 @@
         <table class="data-table">
           <thead>
             <tr>
-              <th>Booking ID</th>
+              <th>Event ID</th>
               <th>Event</th>
               <th>Date & Time</th>
               <th>Status</th>
@@ -258,7 +258,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let booking of bookingDetails">
-              <td>{{booking.bookingID}}</td>
+              <td>{{booking.eventID}}</td>
               <td>{{booking.title}}</td>
               <td>{{booking.dateTime | date:'medium'}}</td>
               <td>

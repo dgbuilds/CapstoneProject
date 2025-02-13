@@ -93,4 +93,8 @@ export class CreateEventComponent implements OnInit {
       });
     }
   }
+
+  navigateToDashboard() : void {
+    this.router.navigate(['/dashboard']);
+  }
 }

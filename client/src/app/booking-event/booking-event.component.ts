@@ -48,5 +48,9 @@ export class BookingEventComponent implements OnInit
     }
   }
 
+  navigateToDashboard() : void {
+    this.router.navigate(['/dashboard']);
+  }
+
 }
 
