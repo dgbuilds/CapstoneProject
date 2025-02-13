@@ -132,6 +132,7 @@ export class DashbaordComponent implements OnInit {
     });
   }
 
+  
   loadClientData(): void {
     this.httpService.getAllBookings().subscribe({
       next : (res) => this.bookingDetails = res,
