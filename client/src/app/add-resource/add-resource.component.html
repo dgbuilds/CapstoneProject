@@ -54,10 +54,10 @@
 
 <!-- Add this at the top of your add-resource.component.html -->
 <nav class="navbar">
-    <a href="/" class="brand">
-      <fa-icon [icon]="faCalendar"></fa-icon>
-      <span>EventMaster</span>
-    </a>
+      <button type="button" class="brand" (click)="navigateToDashboard()">
+        <fa-icon [icon]="faCalendar"></fa-icon>
+        <span>EventMaster</span>
+      </button>
   
     <div class="nav-actions">
       <button class="logout-btn" (click)="logout()">
@@ -66,7 +66,7 @@
       </button>
     </div>
   </nav>
-  
+   
 
 <div class="main-container">
     <div class="content-wrapper">
