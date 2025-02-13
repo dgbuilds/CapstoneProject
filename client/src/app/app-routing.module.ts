@@ -25,7 +25,7 @@ const routes: Routes = [
   { path: 'resource-allocate', component: ResourceAllocateComponent },  
   { path: 'view-events', component: ViewEventsComponent },  
   { path: 'booking-details', component: BookingDetailsComponent },
-  { path: 'booking-event', component: BookingEventComponent },  
+  { path: 'booking-event/:id', component: BookingEventComponent },  
   {path:'update-event',component:UpdateEventComponent},
   // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', component : HomeComponent },

@@ -17,14 +17,14 @@ import {
   faBuilding
 } from '@fortawesome/free-solid-svg-icons';
 
-interface Event {
-  id: number;
-  title: string;
-  description: string;
-  dateTime: string;
-  location: string;
-  status: string;
-}
+// interface Event {
+//   id: number;
+//   title: string;
+//   description: string;
+//   dateTime: string;
+//   location: string;
+//   status: string;
+// }
 
 interface Resource {
   id: number;
@@ -84,7 +84,7 @@ export class DashbaordComponent implements OnInit {
   
   // Data arrays
   requests: BookingDetail[] = [];
-  events: Event[] = [];
+  events: any[] = [];
   resources: Resource[] = [];
   clients: Client[] = [];
   bookingEvents: any[] = [];
@@ -199,5 +199,9 @@ export class DashbaordComponent implements OnInit {
 
   formatDate(date: string): string {
     return new Date(date).toLocaleString();
+  }
+
+  booking(id:any){
+    this.router.navigate([`/booking-event/${id}`]);
   }
 }

@@ -1,6 +1,9 @@
 package com.wecp.eventmanagementsystem.entity;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -26,6 +29,7 @@ public class Event {
     private List<Allocation> allocations;
 
     @OneToMany(mappedBy = "event",cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Booking> bookings;
 
     

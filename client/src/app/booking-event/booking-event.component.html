@@ -1,6 +1,7 @@
 <div class="create-event-container">
    <h2>Create Event</h2>
    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+
       <div class="form-group">
          <label for="title">Title</label>
          <input type="text" id="title" formControlName="title" class="form-control" placeholder="Enter event title" />
@@ -25,9 +26,8 @@
 
       <div class="form-group">
          <label for="expectedCount">Expected Count</label>
-         <input type="number" id="expectedCount" formControlName="expectedCount" class="form-control"
-            placeholder="Enter expected count" />
-      </div>
+         <input type="number" id="expectedCount" formControlName="expectedCount" class="form-control" placeholder="Enter expected count" />
+       </div>
 
       <div class="form-group">
          <label for="status">Status</label>

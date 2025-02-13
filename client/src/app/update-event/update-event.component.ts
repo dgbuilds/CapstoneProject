@@ -118,7 +118,7 @@ export class UpdateEventComponent implements OnInit {
       description: ['', [Validators.required, Validators.minLength(10)]],
       dateTime: ['', Validators.required],
       location: ['', Validators.required],
-      status: ['', Validators.required]
+      status: ['Pending', Validators.required]
     });
   }
 
@@ -156,7 +156,12 @@ export class UpdateEventComponent implements OnInit {
     this.eventId = eventId;
     this.httpService.GetEventdetails(eventId).subscribe({
       next: (event) => {
-        this.itemForm.patchValue(event);
+        console.log(event);
+        const formattedDateTime = this.formatDateTimeWithoutOffset(event.dateTime);
+        console.log(formattedDateTime);
+        const updatedEvent = { ...event , dateTime : formattedDateTime}
+        console.log(updatedEvent);
+        this.itemForm.patchValue(updatedEvent);
       },
       error: () => {
         // Handle error
@@ -168,5 +173,20 @@ export class UpdateEventComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+
+
+  formatDateTimeWithoutOffset(dateTime: string): string {
+    const date = new Date(dateTime);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    const milliseconds = String(date.getMilliseconds()).padStart(3, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}`;
+  }
+  
 }
+
 

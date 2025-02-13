@@ -32,7 +32,12 @@ public class BookingService {
     }
 
     public void deleteBooking(Long bookingId){
+        System.out.println(bookingId);
         bookingRepository.deleteById(bookingId);
+    }
+
+    public Booking updateBooking(Long bookingId, Booking booking) {
+        return bookingRepository.save(booking);
     }
     
 }

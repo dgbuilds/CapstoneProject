@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
 
 @Component({
@@ -8,12 +8,15 @@ import { HttpService } from '../../services/http.service';
   templateUrl: './booking-event.component.html',
   styleUrls: ['./booking-event.component.scss']
 })
-export class BookingEventComponent
+export class BookingEventComponent implements OnInit
 {
   itemForm: FormGroup;
   errorMessage: String= '';
+  id:string|null ='';
+  event:any
   constructor(
     private fb:FormBuilder,
+    private route:ActivatedRoute,
     private httpService: HttpService,
     private router:Router
   ){
@@ -22,15 +25,20 @@ export class BookingEventComponent
       description:['' , Validators.required],
       dateTime:['' , Validators.required],
       location:['' , Validators.required],
-      expectedCount:[0,Validators.required],
+      expectedCount:[null,Validators.required],
       status:[{value:"Pending", disabled:true} , Validators.required],
     });
+  }
+  ngOnInit(): void {
+    this.id = this.route.snapshot.paramMap.get('id');
+    console.log(this.id);
+    this.httpService.GetEventdetails(this.id).subscribe((res)=>this.event = res);
   }
   onSubmit():void{
     console.log(this.itemForm.value)
     if(this.itemForm.valid){
       this.itemForm.get('status')?.enable()
-      this.httpService.createBooking(this.itemForm.value).subscribe({
+      this.httpService.createBooking({...this.itemForm.value,event:this.event}).subscribe({
         next: () =>{
         this.router.navigate(['/dashboard']);
       },

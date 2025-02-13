@@ -107,12 +107,14 @@ export class HttpService {
   }
 
   public handleRequest(bookingId: any, action: any): Observable<any> {
-    return this.http.put<any>(`${this.serverName}/api/booking/update/${bookingId}`, action, {
+    console.log(action);
+    return this.http.put<any>(`${this.serverName}/api/booking/${bookingId}`, action, {
       headers: this.getHeaders()
     });
   }
 
   public createBooking(value: any): Observable<any> {
+    console.log(value);
     return this.http.post<any>(`${this.serverName}/api/bookings`, value, {
       headers: this.getHeaders()
     });

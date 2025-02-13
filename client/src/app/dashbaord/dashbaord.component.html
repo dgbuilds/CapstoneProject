@@ -98,12 +98,10 @@
               </span>
             </td>
             <td class="actions">
-              <button class="action-btn approve" (click)="handleRequest(request.bookingID, 'approve')"
-                [disabled]="request.status !== 'PENDING'">
+              <button class="action-btn approve" (click)="handleRequest(request.bookingID, 'approve')">
                 <fa-icon [icon]="faCheck"></fa-icon>
               </button>
-              <button class="action-btn reject" (click)="handleRequest(request.bookingID, 'reject')"
-                [disabled]="request.status !== 'PENDING'">
+              <button class="action-btn reject" (click)="handleRequest(request.bookingID, 'reject')">
                 <fa-icon [icon]="faTimes"></fa-icon>
               </button>
             </td>
@@ -199,7 +197,7 @@
         <div class="booking-card" *ngFor="let booking of bookingDetails">
           <div class="booking-header">
             <h3>Booking #{{booking.bookingID}}</h3>
-            <span class="status-badge" [class]="booking.status.toLowerCase()">
+            <span class="status-badge" [class]="booking.status">
               {{booking.status}}
             </span>
           </div>
@@ -234,7 +232,7 @@
               <td>{{event.dateTime | date:'medium'}}</td>
               <td>{{event.location}}</td>
               <td>
-                <button (click)="navigate('/booking-event')">Book</button>
+                <button (click)="booking(event.eventID)">Book</button>
               </td>
             </tr>
           </tbody>
