@@ -1,4 +1,4 @@
-<div class="create-event-container">
+<!-- <div class="create-event-container">
     <h2>Create Event</h2>
     <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
@@ -56,4 +56,98 @@
  
       <button type="submit">Submit</button>
     </form>
+  </div> -->
+
+
+  <div class="page-wrapper">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="nav-brand">
+        <fa-icon [icon]="faCalendar"></fa-icon>
+        <span>EventMaster</span>
+      </div>
+      <button class="nav-logout" (click)="logout()">
+        <fa-icon [icon]="faSignOutAlt"></fa-icon>
+        Logout
+      </button>
+    </nav>
+  
+    <!-- Main Content -->
+    <div class="content-container">
+      <div class="form-card">
+        <div class="card-header">
+          <h1>Create New Event</h1>
+          <p>Fill in the event details below</p>
+        </div>
+  
+        <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+          <!-- Title Input -->
+          <div class="form-field">
+            <label>
+              <fa-icon [icon]="faTag"></fa-icon>
+              Event Title
+            </label>
+            <input 
+              type="text" 
+              formControlName="title" 
+              placeholder="Enter event title"
+              [class.error]="itemForm.get('title')?.invalid && itemForm.get('title')?.touched">
+          </div>
+  
+          <!-- Description Input -->
+          <div class="form-field">
+            <label>
+              <fa-icon [icon]="faFileAlt"></fa-icon>
+              Description
+            </label>
+            <textarea 
+              formControlName="description" 
+              placeholder="Enter event description"
+              rows="4"
+              [class.error]="itemForm.get('description')?.invalid && itemForm.get('description')?.touched">
+            </textarea>
+          </div>
+  
+          <!-- Date and Location Row -->
+          <div class="form-row">
+            <div class="form-field">
+              <label>
+                <fa-icon [icon]="faClock"></fa-icon>
+                Date & Time
+              </label>
+              <input 
+                type="datetime-local" 
+                formControlName="dateTime"
+                [class.error]="itemForm.get('dateTime')?.invalid && itemForm.get('dateTime')?.touched">
+            </div>
+  
+            <div class="form-field">
+              <label>
+                <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
+                Location
+              </label>
+              <input 
+                type="text" 
+                formControlName="location" 
+                placeholder="Enter location"
+                [class.error]="itemForm.get('location')?.invalid && itemForm.get('location')?.touched">
+            </div>
+          </div>
+  
+          <!-- Submit Button -->
+          <button type="submit" [disabled]="!itemForm.valid || isSubmitting">
+            <fa-icon [icon]="faSave"></fa-icon>
+            Create Event
+            <div class="spinner" *ngIf="isSubmitting"></div>
+          </button>
+  
+          <!-- Error Message -->
+          <div class="error-message" *ngIf="errorMessage">
+            <fa-icon [icon]="faExclamationCircle"></fa-icon>
+            {{ errorMessage }}
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
+  

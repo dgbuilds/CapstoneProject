@@ -53,18 +53,21 @@
 // }
  
  
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
-import { AuthService } from '../../services/auth.service';
 import { 
+  faBox, 
+  faTag, 
   faExclamationCircle, 
   faCheckCircle, 
   faTimesCircle, 
-  faPlus 
+  faPlus,
+  faCalendar,
+  faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-add-resource',
@@ -73,20 +76,23 @@ import {
 })
 export class AddResourceComponent implements OnInit {
   // Icons
+  faBox = faBox;
+  faTag = faTag;
   faExclamationCircle = faExclamationCircle;
   faCheckCircle = faCheckCircle;
   faTimesCircle = faTimesCircle;
   faPlus = faPlus;
-
+  faCalendar = faCalendar;
+  faSignOutAlt = faSignOutAlt;
   itemForm: FormGroup;
-  errorMessage: string = '';
   resources: any[] = [];
   isSubmitting = false;
 
   constructor(
-    private httpService: HttpService, 
-    private router: Router, 
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private httpService: HttpService,
+    private router: Router,
+    private authService: AuthService
   ) {
     this.itemForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
@@ -96,46 +102,43 @@ export class AddResourceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getResources();
+    this.loadResources();
   }
 
-  getResources() {
+  loadResources(): void {
     this.httpService.GetAllResources().subscribe({
-      next: (res: any[]) => {
+      next: (res) => {
         this.resources = res;
       },
       error: (error) => {
-        console.error('Error fetching resources:', error);
+        console.error('Error loading resources:', error);
       }
     });
-  }
-
-  onRadioChange(selectedValue: string) {
-    const availabilityControl = this.itemForm.get('availability');
-    if (selectedValue === 'availability') {
-      availabilityControl?.setValue(true);
-    } else if (selectedValue === 'unavailability') {
-      availabilityControl?.setValue(false);
-    }
   }
 
   onSubmit(): void {
     if (this.itemForm.valid && !this.isSubmitting) {
       this.isSubmitting = true;
+      
       this.httpService.addResource(this.itemForm.value).subscribe({
         next: () => {
-          this.getResources();
+          this.loadResources();
           this.itemForm.reset();
           this.isSubmitting = false;
-          // You can add a success toast notification here
         },
         error: (error) => {
           console.error('Error adding resource:', error);
-          this.errorMessage = "Failed to add resource";
           this.isSubmitting = false;
-          // You can add an error toast notification here
+        },
+        complete: () => {
+          this.isSubmitting = false;
         }
       });
     }
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }
