@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
+import { faCalendar, faSignOutAlt, faDashboard } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-booking-event',
@@ -13,7 +14,10 @@ export class BookingEventComponent implements OnInit
   itemForm: FormGroup;
   errorMessage: String= '';
   id:string|null ='';
-  event:any
+  event:any;
+  faCalendar = faCalendar;
+  faSignOutAlt = faSignOutAlt;
+  faDashboard = faDashboard;
   constructor(
     private fb:FormBuilder,
     private route:ActivatedRoute,
@@ -50,6 +54,10 @@ export class BookingEventComponent implements OnInit
 
   navigateToDashboard() : void {
     this.router.navigate(['/dashboard']);
+
+  logout() {
+    // Implement your logout logic here
+    this.router.navigate(['/login']);
   }
 
 }

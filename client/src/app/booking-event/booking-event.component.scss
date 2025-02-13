@@ -1,0 +1,224 @@
+// Variables
+$primary: #764ba2;
+$secondary: #667eea;
+$gradient: linear-gradient(135deg, $primary, $secondary);
+$error: #ff4757;
+
+.navbar {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 1.2rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      color: $primary;
+      font-size: 1.8rem;
+      font-weight: 700;
+      border: none;
+      background: none;
+      cursor: pointer;
+  
+      fa-icon {
+        font-size: 2.2rem;
+        transition: transform 0.3s ease;
+      }
+  
+      &:hover fa-icon {
+        transform: rotate(15deg);
+      }
+    }
+  
+    .nav-actions {
+      display: flex;
+      gap: 1rem;
+  
+      .nav-btn, .nav-logout {
+        padding: 0.8rem 1.5rem;
+        border-radius: 30px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+  
+      .nav-btn {
+        background: rgba($primary, 0.1);
+        color: $primary;
+        border: none;
+  
+        &:hover {
+          background: rgba($primary, 0.2);
+        }
+      }
+  
+      .nav-logout {
+        background: $gradient;
+        color: white;
+        border: none;
+        box-shadow: 0 4px 15px rgba($primary, 0.3);
+  
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba($primary, 0.4);
+        }
+      }
+    }
+  }
+  
+
+.create-event-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+  h2 {
+    font-size: 2.5rem;
+    background: $gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 2rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+
+    label {
+      display: block;
+      color: #444;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 1rem 1.2rem;
+      border: 2px solid rgba($primary, 0.1);
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+
+      &:focus {
+        border-color: $primary;
+        box-shadow: 0 0 0 4px rgba($primary, 0.1);
+        outline: none;
+      }
+
+      &:disabled {
+        background: #f8f9fa;
+        cursor: not-allowed;
+      }
+
+      &::placeholder {
+        color: #aaa;
+      }
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    input[type="datetime-local"] {
+      color: #444;
+      
+      &::-webkit-calendar-picker-indicator {
+        cursor: pointer;
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+
+    input[type="number"] {
+      &::-webkit-inner-spin-button {
+        opacity: 1;
+        height: 24px;
+      }
+    }
+  }
+
+  .error-message {
+    padding: 1rem;
+    background: rgba($error, 0.1);
+    color: $error;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &::before {
+      content: '⚠️';
+    }
+  }
+
+  button[type="submit"] {
+    width: 100%;
+    padding: 1.2rem;
+    background: $gradient;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba($primary, 0.4);
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    &::after {
+      content: '→';
+      transition: transform 0.3s ease;
+    }
+
+    &:hover::after {
+      transform: translateX(5px);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .create-event-container {
+    margin: 1rem;
+    padding: 1.5rem;
+
+    h2 {
+      font-size: 2rem;
+    }
+
+    button[type="submit"] {
+      padding: 1rem;
+      font-size: 1rem;
+    }
+  }
+}
