@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +31,8 @@ public class BookingController {
 
     @PostMapping("/api/bookings")
     public ResponseEntity<Booking> createBooking(@RequestBody Booking booking){
+        System.out.println("================================================");
+        System.out.println(booking.getExceptedCount());
         return new ResponseEntity<Booking>(bookingService.createBooking(booking), HttpStatus.CREATED);
     }
 
@@ -48,5 +51,16 @@ public class BookingController {
     public ResponseEntity<List<Booking>> getBookingStatus(@RequestParam String status){
         return new ResponseEntity<List<Booking>>(bookingService.getBookingByStatus(status),HttpStatus.OK);
     }
-    
+
+    @PutMapping("/api/booking/{bookingId}")
+    public ResponseEntity<Booking> updateBooking(@PathVariable Long bookingId, @RequestBody String status){
+        Booking booking = bookingService.getBookingById(bookingId);
+        System.out.println(status);
+        if(status == "reject"){
+            bookingService.deleteBooking(bookingId);
+        }
+        booking.setStatus(status);
+        return new ResponseEntity<Booking>(bookingService.updateBooking(bookingId,booking), HttpStatus.OK);
+    }
+
 }

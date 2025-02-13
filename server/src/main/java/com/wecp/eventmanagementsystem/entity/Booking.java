@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+
 @Entity
 @Table(name="bookingDetails")
 public class Booking {
@@ -16,22 +17,23 @@ public class Booking {
     private String description;
     private Date dateTime;
     private String location;
-    private long exceptedCount;
+    private long expectedCount;
     private String status;
     @ManyToOne
+    @JoinColumn(name="eventID",nullable = false)
     private Event event;
 
     public Booking() {
     }
 
-    public Booking(Long bookingID, String title, String description, Date dateTime, String location, long exceptedCount,
+    public Booking(Long bookingID, String title, String description, Date dateTime, String location, long expectedCount,
             Event event) {
         this.bookingID = bookingID;
         this.title = title;
         this.description = description;
         this.dateTime = dateTime;
         this.location = location;
-        this.exceptedCount = exceptedCount;
+        this.expectedCount = expectedCount;
         this.event = event;
     }
 
@@ -77,11 +79,11 @@ public class Booking {
     }
 
     public long getExceptedCount() {
-        return exceptedCount;
+        return expectedCount;
     }
 
-    public void setExceptedCount(long exceptedCount) {
-        this.exceptedCount = exceptedCount;
+    public void setExceptedCount(long expectedCount) {
+        this.expectedCount = expectedCount;
     }
 
     public Event getEvent() {
