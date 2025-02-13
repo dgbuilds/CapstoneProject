@@ -44,7 +44,7 @@
 
 // }
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
@@ -57,7 +57,8 @@ import {
   faClock,
   faMapMarkerAlt,
   faExclamationCircle,
-  faSave
+  faSave,
+  faDashboard
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -65,7 +66,7 @@ import {
   templateUrl: './create-event.component.html',
   styleUrls: ['./create-event.component.scss']
 })
-export class CreateEventComponent {
+export class CreateEventComponent implements OnInit {
   // Icons
   faCalendar = faCalendar;
   faSignOutAlt = faSignOutAlt;
@@ -75,8 +76,9 @@ export class CreateEventComponent {
   faMapMarkerAlt = faMapMarkerAlt;
   faExclamationCircle = faExclamationCircle;
   faSave = faSave;
+  faDashboard = faDashboard;
 
-  itemForm: FormGroup;
+  itemForm!: FormGroup;
   errorMessage: string = '';
   isSubmitting = false;
 
@@ -86,6 +88,14 @@ export class CreateEventComponent {
     private router: Router,
     private authService: AuthService
   ) {
+    this.initializeForm();
+  }
+
+  ngOnInit(): void {
+    this.setupFormValidation();
+  }
+
+  private initializeForm(): void {
     this.itemForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', [Validators.required, Validators.minLength(10)]],
@@ -93,6 +103,17 @@ export class CreateEventComponent {
       location: ['', Validators.required],
       status: ['PENDING']
     });
+  }
+
+  private setupFormValidation(): void {
+    this.itemForm.valueChanges.subscribe(() => {
+      this.errorMessage = '';
+    });
+  }
+
+  isFieldInvalid(fieldName: string): boolean {
+    const field = this.itemForm.get(fieldName);
+    return field ? field.invalid && (field.dirty || field.touched) : false;
   }
 
   logout(): void {

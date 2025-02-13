@@ -1,4 +1,4 @@
-<div *ngIf="update" class="section">
+<!-- <div *ngIf="update" class="section">
    <h2>Events</h2>
    <table class="data-table">
       <thead>
@@ -54,4 +54,139 @@
 
    </form>
    <p *ngIf="successMessage">{{successMessage}}</p>
-</div>
+</div> -->
+
+
+<div class="page-wrapper">
+   <!-- Navigation Bar -->
+   <nav class="navbar">
+     <div class="nav-brand">
+       <fa-icon [icon]="faCalendar"></fa-icon>
+       <span>EventMaster</span>
+     </div>
+     <div class="nav-actions">
+       <button class="nav-btn" routerLink="/dashboard">
+         <fa-icon [icon]="faDashboard"></fa-icon>
+         Dashboard
+       </button>
+       <button class="nav-logout" (click)="logout()">
+         <fa-icon [icon]="faSignOutAlt"></fa-icon>
+         Logout
+       </button>
+     </div>
+   </nav>
+ 
+   <!-- Main Content -->
+   <div class="content-container">
+     <div *ngIf="update" class="section">
+       <div class="section-header">
+         <h2>Manage Events</h2>
+         <p>Update and manage your event details</p>
+       </div>
+ 
+       <table class="data-table">
+         <thead>
+           <tr>
+             <th>Title</th>
+             <th>Description</th>
+             <th>Date & Time</th>
+             <th>Location</th>
+             <th>Status</th>
+             <th>Actions</th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr *ngFor="let event of events">
+             <td>{{event.title}}</td>
+             <td>{{event.description}}</td>
+             <td>{{event.dateTime | date:'medium'}}</td>
+             <td>{{event.location}}</td>
+             <td>
+               <span class="status-badge" [class]="event.status.toLowerCase()">
+                 {{event.status}}
+               </span>
+             </td>
+             <td>
+               <button class="update-btn" (click)="selectedEvent(event.eventID)">
+                 <fa-icon [icon]="faEdit"></fa-icon>
+                 Update
+               </button>
+             </td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
+ 
+     <div *ngIf="!update" class="update-form-section">
+       <div class="section-header">
+         <h2>Update Event</h2>
+         <p>Modify the event details below</p>
+       </div>
+ 
+       <form [formGroup]="itemForm" (ngSubmit)="updateEvent()">
+         <div class="form-field">
+           <label for="title">
+             <fa-icon [icon]="faTag"></fa-icon>
+             Event Title
+           </label>
+           <input type="text" formControlName="title" id="title" placeholder="Enter event title">
+         </div>
+ 
+         <div class="form-field">
+           <label for="description">
+             <fa-icon [icon]="faFileAlt"></fa-icon>
+             Description
+           </label>
+           <textarea formControlName="description" id="description" rows="4" placeholder="Enter event description"></textarea>
+         </div>
+ 
+         <div class="form-row">
+           <div class="form-field">
+             <label for="dateTime">
+               <fa-icon [icon]="faClock"></fa-icon>
+               Date & Time
+             </label>
+             <input type="datetime-local" formControlName="dateTime" id="dateTime">
+           </div>
+ 
+           <div class="form-field">
+             <label for="location">
+               <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
+               Location
+             </label>
+             <input type="text" formControlName="location" id="location" placeholder="Enter location">
+           </div>
+         </div>
+ 
+         <div class="form-field">
+           <label for="status">
+             <fa-icon [icon]="faFlag"></fa-icon>
+             Status
+           </label>
+           <select id="status" formControlName="status">
+             <option value="Pending">Pending</option>
+             <option value="Initiated">Initiated</option>
+             <option value="Complete">Complete</option>
+           </select>
+         </div>
+ 
+         <div class="form-actions">
+           <button type="button" class="cancel-btn" (click)="update = true">
+             <fa-icon [icon]="faTimes"></fa-icon>
+             Cancel
+           </button>
+           <button type="submit" [disabled]="!itemForm.valid">
+             <fa-icon [icon]="faSave"></fa-icon>
+             Update Event
+           </button>
+         </div>
+       </form>
+ 
+       <div class="success-message" *ngIf="successMessage">
+         <fa-icon [icon]="faCheckCircle"></fa-icon>
+         {{successMessage}}
+       </div>
+     </div>
+   </div>
+ </div>
+ 

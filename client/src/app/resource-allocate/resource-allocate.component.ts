@@ -1,82 +1,199 @@
+// import { Component, OnInit } from '@angular/core';
+// import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+// import { Router } from '@angular/router';
+// import { HttpService } from '../../services/http.service';
+// import { AuthService } from '../../services/auth.service';
+// import { NgIfContext } from '@angular/common';
+// @Component({
+//   selector: 'app-resource-allocate',
+//   templateUrl: './resource-allocate.component.html',
+//   styleUrls: ['./resource-allocate.component.scss']
+// })
+// export class ResourceAllocateComponent implements OnInit{
+//     itemForm: FormGroup;
+//     events: any[] = [];
+//     resources: any[] = [];
+//     errorMessage: string = '';
+//     successMessage: string = '';
+   
+//     constructor(private httpService:HttpService, private fb:FormBuilder, private router:Router){
+//         this.itemForm = this.fb.group({
+//             eventId: ['', Validators.required],
+//             resourceId: ['', Validators.required],
+//             quantity: ['', [Validators.required, Validators.min(1)]]
+//         });
+//     }
+
+//     ngOnInit(): void {
+//         this.loadEvents();
+//         this.loadResources();
+//         // console.log(this.events);
+//         // console.log(this.resources);
+//     }
+ 
+//     loadEvents(): void{
+//         this.httpService.GetAllevents().subscribe({
+//             next: (events) => {
+//                 this.events = events;
+//             },
+//             error: () => {
+//                 this.errorMessage = 'Failed to load events.';
+//             }
+ 
+//         });
+       
+//     }
+ 
+//     loadResources(): void{
+//         this.httpService.GetAllResources().subscribe({
+//             next: (resources) => {
+//                 console.log(resources);
+//                 this.resources = resources;
+//             },
+//             error: () => {
+//                 this.errorMessage = 'Failed to load resources';
+//             }
+//         });
+//     }
+ 
+//     onSubmit(): void {
+//         console.log(this.itemForm.valid);
+//         console.log(this.itemForm.value);
+//       if(this.itemForm.valid){
+//           //const {eventId, resourceId, quantity} = this.itemForm.value;
+          
+//           this.httpService.allocateResources(this.itemForm.value.eventId, this.itemForm.value.resourceId, this.itemForm.value).subscribe({
+//               next: () => {
+//                   this.itemForm.reset();
+//                   this.loadResources();
+//                   this.successMessage = 'Resource saved successfully';
+//                   setTimeout(()=> this.successMessage = '',3000);
+//                   this.router.navigate(["/dashboard"])
+                  
+//               },
+//               error: () => {
+//                   this.errorMessage = 'Failed to allocate resource'
+//               }
+//           });
+//       }
+//     }
+ 
+// }
+ 
+
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
 import { AuthService } from '../../services/auth.service';
-import { NgIfContext } from '@angular/common';
+import {
+  faBoxes,
+  faSignOutAlt,
+  faDashboard,
+  faCalendarAlt,
+  faBox,
+  faHashtag,
+  faExclamationCircle,
+  faCheckCircle,
+  faSave,
+  faCalendar
+} from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-resource-allocate',
   templateUrl: './resource-allocate.component.html',
   styleUrls: ['./resource-allocate.component.scss']
 })
-export class ResourceAllocateComponent implements OnInit{
-    itemForm: FormGroup;
-    events: any[] = [];
-    resources: any[] = [];
-    errorMessage: string = '';
-    successMessage: string = '';
-   
-    constructor(private httpService:HttpService, private fb:FormBuilder, private router:Router){
-        this.itemForm = this.fb.group({
-            eventId: ['', Validators.required],
-            resourceId: ['', Validators.required],
-            quantity: ['', [Validators.required, Validators.min(1)]]
-        });
-    }
+export class ResourceAllocateComponent implements OnInit {
+  // Icons
+  faCalendar = faCalendar;
+  faSignOutAlt = faSignOutAlt;
+  faDashboard = faDashboard;
+  faCalendarAlt = faCalendarAlt;
+  faBox = faBox;
+  faHashtag = faHashtag;
+  faExclamationCircle = faExclamationCircle;
+  faCheckCircle = faCheckCircle;
+  faSave = faSave;
 
-    ngOnInit(): void {
-        this.loadEvents();
-        this.loadResources();
-        // console.log(this.events);
-        // console.log(this.resources);
-    }
- 
-    loadEvents(): void{
-        this.httpService.GetAllevents().subscribe({
-            next: (events) => {
-                this.events = events;
-            },
-            error: () => {
-                this.errorMessage = 'Failed to load events.';
-            }
- 
-        });
-       
-    }
- 
-    loadResources(): void{
-        this.httpService.GetAllResources().subscribe({
-            next: (resources) => {
-                console.log(resources);
-                this.resources = resources;
-            },
-            error: () => {
-                this.errorMessage = 'Failed to load resources';
-            }
-        });
-    }
- 
-    onSubmit(): void {
-        console.log(this.itemForm.valid);
-        console.log(this.itemForm.value);
-      if(this.itemForm.valid){
-          //const {eventId, resourceId, quantity} = this.itemForm.value;
-          
-          this.httpService.allocateResources(this.itemForm.value.eventId, this.itemForm.value.resourceId, this.itemForm.value).subscribe({
-              next: () => {
-                  this.itemForm.reset();
-                  this.loadResources();
-                  this.successMessage = 'Resource saved successfully';
-                  setTimeout(()=> this.successMessage = '',3000);
-                  this.router.navigate(["/dashboard"])
-                  
-              },
-              error: () => {
-                  this.errorMessage = 'Failed to allocate resource'
-              }
-          });
+  itemForm!: FormGroup;
+  events: any[] = [];
+  resources: any[] = [];
+  errorMessage: string = '';
+  successMessage: string = '';
+
+  constructor(
+    private httpService: HttpService,
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService
+  ) {
+    this.initializeForm();
+  }
+
+  ngOnInit(): void {
+    this.loadEvents();
+    this.loadResources();
+  }
+
+  private initializeForm(): void {
+    this.itemForm = this.fb.group({
+      eventId: ['', Validators.required],
+      resourceId: ['', Validators.required],
+      quantity: ['', [Validators.required, Validators.min(1)]]
+    });
+  }
+
+  isFieldInvalid(fieldName: string): boolean {
+    const field = this.itemForm.get(fieldName);
+    return field ? field.invalid && (field.dirty || field.touched) : false;
+  }
+
+  loadEvents(): void {
+    this.httpService.GetAllevents().subscribe({
+      next: (events) => {
+        this.events = events;
+      },
+      error: () => {
+        this.errorMessage = 'Failed to load events.';
       }
+    });
+  }
+
+  loadResources(): void {
+    this.httpService.GetAllResources().subscribe({
+      next: (resources) => {
+        this.resources = resources;
+      },
+      error: () => {
+        this.errorMessage = 'Failed to load resources';
+      }
+    });
+  }
+
+  onSubmit(): void {
+    if (this.itemForm.valid) {
+      const { eventId, resourceId, quantity } = this.itemForm.value;
+      
+      this.httpService.allocateResources(eventId, resourceId, { quantity }).subscribe({
+        next: () => {
+          this.successMessage = 'Resource allocated successfully';
+          this.itemForm.reset();
+          setTimeout(() => {
+            this.successMessage = '';
+            this.router.navigate(["/dashboard"]);
+          }, 2000);
+        },
+        error: () => {
+          this.errorMessage = 'Failed to allocate resource';
+        }
+      });
     }
- 
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 }
- 
