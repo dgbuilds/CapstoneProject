@@ -249,7 +249,7 @@
                   </div>
                   <button class="book-btn" (click)="bookTickets(event)" [disabled]="!selectedTickets">Book</button>
                   <div *ngIf="event.ticketMessage" [class]="event.ticketStatus ? 'success-message' : 'error-message'">
-                    {{ event.ticketMessage }}
+                    {{ ticketMessage }}
                   </div>
                 </td>
               </tr>

@@ -141,7 +141,7 @@ export class HttpService {
   }
   
   public bookTickets(eventId: number, tickets: number) {
-    return this.http.post(`${this.serverName}/${eventId}/book`, { tickets });
+    return this.http.post(`${this.serverName}/${eventId}/book`, tickets );
   }
   
 }

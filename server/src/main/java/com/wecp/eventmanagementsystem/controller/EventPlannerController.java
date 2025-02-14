@@ -80,5 +80,4 @@ public class EventPlannerController {
         return ResponseEntity.ok(response);
     }
     
-
 }

@@ -85,6 +85,8 @@ export class DashbaordComponent implements OnInit {
   showRequestForm = false;
   requestForm: FormGroup;
   requestErrorMessage = '';
+  ticketMessage = '';
+  ticketStatus : boolean = false;
 
   // Data arrays
   requests: any[] = [];
@@ -272,30 +274,33 @@ export class DashbaordComponent implements OnInit {
   }
 
   bookTickets(event: any) {
-    console.log(this.selectedTickets)
+    console.log(this.selectedTickets);
+    console.log(event.eventID);
     this.httpService.checkTicketAvailability(event.eventID, this.selectedTickets).subscribe({
       next: (response: any) => {
+        console.log(response);
         if (response.available) {
           this.httpService.bookTickets(event.eventID, this.selectedTickets).subscribe({
             next: () => {
-              event.ticketMessage = `Successfully booked ${event.selectedTickets} tickets!`;
-              event.ticketStatus = true;
-              event.selectedTickets = 0;
+              console.log("in next");
+              this.ticketMessage = `Successfully booked ${this.selectedTickets} tickets!`;
+              this.ticketStatus = true;
+              this.selectedTickets = 0;
               this.loadClientData(); // Refresh data
             },
             error: () => {
-              event.ticketMessage = 'Error booking tickets. Please try again.';
-              event.ticketStatus = false;
+              this.ticketMessage = 'Error booking tickets. Please try again.';
+              this.ticketStatus = false;
             }
           });
         } else {
-          event.ticketMessage = `Only ${response.availableTickets} tickets available`;
-          event.ticketStatus = false;
+          this.ticketMessage = `Only ${response.availableTickets} tickets available`;
+          this.ticketStatus = false;
         }
       },
       error: (error) => {
-        event.ticketMessage = 'Error checking ticket availability';
-        event.ticketStatus = false;
+        this.ticketMessage = 'Error checking ticket availability';
+        this.ticketStatus = false;
       }
     });
   }
