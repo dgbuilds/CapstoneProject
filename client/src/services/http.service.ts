@@ -8,6 +8,8 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class HttpService {
+  
+  
 
   public serverName = environment.apiUrl;
 
@@ -27,6 +29,19 @@ export class HttpService {
         'Content-Type': 'application/json'
       })
     });
+  }
+
+  public createEventRequest(value: any) :Observable<any>{
+    return this.http.post<any>(`${this.serverName}/api/request`,value);
+  }
+
+  public getEventByStatus(status: string):Observable<any[]> {
+    return this.http.get<any[]>(`${this.serverName}/api/events?status=${status}`,
+    {
+      headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+      })
+    })
   }
 
   public Login(user: any): Observable<any> {
@@ -101,22 +116,32 @@ export class HttpService {
   }
 
   public getRequests(status: any): Observable<any> {
-    return this.http.get<any>(`${this.serverName}/api/booking?status=${status}`, {
+    return this.http.get<any>(`${this.serverName}/api/request?status=${status}`, {
       headers: this.getHeaders()
     });
   }
 
-  public handleRequest(bookingId: any, action: any): Observable<any> {
+  public handleRequest(requestId: any, action: any): Observable<any> {
     console.log(action);
-    return this.http.put<any>(`${this.serverName}/api/booking/${bookingId}`, action, {
+    return this.http.put<any>(`${this.serverName}/api/request/${requestId}`, action, {
       headers: this.getHeaders()
     });
   }
 
   public createBooking(value: any): Observable<any> {
     console.log(value);
-    return this.http.post<any>(`${this.serverName}/api/bookings`, value, {
+    return this.http.post<any>(`${this.serverName}/api/requests`, value, {
       headers: this.getHeaders()
     });
   }
+
+
+  public checkTicketAvailability(eventId: number, requestedTickets: number):Observable<any> {
+    return this.http.get<any>(`${this.serverName}/${eventId}/check-tickets/${requestedTickets}`);
+  }
+  
+  public bookTickets(eventId: number, tickets: number) {
+    return this.http.post(`${this.serverName}/${eventId}/book`, { tickets });
+  }
+  
 }

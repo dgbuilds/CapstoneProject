@@ -55,6 +55,7 @@ export class CreateEventComponent implements OnInit {
       description: ['', [Validators.required, Validators.minLength(10)]],
       dateTime: ['', Validators.required],
       location: ['', Validators.required],
+      tickets:[null,Validators.required],
       status: ['Pending']
     });
   }
@@ -79,7 +80,7 @@ export class CreateEventComponent implements OnInit {
     if (this.itemForm.valid && !this.isSubmitting) {
       this.isSubmitting = true;
       
-      this.httpService.createEvent(this.itemForm.value).subscribe({
+      this.httpService.createEvent({...this.itemForm.value , type : 'public'}).subscribe({
         next: () => {
           this.router.navigate(['/dashboard']);
         },

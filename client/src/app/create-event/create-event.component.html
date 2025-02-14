@@ -59,111 +59,108 @@
   </div> -->
 
 
-  <div class="page-wrapper">
-    <nav class="navbar">
-      <div class="nav-brand" routerLink="/dashboard">
-        <button type="button" class="brand" (click)="navigateToDashboard()">
-          <fa-icon [icon]="faCalendar"></fa-icon>
-          <span>EventMaster</span>
+<div class="page-wrapper">
+  <nav class="navbar">
+    <div class="nav-brand" routerLink="/dashboard">
+      <button type="button" class="brand" (click)="navigateToDashboard()">
+        <fa-icon [icon]="faCalendar"></fa-icon>
+        <span>EventMaster</span>
       </button>
-      </div>
-      <div class="nav-actions">
-        <!-- <button class="nav-btn" routerLink="/dashboard">
+    </div>
+    <div class="nav-actions">
+      <!-- <button class="nav-btn" routerLink="/dashboard">
           <fa-icon [icon]="faDashboard"></fa-icon>
           Dashboard
         </button> -->
-        <button class="nav-logout" (click)="logout()">
-          <fa-icon [icon]="faSignOutAlt"></fa-icon>
-          Logout
-        </button>
+      <button class="nav-logout" (click)="logout()">
+        <fa-icon [icon]="faSignOutAlt"></fa-icon>
+        Logout
+      </button>
+    </div>
+  </nav>
+
+  <div class="content-container">
+    <div class="form-card">
+      <div class="card-header">
+        <h1>Create New Event</h1>
+        <p>Fill in the details to create your next amazing event</p>
       </div>
-    </nav>
-  
-    <div class="content-container">
-      <div class="form-card">
-        <div class="card-header">
-          <h1>Create New Event</h1>
-          <p>Fill in the details to create your next amazing event</p>
+
+      <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" class="animated-form">
+        <div class="form-field">
+          <label>
+            <fa-icon [icon]="faTag"></fa-icon>
+            Event Title
+          </label>
+          <div class="input-wrapper">
+            <input type="text" formControlName="title" placeholder="Enter a catchy title"
+              [class.error]="isFieldInvalid('title')">
+            <div class="validation-message" *ngIf="isFieldInvalid('title')">
+              Title must be at least 3 characters long
+            </div>
+          </div>
         </div>
-  
-        <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" class="animated-form">
-          <div class="form-field">
-            <label>
-              <fa-icon [icon]="faTag"></fa-icon>
-              Event Title
-            </label>
-            <div class="input-wrapper">
-              <input 
-                type="text" 
-                formControlName="title" 
-                placeholder="Enter a catchy title"
-                [class.error]="isFieldInvalid('title')">
-              <div class="validation-message" *ngIf="isFieldInvalid('title')">
-                Title must be at least 3 characters long
-              </div>
-            </div>
-          </div>
-  
-          <div class="form-field">
-            <label>
-              <fa-icon [icon]="faFileAlt"></fa-icon>
-              Description
-            </label>
-            <div class="input-wrapper">
-              <textarea 
-                formControlName="description" 
-                placeholder="Describe your event"
-                rows="4"
-                [class.error]="isFieldInvalid('description')">
+
+        <div class="form-field">
+          <label>
+            <fa-icon [icon]="faFileAlt"></fa-icon>
+            Description
+          </label>
+          <div class="input-wrapper">
+            <textarea formControlName="description" placeholder="Describe your event" rows="4"
+              [class.error]="isFieldInvalid('description')">
               </textarea>
-              <div class="validation-message" *ngIf="isFieldInvalid('description')">
-                Description must be at least 10 characters long
-              </div>
+            <div class="validation-message" *ngIf="isFieldInvalid('description')">
+              Description must be at least 10 characters long
             </div>
           </div>
-  
-          <div class="form-row">
-            <div class="form-field">
-              <label>
-                <fa-icon [icon]="faClock"></fa-icon>
-                Date & Time
-              </label>
-              <div class="input-wrapper">
-                <input 
-                  type="datetime-local" 
-                  formControlName="dateTime"
-                  [class.error]="isFieldInvalid('dateTime')">
-              </div>
-            </div>
-  
-            <div class="form-field">
-              <label>
-                <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
-                Location
-              </label>
-              <div class="input-wrapper">
-                <input 
-                  type="text" 
-                  formControlName="location" 
-                  placeholder="Event location"
-                  [class.error]="isFieldInvalid('location')">
-              </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label>
+              <fa-icon [icon]="faClock"></fa-icon>
+              Date & Time
+            </label>
+            <div class="input-wrapper">
+              <input type="datetime-local" formControlName="dateTime" [class.error]="isFieldInvalid('dateTime')">
             </div>
           </div>
-  
-          <button type="submit" [disabled]="!itemForm.valid || isSubmitting" class="submit-btn">
-            <fa-icon [icon]="faSave"></fa-icon>
-            {{ isSubmitting ? 'Creating Event...' : 'Create Event' }}
-            <div class="spinner" *ngIf="isSubmitting"></div>
-          </button>
-  
-          <div class="error-message" *ngIf="errorMessage">
-            <fa-icon [icon]="faExclamationCircle"></fa-icon>
-            {{ errorMessage }}
+
+          <div class="form-field">
+            <label>
+              <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
+              Location
+            </label>
+            <div class="input-wrapper">
+              <input type="text" formControlName="location" placeholder="Event location"
+                [class.error]="isFieldInvalid('location')">
+            </div>
           </div>
-        </form>
-      </div>
+
+          <div class="form-field">
+            <label>
+              <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
+              Number of Tickets
+            </label>
+            <div class="input-wrapper">
+              <input type="text" formControlName="tickets" placeholder="Event Tickets"
+                [class.error]="isFieldInvalid('tickets')">
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" [disabled]="!itemForm.valid || isSubmitting" class="submit-btn">
+          <fa-icon [icon]="faSave"></fa-icon>
+          {{ isSubmitting ? 'Creating Event...' : 'Create Event' }}
+          <div class="spinner" *ngIf="isSubmitting"></div>
+        </button>
+
+        <div class="error-message" *ngIf="errorMessage">
+          <fa-icon [icon]="faExclamationCircle"></fa-icon>
+          {{ errorMessage }}
+        </div>
+      </form>
     </div>
   </div>
-  
-  
+</div>

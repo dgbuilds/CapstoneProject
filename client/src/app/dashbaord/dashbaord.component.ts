@@ -2,20 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { HttpService } from '../../services/http.service';
-import { 
-  faCalendar, 
-  faEllipsisV, 
-  faClipboard, 
-  faPlus, 
-  faShare, 
-  faCalendarPlus, 
-  faEdit, 
+import {
+  faCalendar,
+  faEllipsisV,
+  faClipboard,
+  faPlus,
+  faShare,
+  faCalendarPlus,
+  faEdit,
   faSignOutAlt,
   faCheck,
   faTimes,
   faUser,
   faBuilding
 } from '@fortawesome/free-solid-svg-icons';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // interface Event {
 //   id: number;
@@ -26,18 +27,18 @@ import {
 //   status: string;
 // }
 
-interface Resource {
-  id: number;
-  name: string;
-  type: string;
-  availability: boolean;
-}
+// interface Resource {
+//   id: number;
+//   name: string;
+//   type: string;
+//   availability: boolean;
+// }
 
-interface Client {
-  id: number;
-  username: string;
-  email: string;
-}
+// interface Client {
+//   id: number;
+//   username: string;
+//   email: string;
+// }
 
 // interface Request {
 //   id: number;
@@ -46,15 +47,15 @@ interface Client {
 //   status: string;
 // }
 
-interface BookingDetail {
-  bookingID: number;
-  title: string;
-  description : string;
-  expectedCount : number;
-  dateTime: string;
-  location: string;
-  status: string;
-}
+// interface BookingDetail {
+//   bookingID: number;
+//   title: string;
+//   description: string;
+//   expectedCount: number;
+//   dateTime: string;
+//   location: string;
+//   status: string;
+// }
 
 @Component({
   selector: 'app-dashbaord',
@@ -81,28 +82,45 @@ export class DashbaordComponent implements OnInit {
   isDropdownOpen = false;
   viewingRequests = false;
   viewingEvents = false;
-  
+  showRequestForm = false;
+  requestForm: FormGroup;
+  requestErrorMessage = '';
+
   // Data arrays
-  requests: BookingDetail[] = [];
+  requests: any[] = [];
   events: any[] = [];
-  resources: Resource[] = [];
-  clients: Client[] = [];
+  resources: any[] = [];
+  clients: any[] = [];
   bookingEvents: any[] = [];
   bookingDetails: any[] = [];
+  selectedTickets : any = 0;
 
   constructor(
     private authService: AuthService,
     private httpService: HttpService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+    this.requestForm = this.fb.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      preferredLocation: ['', Validators.required],
+      preferredDate: ['', Validators.required],
+      expectedPeople: ['', [Validators.required, Validators.min(1)]],
+      status: [{ value: "Pending", disabled: true }, [Validators.required]]
+    });
+  }
 
   ngOnInit(): void {
+    // if(this.showRequestForm){
+    //   this.loadRequests();
+    // }
     this.role = this.authService.getRole();
     this.loadDashboardData();
   }
 
   loadDashboardData(): void {
-    switch(this.role) {
+    switch (this.role) {
       case 'PLANNER':
         this.loadPlannerData();
         break;
@@ -132,13 +150,13 @@ export class DashbaordComponent implements OnInit {
     });
   }
 
-  
+
   loadClientData(): void {
     this.httpService.getAllBookings().subscribe({
-      next : (res) => this.bookingDetails = res,
-      error : (error) => console.error('Error loading booking details:', error)
+      next: (res) => this.bookingDetails = res,
+      error: (error) => console.error('Error loading booking details:', error)
     })
-    this.httpService.GetAllevents().subscribe({
+    this.httpService.getEventByStatus("public").subscribe({
       next: (res) => this.events = res,
       error: (error) => console.error('Error loading events:', error)
     });
@@ -153,13 +171,27 @@ export class DashbaordComponent implements OnInit {
 
   loadRequests(): void {
     this.httpService.getRequests("pending").subscribe({
-      next: (res: BookingDetail[]) => this.requests = res,
+      next: (res: any[]) => this.requests = res,
       error: (error: any) => console.error('Error loading requests:', error)
     });
   }
 
-  handleRequest(requestId: number, action: 'approve' | 'reject'): void {
-    this.httpService.handleRequest(requestId, action).subscribe({
+  handleRequest(request: any, action: 'approve' | 'reject'): void {
+    if (action == 'approve') {
+      this.httpService.createEvent({
+        type: "private",
+        title: request.name,
+        description: request.description,
+        dateTime: request.preferredDate,
+        location: request.preferredLocation,
+        status: request.status,
+        tickets: 0
+      }).subscribe();
+    }
+    if (action == 'reject') {
+      this.requestErrorMessage = 'Sorry! Currently we have no resources available for the event.';
+    }
+    this.httpService.handleRequest(request.requestId, action).subscribe({
       next: () => {
         this.loadRequests();
       },
@@ -175,11 +207,36 @@ export class DashbaordComponent implements OnInit {
     this.viewingRequests = !this.viewingRequests;
     if (this.viewingRequests) {
       this.loadRequests();
-    }else{
+    } else {
       this.ngOnInit();
     }
   }
 
+  toggleRequest() {
+    this.showRequestForm = !this.showRequestForm;
+    if (this.showRequestForm) {
+    } else {
+      this.ngOnInit();
+    }
+  }
+
+  // Add this method to handle form submission
+  onSubmitRequest() {
+    console.log("here");
+    if (this.requestForm.valid) {
+      // Add your API call here to submit the request
+      console.log(this.requestForm.value);
+      this.requestForm.get('status')?.enable();
+      this.httpService.createEventRequest(this.requestForm.value).subscribe({
+        next: (response: any) => {
+          this.showRequestForm = false;
+          this.requestForm.reset();
+          this.loadClientData(); // Refresh the data
+        },
+        error: (error: any) => console.error('Error submitting request:', error)
+      });
+    }
+  }
   viewEvents(): void {
     //this.viewingEvents = !this.viewingEvents;
     this.router.navigate(['/view-events']);
@@ -204,11 +261,46 @@ export class DashbaordComponent implements OnInit {
     return new Date(date).toLocaleString();
   }
 
-  booking(id:any){
-    this.router.navigate([`/booking-event/${id}`]);
+  incrementTickets(event: any) {
+    this.selectedTickets = this.selectedTickets + 1;
   }
 
-  navigateToDashboard() : void {
+  decrementTickets(event: any) {
+    if (this.selectedTickets > 0) {
+      this.selectedTickets--;
+    }
+  }
+
+  bookTickets(event: any) {
+    console.log(this.selectedTickets)
+    this.httpService.checkTicketAvailability(event.eventID, this.selectedTickets).subscribe({
+      next: (response: any) => {
+        if (response.available) {
+          this.httpService.bookTickets(event.eventID, this.selectedTickets).subscribe({
+            next: () => {
+              event.ticketMessage = `Successfully booked ${event.selectedTickets} tickets!`;
+              event.ticketStatus = true;
+              event.selectedTickets = 0;
+              this.loadClientData(); // Refresh data
+            },
+            error: () => {
+              event.ticketMessage = 'Error booking tickets. Please try again.';
+              event.ticketStatus = false;
+            }
+          });
+        } else {
+          event.ticketMessage = `Only ${response.availableTickets} tickets available`;
+          event.ticketStatus = false;
+        }
+      },
+      error: (error) => {
+        event.ticketMessage = 'Error checking ticket availability';
+        event.ticketStatus = false;
+      }
+    });
+  }
+
+  navigateToDashboard(): void {
     this.router.navigate(['/dashboard']);
   }
 }

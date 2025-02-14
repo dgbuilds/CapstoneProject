@@ -1,6 +1,5 @@
 package com.wecp.eventmanagementsystem.controller;
 
-
 import com.wecp.eventmanagementsystem.entity.Allocation;
 import com.wecp.eventmanagementsystem.entity.Event;
 import com.wecp.eventmanagementsystem.entity.Resource;
@@ -13,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+import java.util.Map;
 
 @RestController
 public class EventPlannerController {
@@ -27,20 +26,20 @@ public class EventPlannerController {
     @PostMapping("/api/planner/event")
     public ResponseEntity<Event> createEvent(@RequestBody Event event) {
         // create event and return created event with status code 201 (CREATED)
-        return new ResponseEntity<Event>(eventService.createEvent(event),HttpStatus.CREATED);
+        return new ResponseEntity<Event>(eventService.createEvent(event), HttpStatus.CREATED);
     }
 
     @GetMapping("/api/planner/events")
     public ResponseEntity<List<Event>> getAllEvents() {
         // get all events and return the list with status code 200 (OK)
-        
-        return new ResponseEntity<>(eventService.getAllEvents(),HttpStatus.OK);
+
+        return new ResponseEntity<>(eventService.getAllEvents(), HttpStatus.OK);
     }
 
     @PostMapping("/api/planner/resource")
     public ResponseEntity<Resource> addResource(@RequestBody Resource resource) {
         // add resource and return added resource with status code 201 (CREATED)
-        return new ResponseEntity<Resource>(resourceService.addResource(resource) , HttpStatus.CREATED);
+        return new ResponseEntity<Resource>(resourceService.addResource(resource), HttpStatus.CREATED);
     }
 
     @GetMapping("/api/planner/resources")
@@ -53,8 +52,33 @@ public class EventPlannerController {
     public ResponseEntity<String> allocateResources(@RequestParam Long eventId, @RequestParam Long resourceId,
             @RequestBody Allocation allocation) {
 
-        // allocate resources for the event and return a success message with status code 201 (CREATED)
+        // allocate resources for the event and return a success message with status
+        // code 201 (CREATED)
         resourceService.allocateResource(eventId, resourceId, allocation.getQuantity());
-        return new ResponseEntity<>("{\"message\": \"Resource allocated successfully for Event ID: " + eventId + "\"}", HttpStatus.CREATED);
+        return new ResponseEntity<>("{\"message\": \"Resource allocated successfully for Event ID: " + eventId + "\"}",
+                HttpStatus.CREATED);
     }
+
+    @GetMapping("/api/events")
+    public ResponseEntity<List<Event>> getEventByType(@RequestParam String status) {
+        return new ResponseEntity<List<Event>>(eventService.getEventByType(status), HttpStatus.OK);
+    }
+
+    @GetMapping("/{eventId}/check-tickets/{requestedTickets}")
+    public ResponseEntity<Map<String, Object>> checkTicketAvailability(
+            @PathVariable Long eventId,
+            @PathVariable Integer requestedTickets) {
+        Map<String, Object> response = eventService.checkTicketAvailability(eventId, requestedTickets);
+        return ResponseEntity.ok(response);
+    }
+    
+    @PostMapping("/{eventId}/book")
+    public ResponseEntity<Map<Boolean, String>> bookTickets(
+            @PathVariable Long eventId,
+            @RequestBody Integer tickets) { 
+        Map<Boolean, String> response = eventService.bookTickets(eventId, tickets);
+        return ResponseEntity.ok(response);
+    }
+    
+
 }
