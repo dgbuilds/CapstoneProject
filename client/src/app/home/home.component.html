@@ -1,8 +1,8 @@
 <nav class="navbar">
-    <a href="/" class="brand">
-      <fa-icon [icon]="faCalendar"></fa-icon>
-      <span>EventMaster</span>
-    </a>
+  <button type="button" class="brand" (click)="navigateToHome()">
+    <fa-icon [icon]="faCalendar"></fa-icon>
+    <span>EventMaster</span>
+  </button>
   
     <div class="nav-buttons">
       <button class="sign-in" routerLink="/login">Sign In</button>

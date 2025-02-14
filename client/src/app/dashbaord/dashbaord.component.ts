@@ -175,6 +175,8 @@ export class DashbaordComponent implements OnInit {
     this.viewingRequests = !this.viewingRequests;
     if (this.viewingRequests) {
       this.loadRequests();
+    }else{
+      this.ngOnInit();
     }
   }
 
@@ -204,5 +206,9 @@ export class DashbaordComponent implements OnInit {
 
   booking(id:any){
     this.router.navigate([`/booking-event/${id}`]);
+  }
+
+  navigateToDashboard() : void {
+    this.router.navigate(['/dashboard']);
   }
 }

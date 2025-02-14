@@ -9,6 +9,7 @@ import { faCalendar, faSignOutAlt, faDashboard } from '@fortawesome/free-solid-s
   templateUrl: './booking-event.component.html',
   styleUrls: ['./booking-event.component.scss']
 })
+
 export class BookingEventComponent implements OnInit
 {
   itemForm: FormGroup;
@@ -54,8 +55,9 @@ export class BookingEventComponent implements OnInit
 
   navigateToDashboard() : void {
     this.router.navigate(['/dashboard']);
+  }
 
-  logout() {
+  logout() : void {
     // Implement your logout logic here
     this.router.navigate(['/login']);
   }

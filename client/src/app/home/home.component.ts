@@ -60,4 +60,8 @@ export class HomeComponent implements OnInit {
   navigateToRegistration() {
     this.router.navigate(['/registration']);
   }
+
+  navigateToHome() {
+    this.router.navigate(['/home']);
+  }
 }

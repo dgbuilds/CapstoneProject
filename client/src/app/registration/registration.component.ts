@@ -36,6 +36,10 @@ onSubmit(){
     })
   }
 }
+
+navigateToHome() {
+  this.router.navigate(['/home']);
+}
  
 }
  

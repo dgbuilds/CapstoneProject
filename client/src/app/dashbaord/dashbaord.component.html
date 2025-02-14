@@ -1,14 +1,18 @@
 <!-- Planner Navbar -->
 <nav class="navbar" *ngIf="role === 'PLANNER'">
-  <a href="/" class="brand">
+  <button type="button" class="brand" (click)="navigateToDashboard()">
     <fa-icon [icon]="faCalendar"></fa-icon>
     <span>EventMaster</span>
-  </a>
+  </button>
 
   <div class="nav-actions">
-    <button class="view-requests-btn" (click)="toggleViewRequests()">
+    <button *ngIf="!viewingRequests"  class="view-requests-btn" (click)="toggleViewRequests()">
       <fa-icon [icon]="faClipboard"></fa-icon>
       View Requests
+    </button>
+    <button *ngIf="viewingRequests" class="view-requests-btn" (click)="toggleViewRequests()">
+      <fa-icon [icon]="faClipboard"></fa-icon>
+      Dashboard
     </button>
 
     <div class="dropdown">
