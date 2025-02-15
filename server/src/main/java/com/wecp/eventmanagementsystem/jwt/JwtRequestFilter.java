@@ -32,19 +32,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
-        System.out.println("here in doFilterInternal");
         final String authorizationHeader = request.getHeader("Authorization");
-        System.out.println(authorizationHeader);
         
         String username = null;
         String jwt = null;
         
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            System.out.println("here in");
             jwt = authorizationHeader.substring(7);
-            System.out.println(jwt);
             username = jwtUtil.extractUsername(jwt);
-            System.out.println(username);
         }
  
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {

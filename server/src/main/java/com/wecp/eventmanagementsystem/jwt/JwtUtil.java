@@ -36,9 +36,11 @@ public class JwtUtil {
         User user = userRepository.findByUsername(username).get();
  
         Map<String, Object> claims = new HashMap<>();
+        System.out.println(user.getUserID());
         claims.put("username", username);
+        claims.put("user_id",user.getUserID());
         claims.put("role", user.getRole());
- 
+        System.out.println(claims);
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
