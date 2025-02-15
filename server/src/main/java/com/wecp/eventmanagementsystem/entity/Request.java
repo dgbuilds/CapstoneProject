@@ -5,6 +5,9 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 
 @Entity
 @Table(name="requests")
@@ -19,6 +22,10 @@ public class Request {
     private String preferredLocation;
     private long expectedPeople;
     private String status;
+
+    @ManyToOne
+    @JsonIgnore
+    private Client client;
     
 
     public Request() {
@@ -92,6 +99,23 @@ public class Request {
     public void setStatus(String status) {
         this.status = status;
     }
+
+
+    public void setRequestId(Long requestId) {
+        this.requestId = requestId;
+    }
+
+
+    public Client getClient() {
+        return client;
+    }
+
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    
 
     
 

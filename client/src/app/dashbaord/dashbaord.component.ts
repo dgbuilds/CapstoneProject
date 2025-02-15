@@ -18,45 +18,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-// interface Event {
-//   id: number;
-//   title: string;
-//   description: string;
-//   dateTime: string;
-//   location: string;
-//   status: string;
-// }
-
-// interface Resource {
-//   id: number;
-//   name: string;
-//   type: string;
-//   availability: boolean;
-// }
-
-// interface Client {
-//   id: number;
-//   username: string;
-//   email: string;
-// }
-
-// interface Request {
-//   id: number;
-//   eventTitle: string;
-//   clientName: string;
-//   status: string;
-// }
-
-// interface BookingDetail {
-//   bookingID: number;
-//   title: string;
-//   description: string;
-//   expectedCount: number;
-//   dateTime: string;
-//   location: string;
-//   status: string;
-// }
-
 @Component({
   selector: 'app-dashbaord',
   templateUrl: './dashbaord.component.html',
@@ -85,6 +46,7 @@ export class DashbaordComponent implements OnInit {
   showRequestForm = false;
   requestForm: FormGroup;
   requestErrorMessage = '';
+  myEvents:Boolean = false;
 
   // Data arrays
   requests: any[] = [];
@@ -94,6 +56,8 @@ export class DashbaordComponent implements OnInit {
   bookingEvents: any[] = [];
   bookingDetails: any[] = [];
   selectedTickets : any = 0;
+  clientId:any;
+  requestedEvents: any[] = [];
 
   constructor(
     private authService: AuthService,
@@ -116,6 +80,10 @@ export class DashbaordComponent implements OnInit {
     //   this.loadRequests();
     // }
     this.role = this.authService.getRole();
+    //this.clientId = 1;
+    this.clientId = this.authService.getUserID();
+    console.log(this.clientId);
+
     this.loadDashboardData();
   }
 
@@ -152,7 +120,7 @@ export class DashbaordComponent implements OnInit {
 
 
   loadClientData(): void {
-    this.httpService.getAllBookings().subscribe({
+    this.httpService.getClientBookedEvents(this.clientId).subscribe({
       next: (res) => this.bookingDetails = res,
       error: (error) => console.error('Error loading booking details:', error)
     })
@@ -176,7 +144,7 @@ export class DashbaordComponent implements OnInit {
     });
   }
 
-  handleRequest(request: any, action: 'approve' | 'reject'): void {
+  handleRequest(request: any, action: any): void {
     if (action == 'approve') {
       this.httpService.createEvent({
         type: "private",
@@ -189,7 +157,7 @@ export class DashbaordComponent implements OnInit {
       }).subscribe();
     }
     if (action == 'reject') {
-      this.requestErrorMessage = 'Sorry! Currently we have no resources available for the event.';
+      action = action +'Sorry! Currently we have no resources available for the event.';
     }
     this.httpService.handleRequest(request.requestId, action).subscribe({
       next: () => {
@@ -215,23 +183,20 @@ export class DashbaordComponent implements OnInit {
   toggleRequest() {
     this.showRequestForm = !this.showRequestForm;
     if (this.showRequestForm) {
+
     } else {
       this.ngOnInit();
     }
   }
 
-  // Add this method to handle form submission
   onSubmitRequest() {
-    console.log("here");
     if (this.requestForm.valid) {
-      // Add your API call here to submit the request
-      console.log(this.requestForm.value);
       this.requestForm.get('status')?.enable();
-      this.httpService.createEventRequest(this.requestForm.value).subscribe({
+      this.httpService.createClientRequest(this.clientId,this.requestForm.value).subscribe({
         next: (response: any) => {
           this.showRequestForm = false;
           this.requestForm.reset();
-          this.loadClientData(); // Refresh the data
+          this.loadClientData(); 
         },
         error: (error: any) => console.error('Error submitting request:', error)
       });
@@ -261,27 +226,35 @@ export class DashbaordComponent implements OnInit {
     return new Date(date).toLocaleString();
   }
 
-  incrementTickets(event: any) {
-    this.selectedTickets = this.selectedTickets + 1;
+  // Replace the single selectedTickets property with a map
+  selectedTicketsMap: Map<number, number> = new Map();
+  
+  // Update the increment/decrement methods to handle per-event tickets
+  incrementTickets(eventId: number) {
+    const currentCount = this.selectedTicketsMap.get(eventId) || 0;
+    this.selectedTicketsMap.set(eventId, currentCount + 1);
   }
-
-  decrementTickets(event: any) {
-    if (this.selectedTickets > 0) {
-      this.selectedTickets--;
+  
+  decrementTickets(eventId: number) {
+    const currentCount = this.selectedTicketsMap.get(eventId) || 0;
+    if (currentCount > 0) {
+      this.selectedTicketsMap.set(eventId, currentCount - 1);
     }
   }
-
+  
+  // Update the bookTickets method to use the map
   bookTickets(event: any) {
-    console.log(this.selectedTickets)
-    this.httpService.checkTicketAvailability(event.eventID, this.selectedTickets).subscribe({
+    const ticketCount = this.selectedTicketsMap.get(event.eventID) || 0;
+    
+    this.httpService.checkTicketAvailability(event.eventID, ticketCount).subscribe({
       next: (response: any) => {
         if (response.available) {
-          this.httpService.bookTickets(event.eventID, this.selectedTickets).subscribe({
+          this.httpService.bookEventTickets(this.clientId, event.eventID, ticketCount).subscribe({
             next: () => {
-              event.ticketMessage = `Successfully booked ${event.selectedTickets} tickets!`;
+              event.ticketMessage = `Successfully booked ${ticketCount} tickets!`;
               event.ticketStatus = true;
-              event.selectedTickets = 0;
-              this.loadClientData(); // Refresh data
+              this.selectedTicketsMap.set(event.eventID, 0); // Reset count after booking
+              this.loadClientData();
             },
             error: () => {
               event.ticketMessage = 'Error booking tickets. Please try again.';
@@ -299,8 +272,14 @@ export class DashbaordComponent implements OnInit {
       }
     });
   }
+  
 
   navigateToDashboard(): void {
     this.router.navigate(['/dashboard']);
+  }
+
+  toggleEvents(){
+    this.myEvents = !this.myEvents;
+    this.httpService.getClientRequests(this.clientId).subscribe((res)=>this.requestedEvents = res)
   }
 }
