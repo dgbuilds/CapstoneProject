@@ -14,7 +14,10 @@ import {
   faCheck,
   faTimes,
   faUser,
-  faBuilding
+  faBuilding,
+  faTicketAlt,
+  faLocationDot,
+  faUsers
 } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -37,6 +40,9 @@ export class DashbaordComponent implements OnInit {
   faTimes = faTimes;
   faUser = faUser;
   faBuilding = faBuilding;
+  faTicketAlt = faTicketAlt;
+  faLocationDot = faLocationDot;
+  faUsers = faUsers;
 
   // Component properties
   role: string | null = '';
@@ -46,7 +52,11 @@ export class DashbaordComponent implements OnInit {
   showRequestForm = false;
   requestForm: FormGroup;
   requestErrorMessage = '';
+  ticketMessage = '';
+  ticketStatus : boolean = false;
   myEvents:Boolean = false;
+  requestStatusMessage : any = '';
+  requestStatus : any = true;
 
   // Data arrays
   requests: any[] = [];
@@ -146,6 +156,9 @@ export class DashbaordComponent implements OnInit {
 
   handleRequest(request: any, action: any): void {
     if (action == 'approve') {
+      this.requestStatusMessage = 'Approved';
+      this.requestStatus = true;
+      console.log(this.requestStatusMessage);
       this.httpService.createEvent({
         type: "private",
         title: request.name,
@@ -157,7 +170,9 @@ export class DashbaordComponent implements OnInit {
       }).subscribe();
     }
     if (action == 'reject') {
-      action = action +'Sorry! Currently we have no resources available for the event.';
+      this.requestStatusMessage = 'Sorry! Currently we have no resources available for the event.';
+      this.requestStatus = false;
+      console.log(this.requestStatusMessage);
     }
     this.httpService.handleRequest(request.requestId, action).subscribe({
       next: () => {
@@ -248,6 +263,7 @@ export class DashbaordComponent implements OnInit {
     
     this.httpService.checkTicketAvailability(event.eventID, ticketCount).subscribe({
       next: (response: any) => {
+        console.log(response);
         if (response.available) {
           this.httpService.bookEventTickets(this.clientId, event.eventID, ticketCount).subscribe({
             next: () => {
@@ -257,18 +273,18 @@ export class DashbaordComponent implements OnInit {
               this.loadClientData();
             },
             error: () => {
-              event.ticketMessage = 'Error booking tickets. Please try again.';
-              event.ticketStatus = false;
+              this.ticketMessage = 'Error booking tickets. Please try again.';
+              this.ticketStatus = false;
             }
           });
         } else {
-          event.ticketMessage = `Only ${response.availableTickets} tickets available`;
-          event.ticketStatus = false;
+          this.ticketMessage = `Only ${response.availableTickets} tickets available`;
+          this.ticketStatus = false;
         }
       },
       error: (error) => {
-        event.ticketMessage = 'Error checking ticket availability';
-        event.ticketStatus = false;
+        this.ticketMessage = 'Error checking ticket availability';
+        this.ticketStatus = false;
       }
     });
   }

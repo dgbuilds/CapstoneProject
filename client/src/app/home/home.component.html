@@ -36,4 +36,57 @@
     <p>Join thousands of event organizers who trust our platform</p>
     <button class="cta-button" routerLink="/registration">Get Started</button>
   </section>
+
+
+  <!-- Add this after the cta-section -->
+<footer class="footer-section">
+  <div class="footer-content">
+    <div class="footer-column about-us">
+      <h3>About Us</h3>
+      <p>EventMaster is crafted by a team of passionate developers dedicated to revolutionizing event management.</p>
+      <div class="team-grid">
+        <div class="team-member" *ngFor="let member of teamMembers">
+          <!-- <img [src]="member.image" [alt]="member.name"> -->
+          <h4>{{member.name}}</h4>
+          <p>{{member.role}}</p>
+          <div class="social-links">
+            <a [href]="member.linkedin" target="_blank">
+              <fa-icon [icon]="faLinkedin"></fa-icon>
+            </a>
+            <a [href]="member.github" target="_blank">
+              <fa-icon [icon]="faGithub"></fa-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-column contact-us">
+      <h3>Contact Us</h3>
+      <div class="contact-info">
+        <div class="contact-item">
+          <fa-icon [icon]="faEnvelope"></fa-icon>
+          <a href="mailto:support@eventmaster.com">support@eventmaster.com</a>
+        </div>
+        <div class="contact-item">
+          <fa-icon [icon]="faPhone"></fa-icon>
+          <a href="tel:+1234567890">+1 (234) 567-890</a>
+        </div>
+        <div class="contact-item">
+          <fa-icon [icon]="faMapMarker"></fa-icon>
+          <p>Mahape, Navi Mumbai, India</p>
+        </div>
+      </div>
+      <form class="contact-form" (ngSubmit)="onContactSubmit()">
+        <input type="email" placeholder="Your Email" required>
+        <textarea placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 EventMaster. All rights reserved.</p>
+  </div>
+</footer>
+
   

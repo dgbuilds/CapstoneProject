@@ -74,7 +74,7 @@ public class EventService {
         // Get current tickets for this client and add new tickets
         Long currentTickets = event.getClientTickets().getOrDefault(userId, 0L);
         Long newTotalTickets = currentTickets + tickets;
-        
+        client.setBookedTickets(newTotalTickets);
         // Update the tickets count for this client
         event.getClientTickets().put(userId, newTotalTickets);
         event.setTickets(event.getTickets() - tickets);

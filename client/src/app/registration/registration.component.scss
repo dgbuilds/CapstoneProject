@@ -1,219 +1,393 @@
-// Add this navbar styling at the top of your existing SCSS file
 .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 1rem 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 248, 248, 0.97));
+  backdrop-filter: blur(15px);
+  padding: 0.8rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  z-index: 1000;
+  height: 70px;
+  transition: all 0.3s ease;
+
+  .brand {
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    &:focus {
+      outline: none;
+    }
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-  
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      text-decoration: none;
-      color: #764ba2;
-      font-weight: 700;
-      font-size: 1.5rem;
-  
+    background-color: rgba(248, 248, 248, 0.97);
+    gap: 0.8rem;
+    text-decoration: none;
+    color: #764ba2;
+    font-weight: 700;
+    border: rgba(255, 255, 255, 0.95);
+    font-size: 1.6rem;
+    position: relative;
+
+    fa-icon {
+      font-size: 2rem;
+      transition: transform 0.4s ease;
+    }
+
+    &:hover {
+      transform: scale(1.02);
+      
       fa-icon {
-        font-size: 1.8rem;
-      }
-  
-      &:hover {
-        transform: scale(1.05);
-        transition: transform 0.3s ease;
+        transform: rotate(10deg);
       }
     }
-  
-    .nav-buttons {
-      display: flex;
-      gap: 1rem;
-  
-      .sign-in, .sign-up {
-        padding: 0.5rem 1.5rem;
-        border-radius: 25px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        cursor: pointer;
+
+
+    &:hover::after {
+      width: 100%;
+    }
+  }
+
+  .nav-buttons {
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+
+    .home, .sign-in {
+      padding: 0.7rem 1.8rem;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.3));
+        transition: left 0.3s ease;
       }
-  
-      .sign-in {
-        background: transparent;
-        border: 2px solid #764ba2;
-        color: #764ba2;
-  
-        &:hover {
+
+      &:hover::before {
+        left: 100%;
+      }
+    }
+
+    .home {
+      background: linear-gradient(135deg, #764ba2, #667eea);
+      color: white;
+      box-shadow: 0 4px 15px rgba(118, 75, 162, 0.2);
+      margin-right: 20px;
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(118, 75, 162, 0.3);
+      }
+    }
+
+    .sign-in {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+      }
+    }
+  }
+
+  &:hover {
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.registration-container {
+  min-height: 100vh;
+  background-image: url('login.jpg');
+  background-size: cover;
+  background-position: center;
+  margin-top: 60px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+
+  .split-layout {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 80px);
+    padding: 2rem;
+    margin-top: 20px;
+  }
+
+  .registration-card {
+    margin-top: 35px;
+    width: 35%;
+    padding: 2.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    margin-left: 2rem;
+    height: fit-content;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    h2 {
+      color: white;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .input-container {
+      position: relative;
+      height: 48px;
+      margin-bottom: 0.5rem;
+
+      input, select {
+        width: 100%;
+        height: 100%;
+        padding: 0.8rem 1rem 0.8rem 3rem;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        font-size: 1rem;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        transition: all 0.3s;
+        font-weight: 800;
+
+        option {
           background: #764ba2;
           color: white;
         }
+
+        &::placeholder {
+          color: rgba(255, 255, 255, 0.7);
+        }
+
+        &:focus {
+          border-color: #764ba2;
+          outline: none;
+          box-shadow: 0 0 15px rgba(118, 75, 162, 0.2);
+        }
+
+        &:focus + label,
+        &:not(:placeholder-shown) + label {
+          transform: translateY(-130%) scale(0.8);
+          color: white;
+          padding: 0 0.5rem;
+        }
       }
-  
-      .sign-up {
-        background: #764ba2;
-        border: none;
+
+      label {
+        position: absolute;
+        left: 1.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        transition: all 0.3s;
         color: white;
-  
-        &:hover {
-          background: #667eea;
-          transform: translateY(-2px);
-        }
+        pointer-events: none;
+        font-size: medium;
+        font-weight: 800;
       }
     }
-  }
-  
-  // Update the registration-container top padding to account for navbar
-  .registration-container {
-    padding-top: 5rem; // Add this line to existing styles
-  }
-  
-  // Add responsive styles for navbar
-  @media (max-width: 768px) {
-    .navbar {
-      padding: 1rem;
-  
-      .nav-buttons {
-        gap: 0.5rem;
-  
-        .sign-in, .sign-up {
-          padding: 0.5rem 1rem;
-          font-size: 0.9rem;
-        }
-      }
-    }
-  }  
 
-
-.registration-container {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-  
-    .registration-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      padding: 2.5rem;
-      border-radius: 20px;
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    .submit-button {
       width: 100%;
-      max-width: 500px;
-      animation: fadeIn 0.6s ease-out;
-  
-      h2 {
-        color: #764ba2;
-        font-size: 1.8rem;
-        text-align: center;
-        margin-bottom: 0.5rem;
+      padding: 0.8rem;
+      background: linear-gradient(135deg, #764ba2, #667eea);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(118, 75, 162, 0.2);
+
+      &:hover:not(:disabled) {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(118, 75, 162, 0.3);
       }
-  
-      p {
-        color: #666;
-        text-align: center;
-        margin-bottom: 2rem;
-      }
-  
-      .form-group {
-        margin-bottom: 1.5rem;
-  
-        label {
-          display: block;
-          color: #4a4a4a;
-          margin-bottom: 0.5rem;
-          font-weight: 500;
-        }
-  
-        input, select {
-          width: 100%;
-          padding: 0.8rem;
-          border: 2px solid #e1e1e1;
-          border-radius: 10px;
-          font-size: 1rem;
-          transition: all 0.3s ease;
-  
-          &:focus {
-            outline: none;
-            border-color: #764ba2;
-            box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
-          }
-        }
-  
-        .error-message {
-          color: #ff4757;
-          font-size: 0.85rem;
-          margin-top: 0.5rem;
-        }
-      }
-  
-      .submit-button {
-        width: 100%;
-        padding: 1rem;
-        background: #764ba2;
-        color: white;
-        border: none;
-        border-radius: 10px;
-        font-size: 1rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-  
-        &:hover:not(:disabled) {
-          background: #667eea;
-          transform: translateY(-2px);
-        }
-  
-        &:disabled {
-          opacity: 0.7;
-          cursor: not-allowed;
-        }
-      }
-  
-      .login-link {
-        display: block;
-        text-align: center;
-        margin-top: 1.5rem;
-        color: #764ba2;
-        text-decoration: none;
-        font-weight: 500;
+    }
+
+    .login-link {
+      display: block;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-weight: 700;
+      margin-top: 1rem;
+
+      span {
+        color: #f3f0f6;
+        font-weight: 800;
+        font-size: 20px;
         transition: color 0.3s ease;
-  
+
         &:hover {
           color: #667eea;
         }
       }
     }
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
+
+    .error-message {
+      color: #ff4757;
+      font-weight: 800;
+      font-size: 1rem;
     }
   }
-  
-  @media (max-width: 768px) {
-    .registration-container {
-      padding: 1rem;
-  
-      .registration-card {
-        padding: 1.5rem;
-  
-        h2 {
-          font-size: 1.5rem;
-        }
+
+  .content-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+    padding-right: 2rem;
+
+    .animate-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-top: 130px;
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 1.5s ease-out;
+      background: linear-gradient(135deg, #ffffff, #e0e0e0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .welcome-text {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-top: 5px;
+      margin-bottom: 200px;
+      margin-left: 90px;
+      animation: fadeInUp 1.8s ease-out;
+      background: linear-gradient(135deg, #ffffff, #e0e0e0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.8rem;
+
+    .nav-buttons {
+      gap: 0.5rem;
+
+      .home, .sign-in {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
       }
     }
   }
+
+  .registration-container {
+    .registration-card {
+      width: 90%;
+      margin: 1rem;
+    }
+
+    .content-right {
+      display: none;
+    }
+  }
+}
+
+
+// Add these new styles to your existing SCSS
+
+.input-container {
+  position: relative;
+
+  .toggle-password {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: white;
+    }
+  }
+}
+
+.password-strength {
+  margin-top: 0.5rem;
   
+  .strength-meter {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+
+    .strength-bar {
+      height: 100%;
+      width: 0;
+      transition: all 0.3s ease;
+      
+      &.weak {
+        width: 33.33%;
+        background: #ff4757;
+      }
+      
+      &.medium {
+        width: 66.66%;
+        background: #ffa502;
+      }
+      
+      &.strong {
+        width: 100%;
+        background: #2ed573;
+      }
+    }
+  }
+
+  .strength-text {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+// Rest of your existing styles remain the same

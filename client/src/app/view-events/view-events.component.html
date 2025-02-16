@@ -60,7 +60,7 @@
               <label for="status">Status</label>
               <select id="status" formControlName="status">
                 <option value="Initiated">Initiated</option>
-                <option value="Complete">Complete</option>
+                <option value="Complete">Completed</option>
               </select>
             </div>
   
@@ -103,7 +103,8 @@
                   {{fevents.status}}
                 </span>
               </td>
-              <td>
+              <p>{{ fevents|json}}</p>
+              <td *ngIf="fevents.status != 'Complete' ">
                 <button (click)="selectEvent(fevents)">
                   <fa-icon [icon]="faEdit"></fa-icon>
                   Update

@@ -34,6 +34,7 @@ export class ViewEventsComponent implements OnInit {
   itemForm!: FormGroup;
   selectedEvent: any = null;
   successMessage: string = '';
+  isCompleted : boolean = false;
 
   constructor(
     private httpService: HttpService,
