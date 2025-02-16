@@ -7,10 +7,10 @@
       </button>
       </div>
       <div class="nav-actions">
-        <button class="nav-btn" routerLink="/dashboard">
+        <!-- <button class="nav-btn" routerLink="/dashboard">
           <fa-icon [icon]="faDashboard"></fa-icon>
           Dashboard
-        </button>
+        </button> -->
         <button class="nav-logout" (click)="logout()">
           <fa-icon [icon]="faSignOutAlt"></fa-icon>
           Logout
@@ -103,7 +103,6 @@
                   {{fevents.status}}
                 </span>
               </td>
-              <p>{{ fevents|json}}</p>
               <td *ngIf="fevents.status != 'Complete' ">
                 <button (click)="selectEvent(fevents)">
                   <fa-icon [icon]="faEdit"></fa-icon>
