@@ -16,6 +16,16 @@ export class AuthService {
     localStorage.setItem('role', role);
   }
 
+  setUserID(userId:any):void{
+    localStorage.setItem('userId',userId);
+  }
+
+  getUserID():any{
+    console.log("getuserIdcalled");
+    console.log(localStorage.getItem('userId'));
+    return localStorage.getItem('userId');
+  }
+
   getRole(): string | null {
     return localStorage.getItem('role');
   }

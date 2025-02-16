@@ -122,7 +122,6 @@ export class HttpService {
   }
 
   public handleRequest(requestId: any, action: any): Observable<any> {
-    console.log(action);
     return this.http.put<any>(`${this.serverName}/api/request/${requestId}`, action, {
       headers: this.getHeaders()
     });
@@ -140,8 +139,28 @@ export class HttpService {
     return this.http.get<any>(`${this.serverName}/${eventId}/check-tickets/${requestedTickets}`);
   }
   
-  public bookTickets(eventId: number, tickets: number) {
-    return this.http.post(`${this.serverName}/${eventId}/book`, tickets );
+  public bookTickets(eventId: number, tickets: number):Observable<any> {
+    return this.http.post<any>(`${this.serverName}/${eventId}/book`, tickets);
   }
+
+  public createClientRequest(clientId:any,request:any):Observable<any>{
+    return this.http.post<any>(`${this.serverName}/api/client/${clientId}/request`,request);
+  }
+
+  public getClientRequests(clientId:any):Observable<any[]>{
+    return this.http.get<any[]>(`${this.serverName}/api/client/${clientId}/requests`);
+  }
+
+  public bookEventTickets(clientId:any,eventId:any,tickets:any):Observable<any[]>{
+    return this.http.post<any[]>(`${this.serverName}/api/client/${clientId}/events/${eventId}/book`,tickets);
+  }
+
+  public getClientBookedEvents(clientId:any):Observable<any[]>{
+    return this.http.get<any[]>(`${this.serverName}/api/client/${clientId}/events`);
+  }
+
+
+
+
   
 }

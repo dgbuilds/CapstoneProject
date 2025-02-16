@@ -49,7 +49,7 @@
 
 
 
-
+<!-- 
 <nav class="navbar">
   <button type="button" class="brand" (click)="navigateToHome()">
     <fa-icon [icon]="faCalendar"></fa-icon>
@@ -58,15 +58,15 @@
   
     <div class="nav-buttons">
       <button class="sign-in" routerLink="/login">Sign In</button>
-      <!-- <button class="sign-up" routerLink="/registration">Sign Up</button> -->
+       <button class="sign-up" routerLink="/registration">Sign Up</button> 
     </div>
   </nav>
   
-  <!-- Rest of your existing registration-container code -->  
+   Rest of your existing registration-container code 
 <div class="registration-container">
     <div class="registration-card">
       <h2>Register</h2>
-      <!-- <p>Please enter your details here</p> -->
+       <p>Please enter your details here</p> 
       
       <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
@@ -115,4 +115,146 @@
       </form>
     </div>
   </div>
-  
+   -->
+
+
+
+
+
+  <!-- Previous navbar code remains same -->
+  <nav class="navbar">
+    <button type="button" class="brand" (click)="navigateToHome()">
+      <fa-icon [icon]="faCalendar"></fa-icon>
+      <span>EventMaster</span>
+    </button>
+ 
+    <div class="nav-buttons">
+      <button class="home" routerLink="/home">Home</button>
+      <button class="sign-in" routerLink="/login">Sign In</button>
+    </div>
+  </nav>
+
+<div class="registration-container">
+  <div class="split-layout">
+    <div class="registration-card">
+      <h2>Create Account</h2>
+      <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+        <!-- Username and Email fields remain same -->
+        <div class="form-group">
+          <div class="input-container">
+           
+            <input type="text" id="username" formControlName="username" placeholder=" ">
+            <label for="username">Username</label>
+          </div>
+          <div class="error-message" *ngIf="itemForm.get('username')?.touched && itemForm.get('username')?.invalid">
+            <div *ngIf="itemForm.get('username')?.errors?.['required']">Please enter username</div>
+            <div *ngIf="itemForm.get('username')?.errors?.['pattern']">Username should not contain special characters or numbers</div>
+            <div *ngIf="itemForm.get('username')?.errors?.['minlength']">Minimum 3 characters required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="input-container">
+           
+            <input type="email" id="email" formControlName="email" placeholder=" ">
+            <label for="email">Email</label>
+          </div>
+          <div class="error-message" *ngIf="itemForm.get('email')?.touched && itemForm.get('email')?.invalid">
+            <div *ngIf="itemForm.get('email')?.errors?.['required']">Email is required</div>
+            <div *ngIf="itemForm.get('email')?.errors?.['email']">Enter a valid email</div>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <div class="input-container">
+            <input 
+              [type]="showPassword ? 'text' : 'password'" 
+              id="password" 
+              formControlName="password" 
+              placeholder=" "
+            >
+            <label for="password">Password</label>
+            <button 
+              type="button" 
+              class="toggle-password" 
+              (click)="togglePasswordVisibility('password')"
+            >
+              <fa-icon [icon]="showPassword ? faEye : faEyeSlash"></fa-icon>
+            </button>
+          </div>
+          <div class="password-strength" *ngIf="itemForm.get('password')?.value">
+            <div class="strength-meter">
+              <div 
+                class="strength-bar" 
+                [ngClass]="passwordStrength"
+              ></div>
+            </div>
+            <span class="strength-text">Password Strength: {{passwordStrength | titlecase}}</span>
+          </div>
+          <div class="error-message" *ngIf="itemForm.get('password')?.touched && itemForm.get('password')?.invalid">
+            <!-- Previous password error messages -->
+            <div *ngIf="itemForm.get('password')?.errors?.['required']">Password is required</div>
+            <div *ngIf="itemForm.get('password')?.errors?.['pattern']">Password is have atleast 1 captial letter,1 special character, 1 number</div>
+            <div class="error-message" *ngIf="itemForm.get('password')?.errors?.['min']">Password should contain atleast 8 characters </div>
+
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="input-container">
+            <input 
+              [type]="showConfirmPassword ? 'text' : 'password'" 
+              id="confirmPassword" 
+              formControlName="confirmPassword" 
+              placeholder=" "
+            >
+            <label for="confirmPassword">Confirm Password</label>
+            <button 
+              type="button" 
+              class="toggle-password" 
+              (click)="togglePasswordVisibility('confirmPassword')"
+            >
+              <fa-icon [icon]="showConfirmPassword ? faEye : faEyeSlash"></fa-icon>
+            </button>
+          </div>
+          <div class="error-message" *ngIf="itemForm.get('confirmPassword')?.touched && itemForm.hasError('mismatch')">
+            Passwords do not match
+          </div>
+        </div>
+
+        <!-- Role selection and rest of the form remains same -->
+        <div class="form-group">
+          <div class="input-container">
+         
+            <select id="role" formControlName="role">
+              <option value="" disabled selected>Select Role</option>
+              <option value="PLANNER">Event Planner</option>
+              <option value="CLIENT">Client</option>
+              <option value="STAFF">Staff</option>
+            </select>
+          </div>
+          <div class="error-message" *ngIf="itemForm.get('role')?.touched && itemForm.get('role')?.invalid">
+            <div *ngIf="itemForm.get('role')?.errors?.['required']">Please select a role</div>
+          </div>
+        </div>
+
+        <div class="error-message" *ngIf="errorMessage">{{errorMessage}}</div>
+
+        <button type="submit" class="submit-button" [disabled]="!itemForm.valid">CREATE ACCOUNT</button>
+        <a routerLink="/login" class="login-link">Already have an account? <span>Sign in</span></a>
+
+      </form>
+    </div>
+    <!-- Content right section remains same -->
+    <div class="content-right">
+      <div class="logo-container">
+        <!-- <img src="assets/event-logo.png" alt="Event Logo" class="event-logo"> -->
+      </div>
+      <h1 class="animate-title">EVENT MANAGEMENT</h1>
+      <h2 class="welcome-text">JOIN OUR COMMUNITY</h2>
+      <!-- <p class="description">Create unforgettable events and connect with professional event planners, clients, and staff members worldwide.</p> -->
+    </div>
+
+  </div>
+</div>

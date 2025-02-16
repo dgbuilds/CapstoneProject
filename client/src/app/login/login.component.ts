@@ -13,7 +13,7 @@ import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 })
 
 export class LoginComponent {
-  
+
   itemForm: FormGroup;
   errorMessage: string = '';
   faCalendar = faCalendar;
@@ -25,8 +25,8 @@ export class LoginComponent {
     private router: Router
   ) {
     this.itemForm = this.fb.group({
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required]]
+      username: ['', [Validators.required,Validators.pattern(/^[A-Za-z0-9.' '_]{2,20}$/),Validators.minLength(3)]],
+      password: ['', [Validators.required,Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[._!@#$%^&*])[A-Za-z0-9._!@#$%^&*]{8,20}$/),Validators.min(8)]]
     });
   }
 
@@ -34,8 +34,13 @@ export class LoginComponent {
     if (this.itemForm.valid) {
       this.httpService.Login(this.itemForm.value).subscribe({
         next: (response) => {
+          localStorage.setItem("token", response.token);
+          localStorage.setItem("role", response.roles);
+          localStorage.setItem("user_id", response.userId);
+          console.log(localStorage.getItem("user_id"));
           this.authService.saveToken(response.token);
           this.authService.setRole(response.role);
+          this.authService.setUserID(response.userId);
           this.router.navigate(['/dashboard']);
         },
         error: (error) => {
@@ -48,5 +53,5 @@ export class LoginComponent {
   navigateToHome() {
     this.router.navigate(['/home']);
   }
-  
+
 }

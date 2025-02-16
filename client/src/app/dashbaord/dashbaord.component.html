@@ -4,7 +4,7 @@
     <fa-icon [icon]="faCalendar"></fa-icon>
     <span>EventMaster</span>
   </button>
-
+ 
   <div class="nav-actions">
     <button *ngIf="!viewingRequests" class="view-requests-btn" (click)="toggleViewRequests()">
       <fa-icon [icon]="faClipboard"></fa-icon>
@@ -14,7 +14,7 @@
       <fa-icon [icon]="faClipboard"></fa-icon>
       Dashboard
     </button>
-
+ 
     <div class="dropdown">
       <button class="menu-btn" (click)="toggleDropdown()">
         <fa-icon [icon]="faEllipsisV"></fa-icon>
@@ -40,7 +40,7 @@
     </div>
   </div>
 </nav>
-
+ 
 <!-- Client Navbar -->
 <nav class="navbar" *ngIf="role === 'CLIENT'">
   <a href="/" class="brand">
@@ -48,6 +48,10 @@
     <span>EventMaster</span>
   </a>
   <div class="nav-actions">
+    <button  class="logout-btn" (click)="toggleEvents()">
+      <fa-icon [icon]="faCalendarPlus"></fa-icon>
+      My Events
+    </button>
     <button *ngIf="!showRequestForm" class="logout-btn" (click)="toggleRequest()">
       <fa-icon [icon]="faCalendarPlus"></fa-icon>
       Request Event
@@ -62,7 +66,7 @@
     </button>
   </div>
 </nav>
-
+ 
 <!-- Staff Navbar -->
 <nav class="navbar" *ngIf="role === 'STAFF'">
   <a href="/" class="brand">
@@ -84,7 +88,7 @@
     </button>
   </div>
 </nav>
-
+ 
 <!-- Main Content Area -->
 <div class="dashboard-container">
   <!-- Planner Content -->
@@ -121,7 +125,7 @@
         </tbody>
       </table>
     </div>
-
+ 
     <div *ngIf="!viewingRequests" class="dashboard-content">
       <div class="section">
         <h2>Events</h2>
@@ -150,7 +154,7 @@
           </tbody>
         </table>
       </div>
-
+ 
       <div class="section">
         <h2>Resources</h2>
         <table class="data-table">
@@ -174,7 +178,7 @@
           </tbody>
         </table>
       </div>
-
+ 
       <div class="section">
         <h2>Clients</h2>
         <table class="data-table">
@@ -198,20 +202,21 @@
       </div>
     </div>
   </ng-container>
-
-
-
+ 
+ 
+ 
   <!-- Client Content -->
+  <div *ngIf="!myEvents">
   <div *ngIf="!showRequestForm">
     <ng-container *ngIf="role === 'CLIENT'">
       <div class="booking-details section">
         <h2>Your Booking Details</h2>
         <div class="booking-cards-container">
-          <div class="booking-card" *ngFor="let booking of bookingDetails">
+          <div class="booking-card" *ngFor="let booking of events">
             <div class="booking-header">
               <h3>Booking #{{booking.bookingID}}</h3>
               <span class="status-badge" [class]="booking.status">
-                {{booking.status}}
+               Number of Tickets : {{ booking.clientTickets[clientId] |json }}
               </span>
             </div>
             <div class="booking-info">
@@ -243,14 +248,15 @@
                 <td>{{event.location}}</td>
                 <td class="ticket-booking-cell">
                   <div class="ticket-counter">
-                    <button class="counter-btn" (click)="decrementTickets(event)">-</button>
-                    <span class="ticket-count">{{selectedTickets}}</span>
-                    <button class="counter-btn" (click)="incrementTickets(event)">+</button>
+                    <button class="counter-btn" (click)="decrementTickets(event.eventID)">-</button>
+                    <span class="ticket-count">{{selectedTicketsMap.get(event.eventID) || 0}}</span>
+                    <button class="counter-btn" (click)="incrementTickets(event.eventID)">+</button>
                   </div>
-                  <button class="book-btn" (click)="bookTickets(event)" [disabled]="!selectedTickets">Book</button>
-                  <div *ngIf="event.ticketMessage" [class]="event.ticketStatus ? 'success-message' : 'error-message'">
+                  <button class="book-btn" (click)="bookTickets(event)" [disabled]="!(selectedTicketsMap.get(event.eventID))">Book</button>
+                  
+                  <!-- <div *ngIf="ticket" [class]="event.ticketStatus ? 'success-message' : 'error-message'">
                     {{ ticketMessage }}
-                  </div>
+                  </div> -->
                 </td>
               </tr>
             </tbody>
@@ -259,7 +265,10 @@
       </div>
     </ng-container>
   </div>
-
+ </div>
+ <div *ngFor="let event of requestedEvents">
+  <h2>{{event |json}}</h2>
+ </div>
   <div *ngIf="showRequestForm" class="request-form-container">
     <h2>Request New Event</h2>
     <form [formGroup]="requestForm" (ngSubmit)="onSubmitRequest()" class="request-form">
@@ -267,44 +276,44 @@
         <label for="name">Event Name</label>
         <input type="text" id="name" formControlName="name" class="form-control">
       </div>
-
+ 
       <div class="form-group">
         <label for="description">Description</label>
         <textarea id="description" formControlName="description" class="form-control"></textarea>
       </div>
-
+ 
       <div class="form-group">
         <label for="preferredLocation">Preferred Location</label>
         <input type="text" id="preferredLocation" formControlName="preferredLocation" class="form-control">
       </div>
-
+ 
       <div class="form-group">
         <label for="preferredDate">Preferred Date</label>
         <input type="datetime-local" id="preferredDate" formControlName="preferredDate" class="form-control">
       </div>
-
+ 
       <div class="form-group">
         <label for="expectedPeople">Expected Number of People</label>
         <input type="number" id="expectedPeople" formControlName="expectedPeople" class="form-control">
       </div>
-
+ 
       <div class="form-group">
         <label for="status">Status</label>
         <input type="text" id="status" formControlName="status" class="form-control" [disabled]="true">
       </div>
-
+ 
       <div class="form-actions">
         <button type="submit" [disabled]="!requestForm.valid" class="submit-btn">Submit Request</button>
         <button type="button" (click)="toggleRequest()" class="cancel-btn">Cancel</button>
       </div>
     </form>
-
+ 
     <div *ngIf="requestErrorMessage" class="error-message">
       {{ requestErrorMessage }}
     </div>
   </div>
-
-
+ 
+ 
   <!-- Staff Content -->
   <ng-container *ngIf="role === 'STAFF'">
     <div class="staff-dashboard">

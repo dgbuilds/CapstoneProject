@@ -25,35 +25,27 @@ public class EventPlannerController {
 
     @PostMapping("/api/planner/event")
     public ResponseEntity<Event> createEvent(@RequestBody Event event) {
-        // create event and return created event with status code 201 (CREATED)
         return new ResponseEntity<Event>(eventService.createEvent(event), HttpStatus.CREATED);
     }
 
     @GetMapping("/api/planner/events")
     public ResponseEntity<List<Event>> getAllEvents() {
-        // get all events and return the list with status code 200 (OK)
-
         return new ResponseEntity<>(eventService.getAllEvents(), HttpStatus.OK);
     }
 
     @PostMapping("/api/planner/resource")
     public ResponseEntity<Resource> addResource(@RequestBody Resource resource) {
-        // add resource and return added resource with status code 201 (CREATED)
         return new ResponseEntity<Resource>(resourceService.addResource(resource), HttpStatus.CREATED);
     }
 
     @GetMapping("/api/planner/resources")
     public ResponseEntity<List<Resource>> getAllResources() {
-        // get all resources and return the list with status code 200 (OK)
         return ResponseEntity.ok(resourceService.getAllResources());
     }
 
     @PostMapping("/api/planner/allocate-resources")
     public ResponseEntity<String> allocateResources(@RequestParam Long eventId, @RequestParam Long resourceId,
             @RequestBody Allocation allocation) {
-
-        // allocate resources for the event and return a success message with status
-        // code 201 (CREATED)
         resourceService.allocateResource(eventId, resourceId, allocation.getQuantity());
         return new ResponseEntity<>("{\"message\": \"Resource allocated successfully for Event ID: " + eventId + "\"}",
                 HttpStatus.CREATED);
