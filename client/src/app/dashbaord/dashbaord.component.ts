@@ -14,7 +14,10 @@ import {
   faCheck,
   faTimes,
   faUser,
-  faBuilding
+  faBuilding,
+  faTicketAlt,
+  faLocationDot,
+  faUsers
 } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -37,6 +40,9 @@ export class DashbaordComponent implements OnInit {
   faTimes = faTimes;
   faUser = faUser;
   faBuilding = faBuilding;
+  faTicketAlt = faTicketAlt;
+  faLocationDot = faLocationDot;
+  faUsers = faUsers;
 
   // Component properties
   role: string | null = '';
@@ -49,6 +55,8 @@ export class DashbaordComponent implements OnInit {
   ticketMessage = '';
   ticketStatus : boolean = false;
   myEvents:Boolean = false;
+  requestStatusMessage : any = '';
+  requestStatus : any = true;
 
   // Data arrays
   requests: any[] = [];
@@ -148,6 +156,9 @@ export class DashbaordComponent implements OnInit {
 
   handleRequest(request: any, action: any): void {
     if (action == 'approve') {
+      this.requestStatusMessage = 'Approved';
+      this.requestStatus = true;
+      console.log(this.requestStatusMessage);
       this.httpService.createEvent({
         type: "private",
         title: request.name,
@@ -159,7 +170,9 @@ export class DashbaordComponent implements OnInit {
       }).subscribe();
     }
     if (action == 'reject') {
-      action = action +'Sorry! Currently we have no resources available for the event.';
+      this.requestStatusMessage = 'Sorry! Currently we have no resources available for the event.';
+      this.requestStatus = false;
+      console.log(this.requestStatusMessage);
     }
     this.httpService.handleRequest(request.requestId, action).subscribe({
       next: () => {

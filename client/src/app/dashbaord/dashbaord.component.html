@@ -117,7 +117,7 @@
               <button class="action-btn approve" (click)="handleRequest(request, 'approve')">
                 <fa-icon [icon]="faCheck"></fa-icon>
               </button>
-              <button class="action-btn reject" (click)="handleRequest(request.requestId, 'reject')">
+              <button class="action-btn reject" (click)="handleRequest(request, 'reject')">
                 <fa-icon [icon]="faTimes"></fa-icon>
               </button>
             </td>
@@ -214,10 +214,22 @@
         <div class="booking-cards-container">
           <div class="booking-card" *ngFor="let booking of events">
             <div class="booking-header">
-              <h3>Booking #{{booking.bookingID}}</h3>
-              <span class="status-badge" [class]="booking.status">
+              <h3>Booking</h3>
+              <div class="ticket-display">
+                <div class="ticket-info">
+                  <div class="ticket-icon">
+                    <fa-icon [icon]="faTicketAlt"></fa-icon>
+                  </div>
+                  <div class="ticket-text">
+                    <div class="label">Number of Tickets</div>
+                    <div class="count">{{booking.clientTickets[clientId] | json}}</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <span class="status-badge" [class]="booking.status">
                Number of Tickets : {{ booking.clientTickets[clientId] |json }}
-              </span>
+              </span> -->
             </div>
             <div class="booking-info">
               <p><strong>Event:</strong> {{booking.title}}</p>
@@ -230,7 +242,7 @@
       <div class="dashboard-content">
         <div class="section">
           <h2>Events</h2>
-          <table class="data-table">
+          <!-- <table class="data-table">
             <thead>
               <tr>
                 <th>Title</th>
@@ -254,21 +266,125 @@
                   </div>
                   <button class="book-btn" (click)="bookTickets(event)" [disabled]="!(selectedTicketsMap.get(event.eventID))">Book</button>
                   
-                  <!-- <div *ngIf="ticket" [class]="event.ticketStatus ? 'success-message' : 'error-message'">
+                  <div *ngIf="ticket" [class]="event.ticketStatus ? 'success-message' : 'error-message'">
                     {{ ticketMessage }}
-                  </div> -->
+                  </div>
                 </td>
               </tr>
             </tbody>
-          </table>
+          </table> -->
+
+          
+      <!-- Client Events Section -->
+      <div class="events-grid">
+        <div class="event-card" *ngFor="let event of events">
+          <div class="event-header">
+            <h3>{{event.title}}</h3>
+            <p>{{event.description}}</p>
+          </div>
+          <div class="event-body">
+            <div class="event-info">
+              <p><fa-icon [icon]="faCalendar"></fa-icon> {{event.dateTime | date:'medium'}}</p>
+              <p><fa-icon [icon]="faBuilding"></fa-icon> {{event.location}}</p>
+            </div>
+            
+            <div class="ticket-counter">
+              <button class="counter-btn" (click)="decrementTickets(event.eventID)">-</button>
+              <span class="ticket-count">{{selectedTicketsMap.get(event.eventID) || 0}}</span>
+              <button class="counter-btn" (click)="incrementTickets(event.eventID)">+</button>
+            </div>
+            
+            <button class="book-btn" (click)="bookTickets(event)" 
+                    [disabled]="!(selectedTicketsMap.get(event.eventID))">
+              Book Tickets
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+
+
         </div>
       </div>
     </ng-container>
   </div>
  </div>
- <div *ngFor="let event of requestedEvents">
-  <h2>{{event |json}}</h2>
- </div>
+
+<!-- 
+<div class="requested-events-section">
+  <h2 class="section-title">Your Event Requests</h2>
+  <div class="requested-events-grid">
+
+    <div class="request-card" *ngFor="let event of requestedEvents">
+      <div class="request-header">
+        <span class="request-id">#{{event.requestId}}</span>
+        <span class="status-badge" [ngClass]="requestStatus ? 'approved' : 'rejected' ">
+          {{ requestStatusMessage }}
+        </span>
+      </div>
+      <div class="request-body">
+        <h3 class="event-name">{{event.name}}</h3>
+        <p class="event-description">{{event.description}}</p>
+        <div class="event-details">
+          <div class="detail-item">
+            <fa-icon [icon]="faCalendar"></fa-icon>
+            <span>{{event.preferredDate | date:'medium'}}</span>
+          </div>
+          <div class="detail-item">
+            <fa-icon [icon]="faLocationDot"></fa-icon>
+            <span>{{event.preferredLocation}}</span>
+          </div>
+          <div class="detail-item">
+            <fa-icon [icon]="faUsers"></fa-icon>
+            <span>{{event.expectedPeople}} People Expected</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="requested-events-section">
+  <h2 class="section-title">Your Event Requests</h2>
+  <div class="requested-events-grid">
+    <div class="request-card" *ngFor="let event of requestedEvents">
+      <div class="request-header">
+        <span class="request-id">#{{event.requestId}}</span>
+        <span class="status-badge" [ngClass]="event.status.toLowerCase()">
+          {{event.status}}
+        </span>
+      </div>
+      <div class="request-body">
+        <div class="status-message" [ngClass]="event.status.toLowerCase()">
+          {{event.status === 'approve' ? 'Your event request has been approved!' : 
+            event.status === 'reject' ? 'Sorry! Currently we have no resources available for the event.' : 
+            'Pending approval'}}
+        </div>
+        <h3 class="event-name">{{event.name}}</h3>
+        <p class="event-description">{{event.description}}</p>
+        <div class="event-details">
+          <div class="detail-item">
+            <fa-icon [icon]="faCalendar"></fa-icon>
+            <span>{{event.preferredDate | date:'medium'}}</span>
+          </div>
+          <div class="detail-item">
+            <fa-icon [icon]="faLocationDot"></fa-icon>
+            <span>{{event.preferredLocation}}</span>
+          </div>
+          <div class="detail-item">
+            <fa-icon [icon]="faUsers"></fa-icon>
+            <span>{{event.expectedPeople}} People Expected</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+ 
+
   <div *ngIf="showRequestForm" class="request-form-container">
     <h2>Request New Event</h2>
     <form [formGroup]="requestForm" (ngSubmit)="onSubmitRequest()" class="request-form">

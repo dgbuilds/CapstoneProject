@@ -64,12 +64,12 @@ public class EventPlannerController {
         return ResponseEntity.ok(response);
     }
     
-    @PostMapping("/{eventId}/book")
-    public ResponseEntity<Map<Boolean, String>> bookTickets(
-            @PathVariable Long eventId,
-            @RequestBody Integer tickets) { 
-        Map<Boolean, String> response = eventService.bookTickets(eventId, tickets);
-        return ResponseEntity.ok(response);
-    }
+    // @PostMapping("/{eventId}/book")
+    // public ResponseEntity<Map<Boolean, String>> bookTickets(
+    //         @PathVariable Long eventId,
+    //         @RequestBody Integer tickets) { 
+    //     Map<Boolean, String> response = eventService.bookTickets(eventId, tickets);
+    //     return ResponseEntity.ok(response);
+    // }
     
 }
