@@ -23,35 +23,42 @@ export class HomeComponent implements OnInit {
   teamMembers = [
     {
       name: 'Manikanta',
-      role: 'Full Stack Developer',
+      role: 'Developer',
       image: 'assets/team/manikanta.jpg',
       linkedin: 'https://linkedin.com/in/manikanta',
       github: 'https://github.com/manikanta'
     },
     {
       name: 'Dhruv',
-      role: 'Backend Developer',
+      role: 'Developer',
       image: 'assets/team/dhruv.jpg',
       linkedin: 'https://linkedin.com/in/dhruv',
       github: 'https://github.com/dhruv'
     },
     {
       name: 'Chrisdha',
-      role: 'Frontend Developer',
+      role: 'Developer',
       image: 'assets/team/chrisdha.jpg',
       linkedin: 'https://linkedin.com/in/chrisdha',
       github: 'https://github.com/chrisdha'
     },
     {
       name: 'Harsh',
-      role: 'UI/UX Designer',
+      role: 'Developer',
+      image: 'assets/team/harsh.jpg',
+      linkedin: 'https://linkedin.com/in/harsh',
+      github: 'https://github.com/harsh'
+    },
+    {
+      name: 'Varsith',
+      role: 'Developer',
       image: 'assets/team/harsh.jpg',
       linkedin: 'https://linkedin.com/in/harsh',
       github: 'https://github.com/harsh'
     },
     {
       name: 'Deepika',
-      role: 'Full Stack Developer',
+      role: 'Developer',
       image: 'assets/team/deepika.jpg',
       linkedin: 'https://linkedin.com/in/deepika',
       github: 'https://github.com/deepika'
