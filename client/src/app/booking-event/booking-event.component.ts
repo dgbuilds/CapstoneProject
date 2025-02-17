@@ -58,7 +58,6 @@ export class BookingEventComponent implements OnInit
   }
 
   logout() : void {
-    // Implement your logout logic here
     this.router.navigate(['/login']);
   }
 

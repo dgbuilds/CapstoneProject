@@ -57,6 +57,7 @@ export class DashbaordComponent implements OnInit {
   myEvents:Boolean = false;
   requestStatusMessage : any = '';
   requestStatus : any = true;
+  selectedTicketsMap: Map<number, number> = new Map();
 
   // Data arrays
   requests: any[] = [];
@@ -86,14 +87,8 @@ export class DashbaordComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // if(this.showRequestForm){
-    //   this.loadRequests();
-    // }
     this.role = this.authService.getRole();
-    //this.clientId = 1;
     this.clientId = this.authService.getUserID();
-    console.log(this.clientId);
-
     this.loadDashboardData();
   }
 
@@ -146,6 +141,10 @@ export class DashbaordComponent implements OnInit {
       error: (error) => console.error('Error loading staff events:', error)
     })
   }
+  toggleEvents(){
+    this.myEvents = !this.myEvents;
+    this.httpService.getClientRequests(this.clientId).subscribe((res)=>this.requestedEvents = res)
+  }
 
   loadRequests(): void {
     this.httpService.getRequests("pending").subscribe({
@@ -172,7 +171,6 @@ export class DashbaordComponent implements OnInit {
     if (action == 'reject') {
       this.requestStatusMessage = 'Sorry! Currently we have no resources available for the event.';
       this.requestStatus = false;
-      console.log(this.requestStatusMessage);
     }
     this.httpService.handleRequest(request.requestId, action).subscribe({
       next: () => {
@@ -217,11 +215,7 @@ export class DashbaordComponent implements OnInit {
       });
     }
   }
-  viewEvents(): void {
-    //this.viewingEvents = !this.viewingEvents;
-    this.router.navigate(['/view-events']);
-  }
-
+  
   navigate(route: string): void {
     this.router.navigate([route]);
     this.isDropdownOpen = false;
@@ -232,7 +226,6 @@ export class DashbaordComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  // Helper methods for status display
   getStatusClass(status: string): string {
     return status.toLowerCase();
   }
@@ -241,10 +234,8 @@ export class DashbaordComponent implements OnInit {
     return new Date(date).toLocaleString();
   }
 
-  // Replace the single selectedTickets property with a map
-  selectedTicketsMap: Map<number, number> = new Map();
+ 
   
-  // Update the increment/decrement methods to handle per-event tickets
   incrementTickets(eventId: number) {
     const currentCount = this.selectedTicketsMap.get(eventId) || 0;
     this.selectedTicketsMap.set(eventId, currentCount + 1);
@@ -257,10 +248,8 @@ export class DashbaordComponent implements OnInit {
     }
   }
   
-  // Update the bookTickets method to use the map
   bookTickets(event: any) {
     const ticketCount = this.selectedTicketsMap.get(event.eventID) || 0;
-    
     this.httpService.checkTicketAvailability(event.eventID, ticketCount).subscribe({
       next: (response: any) => {
         console.log(response);
@@ -269,7 +258,7 @@ export class DashbaordComponent implements OnInit {
             next: () => {
               event.ticketMessage = `Successfully booked ${ticketCount} tickets!`;
               event.ticketStatus = true;
-              this.selectedTicketsMap.set(event.eventID, 0); // Reset count after booking
+              this.selectedTicketsMap.set(event.eventID, 0); 
               this.loadClientData();
             },
             error: () => {
@@ -294,8 +283,10 @@ export class DashbaordComponent implements OnInit {
     this.router.navigate(['/dashboard']);
   }
 
-  toggleEvents(){
-    this.myEvents = !this.myEvents;
-    this.httpService.getClientRequests(this.clientId).subscribe((res)=>this.requestedEvents = res)
+  viewEvents(): void {
+    this.router.navigate(['/view-events']);
   }
+
+
+  
 }

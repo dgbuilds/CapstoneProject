@@ -2,11 +2,13 @@ package com.wecp.eventmanagementsystem.entity;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "users") // do not change table name
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
-    // implement entity
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userID;
@@ -16,6 +18,7 @@ public class User {
     private String role;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Client client;
  
     public User() {}

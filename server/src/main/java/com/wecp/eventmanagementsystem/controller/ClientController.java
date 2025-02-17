@@ -57,11 +57,5 @@ public class ClientController {
         return new ResponseEntity<>(createdRequest, HttpStatus.CREATED);
     }
 
-    // @GetMapping("/api/client/booking-details/{eventId}")
-    // public ResponseEntity<Event> getBookingDetails(@PathVariable Long eventId) {
-    // // get event details by event id and return with status code 200 OK
-    // return new ResponseEntity<Event>(eventService.getEventById(eventId),
-    // HttpStatus.OK);
-    // }
 
 }

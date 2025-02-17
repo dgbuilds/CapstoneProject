@@ -1,5 +1,3 @@
-
-
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -47,19 +45,19 @@ export class RegistrationComponent {
 
   checkPasswordStrength(password: string) {
     let strength = 0;
-    
+
     // Length check
     if (password.length >= 8) strength += 1;
-    
+
     // Contains uppercase
     if (/[A-Z]/.test(password)) strength += 1;
-    
+
     // Contains lowercase
     if (/[a-z]/.test(password)) strength += 1;
-    
+
     // Contains number
     if (/[0-9]/.test(password)) strength += 1;
-    
+
     // Contains special char
     if (/[^A-Za-z0-9]/.test(password)) strength += 1;
 

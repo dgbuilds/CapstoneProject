@@ -11,18 +11,12 @@ import { AuthService } from '../services/auth.service';
 @Injectable()
 export class AuthInterceptorInterceptor implements HttpInterceptor {
 
-  // constructor() {}
-
-  // intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-  //   return next.handle(request);
-  // }
 
   constructor(private authService: AuthService) {}
     intercept(
       request: HttpRequest<any>,
       next: HttpHandler
     ): Observable<HttpEvent<any>> {
-      // Get the token from your authentication service
   
       const token = this.authService.getToken();
       console.log(token);
@@ -30,7 +24,6 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
         return next.handle(request);
       }
   
-      // Clone the request and add the Authorization header with the token
       if (token) {
         console.log("in what we want");
         request = request.clone({
@@ -41,8 +34,6 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
           },
         });
       }
-  
-      // Pass the modified request to the next interceptor or to the HTTP handler
-      return next.handle(request);
+        return next.handle(request);
     }
 }

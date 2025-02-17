@@ -8,8 +8,8 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class HttpService {
-  
-  
+
+
 
   public serverName = environment.apiUrl;
 
@@ -31,18 +31,6 @@ export class HttpService {
     });
   }
 
-  public createEventRequest(value: any) :Observable<any>{
-    return this.http.post<any>(`${this.serverName}/api/request`,value);
-  }
-
-  public getEventByStatus(status: string):Observable<any[]> {
-    return this.http.get<any[]>(`${this.serverName}/api/events?status=${status}`,
-    {
-      headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-      })
-    })
-  }
 
   public Login(user: any): Observable<any> {
     return this.http.post<any>(`${this.serverName}/api/user/login`, user, {
@@ -63,6 +51,19 @@ export class HttpService {
     return this.http.post<any>(`${this.serverName}/api/planner/event`, event, {
       headers: this.getHeaders()
     });
+  }
+
+  public createEventRequest(value: any): Observable<any> {
+    return this.http.post<any>(`${this.serverName}/api/request`, value);
+  }
+
+  public getEventByStatus(status: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.serverName}/api/events?type=${status}`,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      })
   }
 
   public GetAllevents(): Observable<any[]> {
@@ -135,32 +136,32 @@ export class HttpService {
   }
 
 
-  public checkTicketAvailability(eventId: number, requestedTickets: number):Observable<any> {
+  public checkTicketAvailability(eventId: number, requestedTickets: number): Observable<any> {
     return this.http.get<any>(`${this.serverName}/${eventId}/check-tickets/${requestedTickets}`);
   }
-  
-  public bookTickets(eventId: number, tickets: number):Observable<any> {
+
+  public bookTickets(eventId: number, tickets: number): Observable<any> {
     return this.http.post<any>(`${this.serverName}/${eventId}/book`, tickets);
   }
 
-  public createClientRequest(clientId:any,request:any):Observable<any>{
-    return this.http.post<any>(`${this.serverName}/api/client/${clientId}/request`,request);
+  public createClientRequest(clientId: any, request: any): Observable<any> {
+    return this.http.post<any>(`${this.serverName}/api/client/${clientId}/request`, request);
   }
 
-  public getClientRequests(clientId:any):Observable<any[]>{
+  public getClientRequests(clientId: any): Observable<any[]> {
     return this.http.get<any[]>(`${this.serverName}/api/client/${clientId}/requests`);
   }
 
-  public bookEventTickets(clientId:any,eventId:any,tickets:any):Observable<any[]>{
-    return this.http.post<any[]>(`${this.serverName}/api/client/${clientId}/events/${eventId}/book`,tickets);
+  public bookEventTickets(clientId: any, eventId: any, tickets: any): Observable<any[]> {
+    return this.http.post<any[]>(`${this.serverName}/api/client/${clientId}/events/${eventId}/book`, tickets);
   }
 
-  public getClientBookedEvents(clientId:any):Observable<any[]>{
+  public getClientBookedEvents(clientId: any): Observable<any[]> {
     return this.http.get<any[]>(`${this.serverName}/api/client/${clientId}/events`);
   }
 
 
 
 
-  
+
 }

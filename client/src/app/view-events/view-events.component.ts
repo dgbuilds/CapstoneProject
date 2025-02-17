@@ -35,6 +35,7 @@ export class ViewEventsComponent implements OnInit {
   selectedEvent: any = null;
   successMessage: string = '';
   isCompleted : boolean = false;
+  errorMessage: string = '';
 
   constructor(
     private httpService: HttpService,
@@ -66,7 +67,7 @@ export class ViewEventsComponent implements OnInit {
         this.filteredEvents = [...this.events];
       },
       error: () => {
-        // Handle error
+        this.errorMessage = "Failed to load event"
       }
     });
   }

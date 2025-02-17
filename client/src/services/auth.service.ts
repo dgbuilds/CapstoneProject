@@ -34,9 +34,9 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  // getLoginStatus(): boolean {
-  //   return !!localStorage.getItem('token');
-  // }
+  getLoginStatus(): boolean {
+    return !!localStorage.getItem('token');
+  }
 
   logout(): void {
     localStorage.removeItem('token');

@@ -52,8 +52,8 @@ public class EventPlannerController {
     }
 
     @GetMapping("/api/events")
-    public ResponseEntity<List<Event>> getEventByType(@RequestParam String status) {
-        return new ResponseEntity<List<Event>>(eventService.getEventByType(status), HttpStatus.OK);
+    public ResponseEntity<List<Event>> getEventByType(@RequestParam String type) {
+        return new ResponseEntity<List<Event>>(eventService.getEventByType(type), HttpStatus.OK);
     }
 
     @GetMapping("/{eventId}/check-tickets/{requestedTickets}")
@@ -64,12 +64,5 @@ public class EventPlannerController {
         return ResponseEntity.ok(response);
     }
     
-    // @PostMapping("/{eventId}/book")
-    // public ResponseEntity<Map<Boolean, String>> bookTickets(
-    //         @PathVariable Long eventId,
-    //         @RequestBody Integer tickets) { 
-    //     Map<Boolean, String> response = eventService.bookTickets(eventId, tickets);
-    //     return ResponseEntity.ok(response);
-    // }
-    
+
 }
