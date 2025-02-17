@@ -34,7 +34,6 @@ public class RegisterAndLoginController {
 
     @PostMapping("/api/user/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
-        System.out.println("User = " + user);
         return new ResponseEntity<User>(userService.registerUser(user), HttpStatus.CREATED);
     }
 
