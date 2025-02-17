@@ -102,11 +102,8 @@ export class UpdateEventComponent implements OnInit {
     this.eventId = eventId;
     this.httpService.GetEventdetails(eventId).subscribe({
       next: (event) => {
-        console.log(event);
         const formattedDateTime = this.formatDateTimeWithoutOffset(event.dateTime);
-        console.log(formattedDateTime);
         const updatedEvent = { ...event , dateTime : formattedDateTime}
-        console.log(updatedEvent);
         this.itemForm.patchValue(updatedEvent);
       },
       error: () => {

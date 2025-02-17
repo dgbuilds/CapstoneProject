@@ -53,10 +53,10 @@ export class DashbaordComponent implements OnInit {
   requestForm: FormGroup;
   requestErrorMessage = '';
   ticketMessage = '';
-  ticketStatus : boolean = false;
-  myEvents:Boolean = false;
-  requestStatusMessage : any = '';
-  requestStatus : any = true;
+  ticketStatus: boolean = false;
+  myEvents: Boolean = false;
+  requestStatusMessage: any = '';
+  requestStatus: any = true;
   selectedTicketsMap: Map<number, number> = new Map();
 
   // Data arrays
@@ -66,8 +66,8 @@ export class DashbaordComponent implements OnInit {
   clients: any[] = [];
   bookingEvents: any[] = [];
   bookingDetails: any[] = [];
-  selectedTickets : any = 0;
-  clientId:any;
+  selectedTickets: any = 0;
+  clientId: any;
   requestedEvents: any[] = [];
 
   constructor(
@@ -106,6 +106,7 @@ export class DashbaordComponent implements OnInit {
     }
   }
 
+  //=======================Planner Dashboard================================//
   loadPlannerData(): void {
     this.httpService.GetAllevents().subscribe({
       next: (res) => this.events = res,
@@ -123,7 +124,22 @@ export class DashbaordComponent implements OnInit {
     });
   }
 
+  loadRequests(): void {
+    this.httpService.getRequests("pending").subscribe({
+      next: (res: any[]) => this.requests = res,
+      error: (error: any) => console.error('Error loading requests:', error)
+    });
+  }
 
+
+  
+
+  //=======================================================================
+
+
+
+
+  //========================Client DashBoard===============================//
   loadClientData(): void {
     this.httpService.getClientBookedEvents(this.clientId).subscribe({
       next: (res) => this.bookingDetails = res,
@@ -135,6 +151,29 @@ export class DashbaordComponent implements OnInit {
     });
   }
 
+
+  onSubmitRequest() {
+    if (this.requestForm.valid) {
+      this.requestForm.get('status')?.enable();
+      this.httpService.createClientRequest(this.clientId, this.requestForm.value).subscribe({
+        next: (response: any) => {
+          this.showRequestForm = false;
+          this.requestForm.reset();
+          this.loadClientData();
+        },
+        error: (error: any) => console.error('Error submitting request:', error)
+      });
+    }
+  }
+
+  toggleEvents() {
+    this.myEvents = !this.myEvents;
+    this.httpService.getClientRequests(this.clientId).subscribe((res) => this.requestedEvents = res)
+  }
+
+
+
+  //===========================Staff===========================//  
   loadStaffData(): void {
     this.httpService.GetAllevents().subscribe({
       next: (res) => this.bookingDetails = res,
@@ -142,18 +181,14 @@ export class DashbaordComponent implements OnInit {
     })
   }
 
-  //Client events
-  toggleEvents(){
-    this.myEvents = !this.myEvents;
-    this.httpService.getClientRequests(this.clientId).subscribe((res)=>this.requestedEvents = res)
+
+  viewEvents(): void {
+    this.router.navigate(['/view-events']);
   }
 
-  loadRequests(): void {
-    this.httpService.getRequests("pending").subscribe({
-      next: (res: any[]) => this.requests = res,
-      error: (error: any) => console.error('Error loading requests:', error)
-    });
-  }
+  //==========================================================//
+
+
 
   // Planner request
   handleRequest(request: any, action: any): void {
@@ -192,35 +227,22 @@ export class DashbaordComponent implements OnInit {
     }
   }
 
-  onSubmitRequest() {
-    if (this.requestForm.valid) {
-      this.requestForm.get('status')?.enable();
-      this.httpService.createClientRequest(this.clientId,this.requestForm.value).subscribe({
-        next: (response: any) => {
-          this.showRequestForm = false;
-          this.requestForm.reset();
-          this.loadClientData(); 
-        },
-        error: (error: any) => console.error('Error submitting request:', error)
-      });
-    }
-  }
-  
 
- // Booking of tickets
-  
+
+
+  // Booking of tickets
   incrementTickets(eventId: number) {
     const currentCount = this.selectedTicketsMap.get(eventId) || 0;
     this.selectedTicketsMap.set(eventId, currentCount + 1);
   }
-  
+
   decrementTickets(eventId: number) {
     const currentCount = this.selectedTicketsMap.get(eventId) || 0;
     if (currentCount > 0) {
       this.selectedTicketsMap.set(eventId, currentCount - 1);
     }
   }
-  
+
   bookTickets(event: any) {
     const ticketCount = this.selectedTicketsMap.get(event.eventID) || 0;
     this.httpService.checkTicketAvailability(event.eventID, ticketCount).subscribe({
@@ -231,7 +253,7 @@ export class DashbaordComponent implements OnInit {
             next: () => {
               event.ticketMessage = `Successfully booked ${ticketCount} tickets!`;
               event.ticketStatus = true;
-              this.selectedTicketsMap.set(event.eventID, 0); 
+              this.selectedTicketsMap.set(event.eventID, 0);
               this.loadClientData();
             },
             error: () => {
@@ -257,9 +279,7 @@ export class DashbaordComponent implements OnInit {
 
   toggleRequest() {
     this.showRequestForm = !this.showRequestForm;
-    if (this.showRequestForm) {
-
-    } else {
+    if (!this.showRequestForm) {
       this.ngOnInit();
     }
   }
@@ -267,15 +287,13 @@ export class DashbaordComponent implements OnInit {
   formatDate(date: string): string {
     return new Date(date).toLocaleString();
   }
-  
+
 
   navigateToDashboard(): void {
     this.router.navigate(['/dashboard']);
   }
 
-  viewEvents(): void {
-    this.router.navigate(['/view-events']);
-  }
+
 
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
@@ -293,5 +311,5 @@ export class DashbaordComponent implements OnInit {
   }
 
 
-  
+
 }
