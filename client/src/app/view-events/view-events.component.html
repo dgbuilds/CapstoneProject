@@ -7,20 +7,20 @@
       </button>
       </div>
       <div class="nav-actions">
-        <button class="nav-btn" routerLink="/dashboard">
+        <!-- <button class="nav-btn" routerLink="/dashboard">
           <fa-icon [icon]="faDashboard"></fa-icon>
           Dashboard
-        </button>
+        </button> -->
         <button class="nav-logout" (click)="logout()">
           <fa-icon [icon]="faSignOutAlt"></fa-icon>
           Logout
         </button>
       </div>
     </nav>
-  
+
     <div class="content-container">
       <h1>Manage Events</h1>
-  
+
       <div class="search-section">
         <h3>View & Update Events</h3>
         <div class="search-box">
@@ -33,29 +33,29 @@
             </button>
           </div>
         </div>
-  
+
         <div *ngIf="selectedEvent" class="update-form">
           <form [formGroup]="itemForm" (ngSubmit)="updateEvent()">
             <div class="form-field">
               <label for="title">Title</label>
               <input type="text" formControlName="title" id="title" [disabled]="true">
             </div>
-  
+
             <div class="form-field">
               <label for="description">Description</label>
               <input type="text" formControlName="description" id="description" [disabled]="true">
             </div>
-  
+
             <div class="form-field">
               <label for="dateTime">Date Time</label>
               <input type="text" formControlName="dateTime" id="dateTime" [disabled]="true">
             </div>
-  
+
             <div class="form-field">
               <label for="location">Location</label>
               <input type="text" formControlName="location" id="location" [disabled]="true">
             </div>
-  
+
             <div class="form-field">
               <label for="status">Status</label>
               <select id="status" formControlName="status">
@@ -63,20 +63,20 @@
                 <option value="Complete">Completed</option>
               </select>
             </div>
-  
+
             <button type="submit">
               <fa-icon [icon]="faSave"></fa-icon>
               Update Status
             </button>
           </form>
-  
+
           <div class="success-message" *ngIf="successMessage">
             <fa-icon [icon]="faCheckCircle"></fa-icon>
             {{successMessage}}
           </div>
         </div>
       </div>
-  
+
       <div class="table-section">
         <h3>Event Information</h3>
         <table>
@@ -103,7 +103,6 @@
                   {{fevents.status}}
                 </span>
               </td>
-              <p>{{ fevents|json}}</p>
               <td *ngIf="fevents.status != 'Complete' ">
                 <button (click)="selectEvent(fevents)">
                   <fa-icon [icon]="faEdit"></fa-icon>
@@ -116,4 +115,3 @@
       </div>
     </div>
   </div>
-  
