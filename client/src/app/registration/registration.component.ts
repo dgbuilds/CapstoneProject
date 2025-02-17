@@ -91,13 +91,12 @@ export class RegistrationComponent {
     if (this.itemForm.valid) {
       const formData = { ...this.itemForm.value };
       delete formData.confirmPassword; // Remove confirm password before sending
-
       this.httpService.registerUser(formData).subscribe({
         next: () => {
           this.router.navigate(['/login']);
         },
-        error: () => {
-          this.errorMessage = "Registration failed. Please try again.";
+        error: (err) => {
+          this.errorMessage = err.error.message || err.error;
         }
       });
     }
