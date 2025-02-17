@@ -141,6 +141,8 @@ export class DashbaordComponent implements OnInit {
       error: (error) => console.error('Error loading staff events:', error)
     })
   }
+
+  //Client events
   toggleEvents(){
     this.myEvents = !this.myEvents;
     this.httpService.getClientRequests(this.clientId).subscribe((res)=>this.requestedEvents = res)
@@ -153,6 +155,7 @@ export class DashbaordComponent implements OnInit {
     });
   }
 
+  // Planner request
   handleRequest(request: any, action: any): void {
     if (action == 'approve') {
       this.requestStatusMessage = 'Approved';
@@ -180,23 +183,10 @@ export class DashbaordComponent implements OnInit {
     });
   }
 
-  toggleDropdown(): void {
-    this.isDropdownOpen = !this.isDropdownOpen;
-  }
-
   toggleViewRequests(): void {
     this.viewingRequests = !this.viewingRequests;
     if (this.viewingRequests) {
       this.loadRequests();
-    } else {
-      this.ngOnInit();
-    }
-  }
-
-  toggleRequest() {
-    this.showRequestForm = !this.showRequestForm;
-    if (this.showRequestForm) {
-
     } else {
       this.ngOnInit();
     }
@@ -216,25 +206,8 @@ export class DashbaordComponent implements OnInit {
     }
   }
   
-  navigate(route: string): void {
-    this.router.navigate([route]);
-    this.isDropdownOpen = false;
-  }
 
-  logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/login']);
-  }
-
-  getStatusClass(status: string): string {
-    return status.toLowerCase();
-  }
-
-  formatDate(date: string): string {
-    return new Date(date).toLocaleString();
-  }
-
- 
+ // Booking of tickets
   
   incrementTickets(eventId: number) {
     const currentCount = this.selectedTicketsMap.get(eventId) || 0;
@@ -277,6 +250,23 @@ export class DashbaordComponent implements OnInit {
       }
     });
   }
+
+  getStatusClass(status: string): string {
+    return status.toLowerCase();
+  }
+
+  toggleRequest() {
+    this.showRequestForm = !this.showRequestForm;
+    if (this.showRequestForm) {
+
+    } else {
+      this.ngOnInit();
+    }
+  }
+
+  formatDate(date: string): string {
+    return new Date(date).toLocaleString();
+  }
   
 
   navigateToDashboard(): void {
@@ -285,6 +275,21 @@ export class DashbaordComponent implements OnInit {
 
   viewEvents(): void {
     this.router.navigate(['/view-events']);
+  }
+
+  toggleDropdown(): void {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  navigate(route: string): void {
+    this.router.navigate([route]);
+    this.isDropdownOpen = false;
+  }
+
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
 
