@@ -1,89 +1,85 @@
 <div class="page-wrapper">
-    <nav class="navbar">
-        <div class="nav-brand">
-          <button type="button" class="brand" (click)="navigateToDashboard()">
-            <fa-icon [icon]="faCalendar"></fa-icon>
-            <span>EventMaster</span>
-        </button>
-        </div>
-  
-      <div class="nav-actions">
-        <button class="nav-btn" routerLink="/dashboard">
+  <nav class="navbar">
+    <!-- Update the nav-brand section -->
+    <div class="nav-brand">
+      <button type="button" class="brand" (click)="navigateToDashboard()">
+        <fa-icon [icon]="faCalendar"></fa-icon>
+        <span>EventMaster</span>
+      </button>
+    </div>
+
+    <div class="nav-actions">
+      <!-- <button class="nav-btn" routerLink="/dashboard">
           <fa-icon [icon]="faDashboard"></fa-icon>
           Dashboard
-        </button>
-        <button class="nav-logout" (click)="logout()">
-          <fa-icon [icon]="faSignOutAlt"></fa-icon>
-          Logout
-        </button>
+        </button> -->
+      <button class="nav-logout" (click)="logout()">
+        <fa-icon [icon]="faSignOutAlt"></fa-icon>
+        Logout
+      </button>
+    </div>
+  </nav>
+
+  <div class="content-container">
+    <div class="allocation-card">
+      <div class="card-header">
+        <h1>Manage Resource Allocation</h1>
+        <p>Assign resources to your events</p>
       </div>
-    </nav>
-  
-    <div class="content-container">
-      <div class="allocation-card">
-        <div class="card-header">
-          <h1>Manage Resource Allocation</h1>
-          <p>Assign resources to your events</p>
+
+      <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" class="allocation-form">
+        <div class="form-field">
+          <label for="eventId">
+            <fa-icon [icon]="faCalendarAlt"></fa-icon>
+            Select Event
+          </label>
+          <select id="eventId" formControlName="eventId" [class.error]="isFieldInvalid('eventId')">
+            <option value="">Choose Event</option>
+            <option *ngFor="let event of events" [value]="event.eventID">{{event.title}}</option>
+          </select>
         </div>
-  
-        <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" class="allocation-form">
-          <div class="form-field">
-            <label for="eventId">
-              <fa-icon [icon]="faCalendarAlt"></fa-icon>
-              Select Event
-            </label>
-            <select id="eventId" formControlName="eventId" [class.error]="isFieldInvalid('eventId')">
-              <option value="">Choose Event</option>
-              <option *ngFor="let event of events" [value]="event.eventID">{{event.title}}</option>
-            </select>
+
+        <div class="form-field">
+          <label for="resourceId">
+            <fa-icon [icon]="faBox"></fa-icon>
+            Select Resource
+          </label>
+          <select id="resourceId" formControlName="resourceId" [class.error]="isFieldInvalid('resourceId')">
+            <option value="">Choose Resource</option>
+            <option *ngFor="let resource of resources" [value]="resource.resourceID">{{resource.name}}</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="quantity">
+            <fa-icon [icon]="faHashtag"></fa-icon>
+            Quantity
+          </label>
+          <input type="number" id="quantity" formControlName="quantity" [class.error]="isFieldInvalid('quantity')"
+            min="1">
+          <div class="validation-message" *ngIf="isFieldInvalid('quantity')">
+            <fa-icon [icon]="faExclamationCircle"></fa-icon>
+            <span *ngIf="itemForm.get('quantity')?.errors?.['required']">Quantity is required</span>
+            <span *ngIf="itemForm.get('quantity')?.errors?.['min']">Minimum quantity is 1</span>
           </div>
-  
-          <div class="form-field">
-            <label for="resourceId">
-              <fa-icon [icon]="faBox"></fa-icon>
-              Select Resource
-            </label>
-            <select id="resourceId" formControlName="resourceId" [class.error]="isFieldInvalid('resourceId')">
-              <option value="">Choose Resource</option>
-              <option *ngFor="let resource of resources" [value]="resource.resourceID">{{resource.name}}</option>
-            </select>
+        </div>
+
+        <div class="message-container">
+          <div class="success-message" *ngIf="successMessage">
+            <fa-icon [icon]="faCheckCircle"></fa-icon>
+            {{successMessage}}
           </div>
-  
-          <div class="form-field">
-            <label for="quantity">
-              <fa-icon [icon]="faHashtag"></fa-icon>
-              Quantity
-            </label>
-            <input 
-              type="number" 
-              id="quantity" 
-              formControlName="quantity"
-              [class.error]="isFieldInvalid('quantity')"
-              min="1">
-            <div class="validation-message" *ngIf="isFieldInvalid('quantity')">
-              <fa-icon [icon]="faExclamationCircle"></fa-icon>
-              <span *ngIf="itemForm.get('quantity')?.errors?.['required']">Quantity is required</span>
-              <span *ngIf="itemForm.get('quantity')?.errors?.['min']">Minimum quantity is 1</span>
-            </div>
+          <div class="error-message" *ngIf="errorMessage">
+            <fa-icon [icon]="faExclamationCircle"></fa-icon>
+            {{errorMessage}}
           </div>
-  
-          <div class="message-container">
-            <div class="success-message" *ngIf="successMessage">
-              <fa-icon [icon]="faCheckCircle"></fa-icon>
-              {{successMessage}}
-            </div>
-            <div class="error-message" *ngIf="errorMessage">
-              <fa-icon [icon]="faExclamationCircle"></fa-icon>
-              {{errorMessage}}
-            </div>
-          </div>
-  
-          <button type="submit" [disabled]="!itemForm.valid" class="submit-btn">
-            <fa-icon [icon]="faSave"></fa-icon>
-            Allocate Resource
-          </button>
-        </form>
-      </div>
+        </div>
+
+        <button type="submit" [disabled]="!itemForm.valid" class="submit-btn">
+          <fa-icon [icon]="faSave"></fa-icon>
+          Allocate Resource
+        </button>
+      </form>
     </div>
   </div>
-  
+</div>

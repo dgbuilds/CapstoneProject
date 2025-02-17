@@ -8,25 +8,25 @@
     </button>
      </div>
      <div class="nav-actions">
-       <button class="nav-btn" routerLink="/dashboard">
+       <!-- <button class="nav-btn" routerLink="/dashboard">
          <fa-icon [icon]="faDashboard"></fa-icon>
          Dashboard
-       </button>
+       </button> -->
        <button class="nav-logout" (click)="logout()">
          <fa-icon [icon]="faSignOutAlt"></fa-icon>
          Logout
        </button>
      </div>
    </nav>
- 
+
    <!-- Main Content -->
    <div class="content-container">
      <div *ngIf="update" class="section">
        <div class="section-header">
          <h2>Manage Events</h2>
-         <p>Update and manage your event details</p>
+         <!-- <p>Update and manage your event details</p> -->
        </div>
- 
+
        <table class="data-table">
          <thead>
            <tr>
@@ -59,13 +59,13 @@
          </tbody>
        </table>
      </div>
- 
+
      <div *ngIf="!update" class="update-form-section">
        <div class="section-header">
          <h2>Update Event</h2>
          <p>Modify the event details below</p>
        </div>
- 
+
        <form [formGroup]="itemForm" (ngSubmit)="updateEvent()">
          <div class="form-field">
            <label for="title">
@@ -74,7 +74,7 @@
            </label>
            <input type="text" formControlName="title" id="title" placeholder="Enter event title">
          </div>
- 
+
          <div class="form-field">
            <label for="description">
              <fa-icon [icon]="faFileAlt"></fa-icon>
@@ -82,7 +82,7 @@
            </label>
            <textarea formControlName="description" id="description" rows="4" placeholder="Enter event description"></textarea>
          </div>
- 
+
          <div class="form-row">
            <div class="form-field">
              <label for="dateTime">
@@ -91,7 +91,7 @@
              </label>
              <input type="datetime-local" formControlName="dateTime" id="dateTime">
            </div>
- 
+
            <div class="form-field">
              <label for="location">
                <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
@@ -100,7 +100,7 @@
              <input type="text" formControlName="location" id="location" placeholder="Enter location">
            </div>
          </div>
- 
+
          <div class="form-field">
            <label for="status">
              <fa-icon [icon]="faFlag"></fa-icon>
@@ -112,7 +112,7 @@
              <option value="Complete">Complete</option>
            </select>
          </div>
- 
+
          <div class="form-actions">
            <button type="button" class="cancel-btn" (click)="update = true">
              <fa-icon [icon]="faTimes"></fa-icon>
@@ -125,7 +125,7 @@
            </button>
          </div>
        </form>
- 
+
        <div class="success-message" *ngIf="successMessage">
          <fa-icon [icon]="faCheckCircle"></fa-icon>
          {{successMessage}}
@@ -133,4 +133,3 @@
      </div>
    </div>
  </div>
- 
