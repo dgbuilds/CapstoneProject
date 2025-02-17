@@ -1,138 +1,14 @@
-<!-- <div>
-    <h2>EVENT MANAGEMENT AND RESOURCE ALLOCATION PLATFORM</h2>
-    <p>Please enter your details here</p>
-    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
-        <div>
-            <div>
-                <label for="username">Username</label>
-                <input type="text" formControlName="username" id="username" placeholder="Username">
-                <div *ngIf="itemForm.get('username')?.touched && itemForm.get('username')?.invalid">
-                    <div *ngIf="itemForm.get('username')?.errors?.['required']" >Please Enter Username.</div>
-                </div>
-            </div>
-            <div>
-                <label for="email">Email address</label>
-                <input type="text" formControlName="email" id="email" placeholder="name@example.com">
-                <div *ngIf="itemForm.get('email')?.touched && itemForm.get('email')?.invalid">
-                    <div *ngIf="itemForm.get('email')?.errors?.['required']" >Please Enter email.</div>
-                    <div *ngIf="itemForm.get('email')?.errors?.['email']"></div>
-                </div>
-            </div>
-            <div>
-                <label for="password">Password</label>
-                <input type="text" formControlName="password" id="password" placeholder="">
-                <div *ngIf="itemForm.get('password')?.touched && itemForm.get('password')?.invalid">
-                    <div *ngIf="itemForm.get('password')?.errors?.['required']" >Please Enter password.</div>
-                    <div *ngIf="itemForm.get('password')?.errors?.['minlength']"></div>
-                </div>
-            </div>
-            <div>
-                <label for="role">Role</label>
-                <select name="role" id="role" formControlName="role">
-                    <option value="">Choose Role</option>
-                    <option value="PLANNER">PLANNER</option>
-                    <option value="CLIENT">CLIENT</option>
-                    <option value="STAFF">STAFF</option>
-                </select>
-                <div *ngIf="itemForm.get('role')?.touched && itemForm.get('role')?.invalid">
-                    <div *ngIf="itemForm.get('role')?.errors?.['required']">Select an option</div>
-                </div>
-            </div>
-            <div  *ngIf="errorMessage">{{errorMessage}}</div>
-            <button type="submit" [disabled]="!itemForm.valid">Submit</button>
-            <a routerLink="/login">Go to Login</a>
- 
-        </div>
-    </form>
-</div> -->
-
-
-
-
-<!-- 
 <nav class="navbar">
   <button type="button" class="brand" (click)="navigateToHome()">
     <fa-icon [icon]="faCalendar"></fa-icon>
     <span>EventMaster</span>
   </button>
-  
-    <div class="nav-buttons">
-      <button class="sign-in" routerLink="/login">Sign In</button>
-       <button class="sign-up" routerLink="/registration">Sign Up</button> 
-    </div>
-  </nav>
-  
-   Rest of your existing registration-container code 
-<div class="registration-container">
-    <div class="registration-card">
-      <h2>Register</h2>
-       <p>Please enter your details here</p> 
-      
-      <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" formControlName="username" id="username" placeholder="Enter your username">
-          <div class="error-message" *ngIf="itemForm.get('username')?.touched && itemForm.get('username')?.invalid">
-            <div *ngIf="itemForm.get('username')?.errors?.['required']">Please enter username</div>
-          </div>
-        </div>
-  
-        <div class="form-group">
-          <label for="email">Email address</label>
-          <input type="email" formControlName="email" id="email" placeholder="name@example.com">
-          <div class="error-message" *ngIf="itemForm.get('email')?.touched && itemForm.get('email')?.invalid">
-            <div *ngIf="itemForm.get('email')?.errors?.['required']">Please enter email</div>
-            <div *ngIf="itemForm.get('email')?.errors?.['email']">Please enter a valid email</div>
-          </div>
-        </div>
-  
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" formControlName="password" id="password" placeholder="Enter your password">
-          <div class="error-message" *ngIf="itemForm.get('password')?.touched && itemForm.get('password')?.invalid">
-            <div *ngIf="itemForm.get('password')?.errors?.['required']">Please enter password</div>
-            <div *ngIf="itemForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters</div>
-          </div>
-        </div>
-  
-        <div class="form-group">
-          <label for="role">Role</label>
-          <select name="role" id="role" formControlName="role">
-            <option value="" selected>Choose Role</option>
-            <option value="PLANNER">PLANNER</option>
-            <option value="CLIENT">CLIENT</option>
-            <option value="STAFF">STAFF</option>
-          </select>
-          <div class="error-message" *ngIf="itemForm.get('role')?.touched && itemForm.get('role')?.invalid">
-            <div *ngIf="itemForm.get('role')?.errors?.['required']">Please select a role</div>
-          </div>
-        </div>
-  
-        <div class="error-message" *ngIf="errorMessage">{{errorMessage}}</div>
-  
-        <button type="submit" class="submit-button" [disabled]="!itemForm.valid">Create Account</button>
-        <a routerLink="/login" class="login-link">Already have an account? Sign in</a>
-      </form>
-    </div>
+
+  <div class="nav-buttons">
+    <button class="home" routerLink="/home">Home</button>
+    <button class="sign-in" routerLink="/login">Sign In</button>
   </div>
-   -->
-
-
-
-
-
-  <!-- Previous navbar code remains same -->
-  <nav class="navbar">
-    <button type="button" class="brand" (click)="navigateToHome()">
-      <fa-icon [icon]="faCalendar"></fa-icon>
-      <span>EventMaster</span>
-    </button>
- 
-    <div class="nav-buttons">
-      <button class="home" routerLink="/home">Home</button>
-      <button class="sign-in" routerLink="/login">Sign In</button>
-    </div>
-  </nav>
+</nav>
 
 <div class="registration-container">
   <div class="split-layout">
@@ -142,20 +18,21 @@
         <!-- Username and Email fields remain same -->
         <div class="form-group">
           <div class="input-container">
-           
+
             <input type="text" id="username" formControlName="username" placeholder=" ">
             <label for="username">Username</label>
           </div>
           <div class="error-message" *ngIf="itemForm.get('username')?.touched && itemForm.get('username')?.invalid">
             <div *ngIf="itemForm.get('username')?.errors?.['required']">Please enter username</div>
-            <div *ngIf="itemForm.get('username')?.errors?.['pattern']">Username should not contain special characters or numbers</div>
+            <div *ngIf="itemForm.get('username')?.errors?.['pattern']">Username should not contain special characters or
+              numbers</div>
             <div *ngIf="itemForm.get('username')?.errors?.['minlength']">Minimum 3 characters required</div>
           </div>
         </div>
 
         <div class="form-group">
           <div class="input-container">
-           
+
             <input type="email" id="email" formControlName="email" placeholder=" ">
             <label for="email">Email</label>
           </div>
@@ -168,53 +45,35 @@
 
         <div class="form-group">
           <div class="input-container">
-            <input 
-              [type]="showPassword ? 'text' : 'password'" 
-              id="password" 
-              formControlName="password" 
-              placeholder=" "
-            >
+            <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" placeholder=" ">
             <label for="password">Password</label>
-            <button 
-              type="button" 
-              class="toggle-password" 
-              (click)="togglePasswordVisibility('password')"
-            >
+            <button type="button" class="toggle-password" (click)="togglePasswordVisibility('password')">
               <fa-icon [icon]="showPassword ? faEye : faEyeSlash"></fa-icon>
             </button>
           </div>
           <div class="password-strength" *ngIf="itemForm.get('password')?.value">
             <div class="strength-meter">
-              <div 
-                class="strength-bar" 
-                [ngClass]="passwordStrength"
-              ></div>
+              <div class="strength-bar" [ngClass]="passwordStrength"></div>
             </div>
             <span class="strength-text">Password Strength: {{passwordStrength | titlecase}}</span>
           </div>
           <div class="error-message" *ngIf="itemForm.get('password')?.touched && itemForm.get('password')?.invalid">
             <!-- Previous password error messages -->
             <div *ngIf="itemForm.get('password')?.errors?.['required']">Password is required</div>
-            <div *ngIf="itemForm.get('password')?.errors?.['pattern']">Password is have atleast 1 captial letter,1 special character, 1 number</div>
-            <div class="error-message" *ngIf="itemForm.get('password')?.errors?.['min']">Password should contain atleast 8 characters </div>
+            <div *ngIf="itemForm.get('password')?.errors?.['pattern']">Password is have atleast 1 captial letter,1
+              special character, 1 number</div>
+            <div class="error-message" *ngIf="itemForm.get('password')?.errors?.['min']">Password should contain atleast
+              8 characters </div>
 
           </div>
         </div>
 
         <div class="form-group">
           <div class="input-container">
-            <input 
-              [type]="showConfirmPassword ? 'text' : 'password'" 
-              id="confirmPassword" 
-              formControlName="confirmPassword" 
-              placeholder=" "
-            >
+            <input [type]="showConfirmPassword ? 'text' : 'password'" id="confirmPassword"
+              formControlName="confirmPassword" placeholder=" ">
             <label for="confirmPassword">Confirm Password</label>
-            <button 
-              type="button" 
-              class="toggle-password" 
-              (click)="togglePasswordVisibility('confirmPassword')"
-            >
+            <button type="button" class="toggle-password" (click)="togglePasswordVisibility('confirmPassword')">
               <fa-icon [icon]="showConfirmPassword ? faEye : faEyeSlash"></fa-icon>
             </button>
           </div>
@@ -226,7 +85,7 @@
         <!-- Role selection and rest of the form remains same -->
         <div class="form-group">
           <div class="input-container">
-         
+
             <select id="role" formControlName="role">
               <option value="" disabled selected>Select Role</option>
               <option value="PLANNER">Event Planner</option>

@@ -121,7 +121,6 @@ export class HomeComponent implements OnInit {
 
 
   onContactSubmit() {
-    // Implement contact form submission logic
     console.log('Contact form submitted');
   }
 

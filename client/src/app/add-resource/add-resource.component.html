@@ -1,182 +1,113 @@
-<!-- <div>
-    <h1>Manage Resource</h1>
-    <div>
-        <h2>Add Resource</h2>
-        <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
-            <div>
-                <label for="name">Name</label>
-                <input type="text" id="name" formControlName="name" placeholder="Enter name">
-                <div *ngIf="itemForm.get('name')?.invalid && itemForm.get('name')?.touched">
-                    <div *ngIf="itemForm.get('name')?.errors?.['required']">Name is required.</div>
-                </div>
- 
-                <label for="type">Type</label>
-                <input type="text" id="type" formControlName="type" placeholder="Enter type">
-                <div *ngIf="itemForm.get('type')?.invalid && itemForm.get('type')?.touched">
-                    <div *ngIf="itemForm.get('type')?.errors?.['required']">Type is required.</div>
-                </div>
- 
-                <div>
-                    <input type="radio" id="availability" name="status" value="availability"
-                        (change)="onRadioChange('availability')">
-                    <label for="availability">Availability</label><br>
- 
-                    <input type="radio" id="unavailability" name="status" value="unavailability"
-                        (change)="onRadioChange('unavailability')">
-                    <label for="unavailability">Unavailability</label><br>
-                </div>
-            </div>
- 
-            <button type="submit">Submit</button>
-        </form>
-    </div>
- 
- 
-    <div>
-        <h3>Resource Information</h3>
-        <table>
-            <tr>
-                <th>Sr*</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Availability</th>
-            </tr>
-            <tr *ngFor="let resource of resources">
-                <td>{{resource.resourceID}}</td>
-                <td>{{resource.name}}</td>
-                <td>{{resource.type}}</td>
-                <td>{{resource.availability}}</td>
-            </tr>
-        </table>
-    </div>
-</div> -->
-
-
-<!-- Add this at the top of your add-resource.component.html -->
 <nav class="navbar">
-      <button type="button" class="brand" (click)="navigateToDashboard()">
-        <fa-icon [icon]="faCalendar"></fa-icon>
-        <span>EventMaster</span>
-      </button>
-  
-    <div class="nav-actions">
-      <button class="logout-btn" (click)="logout()">
-        <fa-icon [icon]="faSignOutAlt"></fa-icon>
-        Logout
-      </button>
-    </div>
-  </nav>
-   
+  <button type="button" class="brand" (click)="navigateToDashboard()">
+    <fa-icon [icon]="faCalendar"></fa-icon>
+    <span>EventMaster</span>
+  </button>
+
+  <div class="nav-actions">
+    <button class="logout-btn" (click)="logout()">
+      <fa-icon [icon]="faSignOutAlt"></fa-icon>
+      Logout
+    </button>
+  </div>
+</nav>
+
 
 <div class="main-container">
-    <div class="content-wrapper">
-      <!-- Form Section -->
-      <div class="form-section">
-        <div class="section-header">
-          <h2>Add New Resource</h2>
-          <p>Enter resource details below</p>
-        </div>
-  
-        <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" class="resource-form">
-          <div class="form-group">
-            <label>Resource Name</label>
-            <div class="input-wrapper">
-              <fa-icon [icon]="faBox"></fa-icon>
-              <input 
-                type="text" 
-                formControlName="name" 
-                placeholder="Enter resource name"
-                [class.error]="itemForm.get('name')?.invalid && itemForm.get('name')?.touched">
-            </div>
-            <div class="error-message" *ngIf="itemForm.get('name')?.invalid && itemForm.get('name')?.touched">
-              <fa-icon [icon]="faExclamationCircle"></fa-icon>
-              Resource name is required
-            </div>
-          </div>
-  
-          <div class="form-group">
-            <label>Resource Type</label>
-            <div class="input-wrapper">
-              <fa-icon [icon]="faTag"></fa-icon>
-              <input 
-                type="text" 
-                formControlName="type" 
-                placeholder="Enter resource type"
-                [class.error]="itemForm.get('type')?.invalid && itemForm.get('type')?.touched">
-            </div>
-            <div class="error-message" *ngIf="itemForm.get('type')?.invalid && itemForm.get('type')?.touched">
-              <fa-icon [icon]="faExclamationCircle"></fa-icon>
-              Resource type is required
-            </div>
-          </div>
-  
-          <div class="form-group">
-            <label>Availability Status</label>
-            <div class="status-options">
-              <div class="status-option">
-                <input 
-                  type="radio" 
-                  id="available" 
-                  formControlName="availability" 
-                  [value]="true">
-                <label for="available">
-                  <fa-icon [icon]="faCheckCircle"></fa-icon>
-                  Available
-                </label>
-              </div>
-              <div class="status-option">
-                <input 
-                  type="radio" 
-                  id="unavailable" 
-                  formControlName="availability" 
-                  [value]="false">
-                <label for="unavailable">
-                  <fa-icon [icon]="faTimesCircle"></fa-icon>
-                  Unavailable
-                </label>
-              </div>
-            </div>
-          </div>
-  
-          <button type="submit" [disabled]="!itemForm.valid || isSubmitting" class="submit-btn">
-            <fa-icon [icon]="faPlus"></fa-icon>
-            <span>Add Resource</span>
-          </button>
-        </form>
+  <div class="content-wrapper">
+    <!-- Form Section -->
+    <div class="form-section">
+      <div class="section-header">
+        <h2>Add New Resource</h2>
+        <p>Enter resource details below</p>
       </div>
-  
-      <!-- Table Section -->
-      <div class="table-section">
-        <div class="section-header">
-          <h2>Resource List</h2>
-          <p>Current available resources</p>
+
+      <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" class="resource-form">
+        <div class="form-group">
+          <label>Resource Name</label>
+          <div class="input-wrapper">
+            <fa-icon [icon]="faBox"></fa-icon>
+            <input type="text" formControlName="name" placeholder="Enter resource name"
+              [class.error]="itemForm.get('name')?.invalid && itemForm.get('name')?.touched">
+          </div>
+          <div class="error-message" *ngIf="itemForm.get('name')?.invalid && itemForm.get('name')?.touched">
+            <fa-icon [icon]="faExclamationCircle"></fa-icon>
+            Resource name is required
+          </div>
         </div>
-  
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let resource of resources">
-                <td>{{resource.resourceID}}</td>
-                <td>{{resource.name}}</td>
-                <td>{{resource.type}}</td>
-                <td>
-                  <span class="status-badge" [class.available]="resource.availability" [class.unavailable]="!resource.availability">
-                    {{resource.availability ? 'Available' : 'Unavailable'}}
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+
+        <div class="form-group">
+          <label>Resource Type</label>
+          <div class="input-wrapper">
+            <fa-icon [icon]="faTag"></fa-icon>
+            <input type="text" formControlName="type" placeholder="Enter resource type"
+              [class.error]="itemForm.get('type')?.invalid && itemForm.get('type')?.touched">
+          </div>
+          <div class="error-message" *ngIf="itemForm.get('type')?.invalid && itemForm.get('type')?.touched">
+            <fa-icon [icon]="faExclamationCircle"></fa-icon>
+            Resource type is required
+          </div>
         </div>
+
+        <div class="form-group">
+          <label>Availability Status</label>
+          <div class="status-options">
+            <div class="status-option">
+              <input type="radio" id="available" formControlName="availability" [value]="true">
+              <label for="available">
+                <fa-icon [icon]="faCheckCircle"></fa-icon>
+                Available
+              </label>
+            </div>
+            <div class="status-option">
+              <input type="radio" id="unavailable" formControlName="availability" [value]="false">
+              <label for="unavailable">
+                <fa-icon [icon]="faTimesCircle"></fa-icon>
+                Unavailable
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" [disabled]="!itemForm.valid || isSubmitting" class="submit-btn">
+          <fa-icon [icon]="faPlus"></fa-icon>
+          <span>Add Resource</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- Table Section -->
+    <div class="table-section">
+      <div class="section-header">
+        <h2>Resource List</h2>
+        <p>Current available resources</p>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let resource of resources">
+              <td>{{resource.resourceID}}</td>
+              <td>{{resource.name}}</td>
+              <td>{{resource.type}}</td>
+              <td>
+                <span class="status-badge" [class.available]="resource.availability"
+                  [class.unavailable]="!resource.availability">
+                  {{resource.availability ? 'Available' : 'Unavailable'}}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
-  
+</div>

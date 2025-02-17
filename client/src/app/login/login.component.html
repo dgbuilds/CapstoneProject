@@ -1,5 +1,3 @@
-
-
 <nav class="navbar">
   <button type="button" class="brand" (click)="navigateToHome()">
     <fa-icon [icon]="faCalendar"></fa-icon>
@@ -11,7 +9,7 @@
     <button class="sign-up" routerLink="/registration">Sign Up</button>
   </div>
 </nav>
- 
+
 <div class="login-container">
   <div class="split-layout">
     <div class="login-card">
@@ -25,11 +23,13 @@
           </div>
           <div class="error-message" *ngIf="itemForm.get('username')?.touched && itemForm.get('username')?.invalid">
             <div class="error-message" *ngIf="itemForm.get('username')?.errors?.['required']">Username is required</div>
-            <div class="error-message" *ngIf="itemForm.get('username')?.errors?.['pattern']">Username should not contain any special characters</div>
-            <div class="error-message" *ngIf="itemForm.get('username')?.errors?.['minlength']">Username should contain atleast 3 characters </div>
+            <div class="error-message" *ngIf="itemForm.get('username')?.errors?.['pattern']">Username should not contain
+              any special characters</div>
+            <div class="error-message" *ngIf="itemForm.get('username')?.errors?.['minlength']">Username should contain
+              atleast 3 characters </div>
           </div>
         </div>
- 
+
         <div class="form-group">
           <div class="input-container">
             <!-- <fa-icon [icon]="faLock" class="input-icon"></fa-icon> -->
@@ -37,27 +37,27 @@
             <label for="password">Password</label>
           </div>
           <div class="error-message" *ngIf="itemForm.get('password')?.touched && itemForm.get('password')?.invalid">
-            <div class="error-message" *ngIf="itemForm.get('password')?.errors?.['required']">Pasword is required</div>          
-            <div *ngIf="itemForm.get('password')?.errors?.['pattern']">Password must have atleast 1 captial letter,1 special character, 1 number</div>
-            <div class="error-message" *ngIf="itemForm.get('password')?.errors?.['min']">Password should contain atleast 8 characters </div>
- 
+            <div class="error-message" *ngIf="itemForm.get('password')?.errors?.['required']">Pasword is required</div>
+            <div *ngIf="itemForm.get('password')?.errors?.['pattern']">Password must have atleast 1 captial letter,1
+              special character, 1 number</div>
+            <div class="error-message" *ngIf="itemForm.get('password')?.errors?.['min']">Password should contain atleast
+              8 characters </div>
+
           </div>
         </div>
- 
+
         <div class="error-message" *ngIf="errorMessage">{{errorMessage}}</div>
- 
+
         <button type="submit" class="submit-button" [disabled]="!itemForm.valid">SIGN IN</button>
         <a routerLink="/registration" class="register-link">Don't have an account? <span>Sign up</span></a>
       </form>
     </div>
- 
+
     <div class="content-right">
       <div class="logo-container">
-        <!-- <img src="assets/event-logo.png" alt="Event Logo" class="event-logo"> -->
       </div>
       <h1 class="animate-title">EVENT MANAGEMENT</h1>
       <h2 class="welcome-text">Welcome Back!</h2>
-      <!-- <p class="description">Your one-stop solution for seamless event planning and management. Create, organize, and execute memorable events with ease.</p> -->
     </div>
   </div>
 </div>

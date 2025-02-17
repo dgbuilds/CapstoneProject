@@ -27,8 +27,7 @@ const routes: Routes = [
   { path: 'booking-details', component: BookingDetailsComponent },
   { path: 'booking-event/:id', component: BookingEventComponent },  
   {path:'update-event',component:UpdateEventComponent},
-  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: '**', component : HomeComponent },
+  { path: '**', component : HomeComponent }
 ];
 
 @NgModule({

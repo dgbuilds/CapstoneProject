@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
 import { AuthService } from '../../services/auth.service';
-import { 
+import {
   faCalendar,
   faSignOutAlt,
   faTag,
@@ -12,9 +12,10 @@ import {
   faMapMarkerAlt,
   faExclamationCircle,
   faSave,
-  faDashboard
+  faDashboard,
+  faTicketAlt
 } from '@fortawesome/free-solid-svg-icons';
-
+ 
 @Component({
   selector: 'app-create-event',
   templateUrl: './create-event.component.html',
@@ -31,11 +32,12 @@ export class CreateEventComponent implements OnInit {
   faExclamationCircle = faExclamationCircle;
   faSave = faSave;
   faDashboard = faDashboard;
-
+  faTicketIcon = faTicketAlt;
+ 
   itemForm!: FormGroup;
   errorMessage: string = '';
   isSubmitting = false;
-
+ 
   constructor(
     private fb: FormBuilder,
     private httpService: HttpService,
@@ -44,11 +46,11 @@ export class CreateEventComponent implements OnInit {
   ) {
     this.initializeForm();
   }
-
+ 
   ngOnInit(): void {
     this.setupFormValidation();
   }
-
+ 
   private initializeForm(): void {
     this.itemForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
@@ -59,27 +61,27 @@ export class CreateEventComponent implements OnInit {
       status: ['Pending']
     });
   }
-
+ 
   private setupFormValidation(): void {
     this.itemForm.valueChanges.subscribe(() => {
       this.errorMessage = '';
     });
   }
-
+ 
   isFieldInvalid(fieldName: string): boolean {
     const field = this.itemForm.get(fieldName);
     return field ? field.invalid && (field.dirty || field.touched) : false;
   }
-
+ 
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
-
+ 
   onSubmit(): void {
     if (this.itemForm.valid && !this.isSubmitting) {
       this.isSubmitting = true;
-      
+     
       this.httpService.createEvent({...this.itemForm.value , type : 'public'}).subscribe({
         next: () => {
           this.router.navigate(['/dashboard']);
@@ -94,7 +96,7 @@ export class CreateEventComponent implements OnInit {
       });
     }
   }
-
+ 
   navigateToDashboard() : void {
     this.router.navigate(['/dashboard']);
   }

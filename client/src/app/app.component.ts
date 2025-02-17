@@ -9,23 +9,23 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   IsLoggin:any=false;
-  //roleName: string | null;
+  roleName: string | null = '';
   constructor(private authService: AuthService, private router:Router)
   {
-  //   this.IsLoggin=authService.getLoginStatus();
-  //   this.roleName=authService.getRole();
-  //   if(this.IsLoggin==false)
-  //   {
-  //     this.router.navigateByUrl('/login'); 
-    
-  //   }
-  // }
-  
-  // logout()
-  // {
-  //   this.authService.logout();
-  //   window.location.reload();
-  // }
-
+    this.IsLoggin=authService.getLoginStatus();
+    this.roleName=authService.getRole();
+    if(this.IsLoggin==false)
+    {
+      this.router.navigateByUrl('/'); 
+    }
   }
+  
+
+  logout()
+  {
+    this.authService.logout();
+    window.location.reload();
+  }
+
+  
 }
